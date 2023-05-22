@@ -10,9 +10,7 @@ import androidx.annotation.UiThread
 import androidx.fragment.app.Fragment
 import com.example.dongsan2mong.databinding.FragmentMapBinding
 import com.naver.maps.geometry.LatLng
-import com.naver.maps.map.CameraUpdate
-import com.naver.maps.map.NaverMap
-import com.naver.maps.map.OnMapReadyCallback
+import com.naver.maps.map.*
 
 class MapFragment : Fragment(), OnMapReadyCallback {
     lateinit var binding: FragmentMapBinding
@@ -23,8 +21,11 @@ class MapFragment : Fragment(), OnMapReadyCallback {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         val fm = childFragmentManager
+        val initialMapOption = NaverMapOptions()
+            .camera(CameraPosition(LatLng(37.541618, 127.079374), 16.0))
+            .mapType(NaverMap.MapType.Basic)
         val mapFragment = fm.findFragmentById(R.id.mapView) as com.naver.maps.map.MapFragment?
-            ?: com.naver.maps.map.MapFragment.newInstance().also {
+            ?: com.naver.maps.map.MapFragment.newInstance(initialMapOption).also {
                 fm.beginTransaction().add(R.id.mapView, it).commit()
             }
         mapFragment.getMapAsync(this@MapFragment)
@@ -90,9 +91,5 @@ class MapFragment : Fragment(), OnMapReadyCallback {
         // ...
         println("onMapReady!!!")
         nMap = naverMap
-        var cameraUpdate = CameraUpdate.scrollTo(LatLng(37.541618, 127.079374))
-        nMap.moveCamera(cameraUpdate)
-        cameraUpdate = CameraUpdate.zoomTo(16.0)
-        nMap.moveCamera(cameraUpdate)
     }
 }
