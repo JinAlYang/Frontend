@@ -5,9 +5,13 @@
     <string name="menu_title_comparison">comparison</string>
     <string name="menu_title_planner">planner</string>
 
-    <string name="map_option_area">지역</string>
-    <string name="map_option_building_type">건물유형</string>
-    <string name="map_option_property_type">매물유형</string>
-    <string name="map_option_example1">예시1</string>
-    <string name="map_option_example2">예시2</string>
+    <string name="map_option_1">지역</string>
+    <string name="map_option_2">건물유형</string>
+    <string name="map_option_3">매물유형</string>
+    <string name="map_option_4">평형</string>
+    <string name="map_option_5">방 갯수</string>
+    <string name="map_option_6">입주가능일시</string>
+    <string name="map_option_7">편의시설</string>
+    <string name="map_option_8">옵션</string>
+
 </resources>
