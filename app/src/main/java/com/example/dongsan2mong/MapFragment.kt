@@ -59,17 +59,13 @@ class MapFragment : Fragment(), OnMapReadyCallback {
     private fun init() {
         binding.apply {
             // 지도 옵션 오른쪽 화살표 버튼 클릭 시 펼치기
-            var isOptionOpened = false
             mapOpenOptionBtn.setOnClickListener {
-                if (isOptionOpened) {
-                    isOptionOpened = false
-                    mapOpenOptionBtn.setImageResource(R.drawable.icon_map_arrow_down)
-                    mapOptionLayout.visibility = View.GONE
-                } else {
-                    isOptionOpened = true
-                    mapOpenOptionBtn.setImageResource(R.drawable.icon_map_arrow_up)
-                    mapOptionLayout.visibility = View.VISIBLE
-                }
+                mapOptionLayout.visibility = View.VISIBLE
+                mapOptionBarLayout.visibility = View.GONE
+            }
+            mapCloseOptionBtn.setOnClickListener {
+                mapOptionBarLayout.visibility = View.VISIBLE
+                mapOptionLayout.visibility = View.GONE
             }
 
             // 돋보기 버튼 클릭 시 searchActivity로 화면 전환
