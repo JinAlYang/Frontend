@@ -16,18 +16,18 @@
             android:layout_weight="1" />
 
         <ImageView
-            android:id="@+id/sidemenuBtn"
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:padding="17dp"
-            android:src="@drawable/icon_menu_white" />
-
-        <ImageView
             android:id="@+id/searchBtn"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:padding="17dp"
             android:src="@drawable/icon_search_white" />
+
+        <ImageView
+            android:id="@+id/sidemenuBtn"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:padding="17dp"
+            android:src="@drawable/icon_menu_white" />
     </LinearLayout>
 
     <FrameLayout
@@ -67,26 +67,22 @@
                     android:gravity="center_vertical">
 
                     <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:paddingHorizontal="5dp"
-                        android:text="" />
-
-                    <TextView
+                        android:id="@+id/map_option_1"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginHorizontal="7dp"
-                        android:background="@drawable/background_map_option_selected"
+                        android:background="@drawable/background_map_option_expand"
+                        android:fontFamily="@font/elicedigitalbaeum"
                         android:paddingHorizontal="6dp"
+
                         android:paddingVertical="3dp"
-
                         android:text="@string/map_option_1"
-                        android:textColor="@color/main_blue"
 
-                        android:textSize="16sp"
-                        android:fontFamily="@font/elicedigitalbaeum" />
+                        android:textColor="@color/black_unselected_option"
+                        android:textSize="16sp" />
 
                     <TextView
+                        android:id="@+id/map_option_5"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginHorizontal="7dp"
@@ -94,12 +90,13 @@
                         android:paddingVertical="3dp"
 
                         android:text="@string/map_option_2"
-                        android:textColor="@color/gray_unselected_option"
+                        android:textColor="@color/black_unselected_option"
 
                         android:textSize="16sp"
                         android:fontFamily="@font/elicedigitalbaeum" />
 
                     <TextView
+                        android:id="@+id/map_option_2"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginHorizontal="7dp"
@@ -107,12 +104,13 @@
                         android:paddingVertical="3dp"
 
                         android:text="@string/map_option_3"
-                        android:textColor="@color/gray_unselected_option"
+                        android:textColor="@color/black_unselected_option"
 
                         android:textSize="16sp"
                         android:fontFamily="@font/elicedigitalbaeum" />
 
                     <TextView
+                        android:id="@+id/map_option_6"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginHorizontal="7dp"
@@ -120,12 +118,13 @@
                         android:paddingVertical="3dp"
 
                         android:text="@string/map_option_4"
-                        android:textColor="@color/gray_unselected_option"
+                        android:textColor="@color/black_unselected_option"
 
                         android:textSize="16sp"
                         android:fontFamily="@font/elicedigitalbaeum" />
 
                     <TextView
+                        android:id="@+id/map_option_3"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginHorizontal="7dp"
@@ -133,52 +132,10 @@
                         android:paddingVertical="3dp"
 
                         android:text="@string/map_option_5"
-                        android:textColor="@color/gray_unselected_option"
+                        android:textColor="@color/black_unselected_option"
 
                         android:textSize="16sp"
                         android:fontFamily="@font/elicedigitalbaeum" />
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginHorizontal="7dp"
-                        android:paddingHorizontal="6dp"
-                        android:paddingVertical="3dp"
-
-                        android:text="@string/map_option_6"
-                        android:textColor="@color/gray_unselected_option"
-
-                        android:textSize="16sp"
-                        android:fontFamily="@font/elicedigitalbaeum" />
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginHorizontal="7dp"
-                        android:paddingHorizontal="6dp"
-                        android:paddingVertical="3dp"
-
-                        android:text="@string/map_option_7"
-                        android:textColor="@color/gray_unselected_option"
-
-                        android:textSize="16sp"
-                        android:fontFamily="@font/elicedigitalbaeum" />
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginHorizontal="7dp"
-                        android:paddingHorizontal="6dp"
-                        android:paddingVertical="3dp"
-
-                        android:text="@string/map_option_8"
-                        android:textColor="@color/gray_unselected_option"
-
-                        android:textSize="16sp"
-                        android:fontFamily="@font/elicedigitalbaeum" />
-
-
-
                 </LinearLayout>
 
             </HorizontalScrollView>
@@ -215,21 +172,23 @@
                     android:gravity="center_horizontal"
                     android:layout_gravity="center">
                     <TextView
+                        android:id="@+id/map_option_1_extend"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginVertical="5dp"
-                        android:background="@drawable/background_map_option_selected"
+                        android:background="@drawable/background_map_option_expand"
                         android:paddingHorizontal="6dp"
                         android:paddingVertical="3dp"
                         android:textAlignment="center"
 
                         android:text="@string/map_option_1"
-                        android:textColor="@color/main_blue"
+                        android:textColor="@color/black_unselected_option"
 
                         android:textSize="16sp"
                         android:fontFamily="@font/elicedigitalbaeum" />
 
                     <TextView
+                        android:id="@+id/map_option_2_extend"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginVertical="5dp"
@@ -237,12 +196,13 @@
                         android:paddingVertical="3dp"
 
                         android:text="@string/map_option_3"
-                        android:textColor="@color/gray_unselected_option"
+                        android:textColor="@color/black_unselected_option"
 
                         android:textSize="16sp"
                         android:fontFamily="@font/elicedigitalbaeum" />
 
                     <TextView
+                        android:id="@+id/map_option_3_extend"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginVertical="5dp"
@@ -250,12 +210,13 @@
                         android:paddingVertical="3dp"
 
                         android:text="@string/map_option_5"
-                        android:textColor="@color/gray_unselected_option"
+                        android:textColor="@color/black_unselected_option"
 
                         android:textSize="16sp"
                         android:fontFamily="@font/elicedigitalbaeum" />
 
                     <TextView
+                        android:id="@+id/map_option_4_extend"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginVertical="5dp"
@@ -263,10 +224,24 @@
                         android:paddingVertical="3dp"
 
                         android:text="@string/map_option_7"
-                        android:textColor="@color/gray_unselected_option"
+                        android:textColor="@color/black_unselected_option"
 
                         android:textSize="16sp"
                         android:fontFamily="@font/elicedigitalbaeum" />
+
+                    <TextView
+                        android:id="@+id/initializeOption"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginVertical="5dp"
+                        android:paddingHorizontal="6dp"
+                        android:paddingVertical="3dp"
+
+                        android:text="초기화"
+                        android:textColor="#999999"
+                        android:textSize="16sp"
+                        android:fontFamily="@font/elicedigitalbaeum" />
+
 
                 </LinearLayout>
 
@@ -278,6 +253,7 @@
                     android:gravity="center_horizontal"
                     android:layout_gravity="center">
                     <TextView
+                        android:id="@+id/map_option_5_extend"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginVertical="5dp"
@@ -286,12 +262,13 @@
                         android:textAlignment="center"
 
                         android:text="@string/map_option_2"
-                        android:textColor="@color/gray_unselected_option"
+                        android:textColor="@color/black_unselected_option"
 
                         android:textSize="16sp"
                         android:fontFamily="@font/elicedigitalbaeum" />
 
                     <TextView
+                        android:id="@+id/map_option_6_extend"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginVertical="5dp"
@@ -299,12 +276,13 @@
                         android:paddingVertical="3dp"
 
                         android:text="@string/map_option_4"
-                        android:textColor="@color/gray_unselected_option"
+                        android:textColor="@color/black_unselected_option"
 
                         android:textSize="16sp"
                         android:fontFamily="@font/elicedigitalbaeum" />
 
                     <TextView
+                        android:id="@+id/map_option_7_extend"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginVertical="5dp"
@@ -312,12 +290,13 @@
                         android:paddingVertical="3dp"
 
                         android:text="@string/map_option_6"
-                        android:textColor="@color/gray_unselected_option"
+                        android:textColor="@color/black_unselected_option"
 
                         android:textSize="16sp"
                         android:fontFamily="@font/elicedigitalbaeum" />
 
                     <TextView
+                        android:id="@+id/map_option_8_extend"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginVertical="5dp"
@@ -325,8 +304,25 @@
                         android:paddingVertical="3dp"
 
                         android:text="@string/map_option_8"
-                        android:textColor="@color/gray_unselected_option"
+                        android:textColor="@color/black_unselected_option"
 
+                        android:textSize="16sp"
+                        android:fontFamily="@font/elicedigitalbaeum" />
+
+                    <TextView
+                        android:id="@+id/saveOptionAsPreset"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginVertical="5dp"
+                        android:paddingHorizontal="6dp"
+                        android:paddingVertical="3dp"
+                        android:background="@color/gray_unselected_option"
+
+                        android:layout_marginHorizontal="10dp"
+
+                        android:text="저장"
+                        android:textColor="@color/white"
+                        android:gravity="center"
                         android:textSize="16sp"
                         android:fontFamily="@font/elicedigitalbaeum" />
 

@@ -28,7 +28,7 @@
             android:layout_height="wrap_content"
             app:tabIndicatorHeight="3dp"
             app:tabIndicatorColor="@color/black"
-            app:tabTextColor="@color/gray_unselected_option"
+            app:tabTextColor="@color/black_unselected_option"
             app:tabSelectedTextColor="@color/black"
             app:tabRippleColor="@null"
             app:tabGravity="fill"
