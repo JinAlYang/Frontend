@@ -78,7 +78,7 @@
                         android:paddingVertical="3dp"
                         android:text="@string/map_option_1"
 
-                        android:textColor="@color/gray_unselected_option"
+                        android:textColor="@color/black_unselected_option"
                         android:textSize="16sp" />
 
                     <TextView
@@ -90,7 +90,7 @@
                         android:paddingVertical="3dp"
 
                         android:text="@string/map_option_2"
-                        android:textColor="@color/gray_unselected_option"
+                        android:textColor="@color/black_unselected_option"
 
                         android:textSize="16sp"
                         android:fontFamily="@font/elicedigitalbaeum" />
@@ -104,7 +104,7 @@
                         android:paddingVertical="3dp"
 
                         android:text="@string/map_option_3"
-                        android:textColor="@color/gray_unselected_option"
+                        android:textColor="@color/black_unselected_option"
 
                         android:textSize="16sp"
                         android:fontFamily="@font/elicedigitalbaeum" />
@@ -118,7 +118,7 @@
                         android:paddingVertical="3dp"
 
                         android:text="@string/map_option_4"
-                        android:textColor="@color/gray_unselected_option"
+                        android:textColor="@color/black_unselected_option"
 
                         android:textSize="16sp"
                         android:fontFamily="@font/elicedigitalbaeum" />
@@ -132,7 +132,7 @@
                         android:paddingVertical="3dp"
 
                         android:text="@string/map_option_5"
-                        android:textColor="@color/gray_unselected_option"
+                        android:textColor="@color/black_unselected_option"
 
                         android:textSize="16sp"
                         android:fontFamily="@font/elicedigitalbaeum" />
@@ -182,7 +182,7 @@
                         android:textAlignment="center"
 
                         android:text="@string/map_option_1"
-                        android:textColor="@color/gray_unselected_option"
+                        android:textColor="@color/black_unselected_option"
 
                         android:textSize="16sp"
                         android:fontFamily="@font/elicedigitalbaeum" />
@@ -196,7 +196,7 @@
                         android:paddingVertical="3dp"
 
                         android:text="@string/map_option_3"
-                        android:textColor="@color/gray_unselected_option"
+                        android:textColor="@color/black_unselected_option"
 
                         android:textSize="16sp"
                         android:fontFamily="@font/elicedigitalbaeum" />
@@ -210,7 +210,7 @@
                         android:paddingVertical="3dp"
 
                         android:text="@string/map_option_5"
-                        android:textColor="@color/gray_unselected_option"
+                        android:textColor="@color/black_unselected_option"
 
                         android:textSize="16sp"
                         android:fontFamily="@font/elicedigitalbaeum" />
@@ -224,10 +224,24 @@
                         android:paddingVertical="3dp"
 
                         android:text="@string/map_option_7"
-                        android:textColor="@color/gray_unselected_option"
+                        android:textColor="@color/black_unselected_option"
 
                         android:textSize="16sp"
                         android:fontFamily="@font/elicedigitalbaeum" />
+
+                    <TextView
+                        android:id="@+id/initializeOption"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginVertical="5dp"
+                        android:paddingHorizontal="6dp"
+                        android:paddingVertical="3dp"
+
+                        android:text="초기화"
+                        android:textColor="#999999"
+                        android:textSize="16sp"
+                        android:fontFamily="@font/elicedigitalbaeum" />
+
 
                 </LinearLayout>
 
@@ -248,7 +262,7 @@
                         android:textAlignment="center"
 
                         android:text="@string/map_option_2"
-                        android:textColor="@color/gray_unselected_option"
+                        android:textColor="@color/black_unselected_option"
 
                         android:textSize="16sp"
                         android:fontFamily="@font/elicedigitalbaeum" />
@@ -262,7 +276,7 @@
                         android:paddingVertical="3dp"
 
                         android:text="@string/map_option_4"
-                        android:textColor="@color/gray_unselected_option"
+                        android:textColor="@color/black_unselected_option"
 
                         android:textSize="16sp"
                         android:fontFamily="@font/elicedigitalbaeum" />
@@ -276,7 +290,7 @@
                         android:paddingVertical="3dp"
 
                         android:text="@string/map_option_6"
-                        android:textColor="@color/gray_unselected_option"
+                        android:textColor="@color/black_unselected_option"
 
                         android:textSize="16sp"
                         android:fontFamily="@font/elicedigitalbaeum" />
@@ -290,8 +304,25 @@
                         android:paddingVertical="3dp"
 
                         android:text="@string/map_option_8"
-                        android:textColor="@color/gray_unselected_option"
+                        android:textColor="@color/black_unselected_option"
 
+                        android:textSize="16sp"
+                        android:fontFamily="@font/elicedigitalbaeum" />
+
+                    <TextView
+                        android:id="@+id/saveOptionAsPreset"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginVertical="5dp"
+                        android:paddingHorizontal="6dp"
+                        android:paddingVertical="3dp"
+                        android:background="@color/gray_unselected_option"
+
+                        android:layout_marginHorizontal="10dp"
+
+                        android:text="저장"
+                        android:textColor="@color/white"
+                        android:gravity="center"
                         android:textSize="16sp"
                         android:fontFamily="@font/elicedigitalbaeum" />
 

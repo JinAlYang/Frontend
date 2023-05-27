@@ -92,6 +92,7 @@ class MapFragment : Fragment(), OnMapReadyCallback {
                     mapOption1Extend.setBackgroundResource(R.drawable.background_map_option_expand)
                     optionClicked[0] = 0;
                 }
+                checkOptionSelected()
             }
 
             mapOption5.setOnClickListener {
@@ -108,6 +109,7 @@ class MapFragment : Fragment(), OnMapReadyCallback {
                     mapOption5Extend.setBackgroundResource(R.drawable.background_map_option_expand)
                     optionClicked[4] = 0;
                 }
+                checkOptionSelected()
             }
 
             mapOption2.setOnClickListener {
@@ -124,6 +126,7 @@ class MapFragment : Fragment(), OnMapReadyCallback {
                     mapOption2Extend.setBackgroundResource(R.drawable.background_map_option_expand)
                     optionClicked[1] = 0;
                 }
+                checkOptionSelected()
             }
 
             mapOption6.setOnClickListener {
@@ -140,6 +143,7 @@ class MapFragment : Fragment(), OnMapReadyCallback {
                     mapOption6Extend.setBackgroundResource(R.drawable.background_map_option_expand)
                     optionClicked[5] = 0;
                 }
+                checkOptionSelected()
             }
 
             mapOption3.setOnClickListener {
@@ -156,6 +160,7 @@ class MapFragment : Fragment(), OnMapReadyCallback {
                     mapOption3Extend.setBackgroundResource(R.drawable.background_map_option_expand)
                     optionClicked[2] = 0;
                 }
+                checkOptionSelected()
             }
 
             mapOption1Extend.setOnClickListener {
@@ -172,6 +177,7 @@ class MapFragment : Fragment(), OnMapReadyCallback {
                     mapOption1Extend.setBackgroundResource(R.drawable.background_map_option_expand)
                     optionClicked[0] = 0;
                 }
+                checkOptionSelected()
             }
 
             mapOption2Extend.setOnClickListener {
@@ -188,6 +194,7 @@ class MapFragment : Fragment(), OnMapReadyCallback {
                     mapOption2Extend.setBackgroundResource(R.drawable.background_map_option_expand)
                     optionClicked[1] = 0;
                 }
+                checkOptionSelected()
             }
 
             mapOption3Extend.setOnClickListener {
@@ -204,6 +211,7 @@ class MapFragment : Fragment(), OnMapReadyCallback {
                     mapOption3Extend.setBackgroundResource(R.drawable.background_map_option_expand)
                     optionClicked[2] = 0;
                 }
+                checkOptionSelected()
             }
 
             mapOption4Extend.setOnClickListener {
@@ -216,6 +224,7 @@ class MapFragment : Fragment(), OnMapReadyCallback {
                     mapOption4Extend.setBackgroundResource(R.drawable.background_map_option_expand)
                     optionClicked[3] = 0;
                 }
+                checkOptionSelected()
             }
 
             mapOption5Extend.setOnClickListener {
@@ -232,6 +241,7 @@ class MapFragment : Fragment(), OnMapReadyCallback {
                     mapOption5Extend.setBackgroundResource(R.drawable.background_map_option_expand)
                     optionClicked[4] = 0;
                 }
+                checkOptionSelected()
             }
 
             mapOption6Extend.setOnClickListener {
@@ -248,6 +258,7 @@ class MapFragment : Fragment(), OnMapReadyCallback {
                     mapOption6Extend.setBackgroundResource(R.drawable.background_map_option_expand)
                     optionClicked[5] = 0;
                 }
+                checkOptionSelected()
             }
 
             mapOption7Extend.setOnClickListener {
@@ -260,6 +271,7 @@ class MapFragment : Fragment(), OnMapReadyCallback {
                     mapOption7Extend.setBackgroundResource(R.drawable.background_map_option_expand)
                     optionClicked[6] = 0;
                 }
+                checkOptionSelected()
             }
 
             mapOption8Extend.setOnClickListener {
@@ -272,8 +284,35 @@ class MapFragment : Fragment(), OnMapReadyCallback {
                     mapOption8Extend.setBackgroundResource(R.drawable.background_map_option_expand)
                     optionClicked[7] = 0;
                 }
+                checkOptionSelected()
             }
 
+            initializeOption.setOnClickListener {
+
+            }
+
+            saveOptionAsPreset.setOnClickListener {
+
+            }
+        }
+    }
+
+    private fun checkOptionSelected(){
+        binding.apply {
+            var optionSelected = false
+            for (idx in optionClicked) {
+                if (idx == 1) {
+                    optionSelected = true
+                    break;
+                }
+            }
+
+            if (optionSelected == true) {
+                saveOptionAsPreset.setBackgroundResource(R.color.main_blue)
+
+            } else {
+                saveOptionAsPreset.setBackgroundResource(R.color.gray_unselected_option)
+            }
         }
     }
 
