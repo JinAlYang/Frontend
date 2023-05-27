@@ -8,6 +8,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
+import android.widget.Toast
 import androidx.annotation.UiThread
 import androidx.fragment.app.Fragment
 import com.example.dongsan2mong.databinding.FragmentMapBinding
@@ -20,6 +21,7 @@ class MapFragment : Fragment(), OnMapReadyCallback {
     lateinit var drawerCloseImageView: ImageView
     lateinit var nMap: NaverMap
     var optionClicked = Array<Int>(8, {0})
+    var optionSelected = false
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -288,7 +290,11 @@ class MapFragment : Fragment(), OnMapReadyCallback {
             }
 
             initializeOption.setOnClickListener {
-
+                if (optionSelected == false) {
+                    Toast.makeText(activity, "선택된 옵션이 없습니다.", Toast.LENGTH_SHORT).show()
+                } else {
+                    initializeOption()
+                }
             }
 
             saveOptionAsPreset.setOnClickListener {
@@ -298,8 +304,8 @@ class MapFragment : Fragment(), OnMapReadyCallback {
     }
 
     private fun checkOptionSelected(){
+        optionSelected = false
         binding.apply {
-            var optionSelected = false
             for (idx in optionClicked) {
                 if (idx == 1) {
                     optionSelected = true
@@ -316,6 +322,40 @@ class MapFragment : Fragment(), OnMapReadyCallback {
         }
     }
 
+    private fun initializeOption() {
+        for (i: Int in 0 until optionClicked.size) {
+            optionClicked[i] = 0
+        }
+        binding.apply {
+            mapOption1.setTextColor(Color.parseColor("#000000"))
+            mapOption1.setBackgroundResource(R.drawable.background_map_option_expand)
+            mapOption5.setTextColor(Color.parseColor("#000000"))
+            mapOption5.setBackgroundResource(R.drawable.background_map_option_expand)
+            mapOption2.setTextColor(Color.parseColor("#000000"))
+            mapOption2.setBackgroundResource(R.drawable.background_map_option_expand)
+            mapOption6.setTextColor(Color.parseColor("#000000"))
+            mapOption6.setBackgroundResource(R.drawable.background_map_option_expand)
+            mapOption3.setTextColor(Color.parseColor("#000000"))
+            mapOption3.setBackgroundResource(R.drawable.background_map_option_expand)
+
+            mapOption1Extend.setTextColor(Color.parseColor("#000000"))
+            mapOption1Extend.setBackgroundResource(R.drawable.background_map_option_expand)
+            mapOption2Extend.setTextColor(Color.parseColor("#000000"))
+            mapOption2Extend.setBackgroundResource(R.drawable.background_map_option_expand)
+            mapOption3Extend.setTextColor(Color.parseColor("#000000"))
+            mapOption3Extend.setBackgroundResource(R.drawable.background_map_option_expand)
+            mapOption4Extend.setTextColor(Color.parseColor("#000000"))
+            mapOption4Extend.setBackgroundResource(R.drawable.background_map_option_expand)
+            mapOption5Extend.setTextColor(Color.parseColor("#000000"))
+            mapOption5Extend.setBackgroundResource(R.drawable.background_map_option_expand)
+            mapOption6Extend.setTextColor(Color.parseColor("#000000"))
+            mapOption6Extend.setBackgroundResource(R.drawable.background_map_option_expand)
+            mapOption7Extend.setTextColor(Color.parseColor("#000000"))
+            mapOption7Extend.setBackgroundResource(R.drawable.background_map_option_expand)
+            mapOption8Extend.setTextColor(Color.parseColor("#000000"))
+            mapOption8Extend.setBackgroundResource(R.drawable.background_map_option_expand)
+        }
+    }
     @UiThread
     // 다음은 OnMapReadyCallback을 등록해 NaverMap 객체를 얻어오는 예제입니다.
     /*
