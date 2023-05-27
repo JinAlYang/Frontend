@@ -28,7 +28,7 @@ class CallfreesetFragment: Fragment() {
 
 
     fun initRecyclerView() {
-        binding.recyclerViewFreeset.layoutManager = LinearLayoutManager(this,
+        binding.recyclerViewFreeset.layoutManager = LinearLayoutManager(requireContext(),
             LinearLayoutManager.VERTICAL, false)
         adapter = FreesetDataAdapter(data, selected)
         adapter.itemClickListener = object :FreesetDataAdapter.OnItemClickListener {
@@ -57,7 +57,4 @@ class CallfreesetFragment: Fragment() {
         val itemTouchHelper = ItemTouchHelper(simpleCallback)
         itemTouchHelper.attachToRecyclerView(binding.recyclerViewFreeset)
     }
-}
-
-
 }
