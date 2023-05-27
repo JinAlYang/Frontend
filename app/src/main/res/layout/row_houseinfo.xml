@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="horizontal">
+
+    <ImageView
+        android:id="@+id/houseImg"
+        android:layout_width="96dp"
+        android:layout_height="96dp"
+        android:layout_margin="17dp"/>
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="24dp"
+            android:layout_marginTop="17dp"
+            android:layout_marginBottom="4dp"
+            android:text="전세 5500"
+            android:textColor="@color/black_unselected_option"
+            android:textSize="16sp"
+            android:fontFamily="@font/elicedigitalbaeum"/>
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="20dp"
+            android:layout_marginBottom="4dp"
+            android:text="23.14m^2 · 반지하"
+            android:textColor="@color/black_unselected_option"
+            android:textSize="16sp"
+            android:fontFamily="@font/elicedigitalbaeum"/>
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="20dp"
+            android:layout_marginBottom="4dp"
+            android:text="광진구 화양동"
+            android:textColor="@color/black_unselected_option"
+            android:textSize="16sp"
+            android:fontFamily="@font/elicedigitalbaeum"/>
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="20dp"
+            android:text="오픈형 원룸"
+            android:layout_marginBottom="17dp"
+            android:textColor="@color/black_unselected_option"
+            android:textSize="16sp"
+            android:fontFamily="@font/elicedigitalbaeum"/>
+
+    </LinearLayout>
+
+</LinearLayout>
