@@ -1,9 +1,9 @@
 package com.example.dongsan2mong
 
 data class FreesetData
-    (var region: String, var typeOfSale: String, var numOfRooms: Int,
-    var amenities: String, var buildingType: String, var roomArea: Int,
-    var availableDate: String, var options: String, var freesetTitle: String) {
+    (val region: String = "지역", var typeOfSale: String = "매매유형", var numOfRooms: Int = 0,
+    var amenities: String = "편의시설", var buildingType: String = "건물유형", var roomArea: Int = 0,
+    var availableDate: String = "입주가능일시", var options: String = "옵션", var freesetTitle: String = "") {
 
 
 }

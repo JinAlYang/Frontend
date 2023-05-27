@@ -9,7 +9,7 @@
         android:layout_height="wrap_content"
         android:layout_gravity="center"
         android:src="@drawable/text_nofreeset"
-        android:visibility="visible" />
+        android:visibility="gone" />
 
 
     <androidx.recyclerview.widget.RecyclerView

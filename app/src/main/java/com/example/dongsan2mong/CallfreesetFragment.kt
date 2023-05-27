@@ -23,9 +23,28 @@ class CallfreesetFragment: Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_callfreeset, container, false)
+        binding = FragmentCallfreesetBinding.inflate(inflater, container, false)
+        initRecyclerView()
+        initData()
+        return binding.root
     }
 
+    fun initData() {
+        data.add(FreesetData(freesetTitle = "슉슈슈슈슉슈슈슈슈슈슉"))
+        data.add(FreesetData(freesetTitle = "오의1각성2지배배마"))
+        data.add(FreesetData(freesetTitle = "배틀마스터는집짓는비버야"))
+        data.add(FreesetData(freesetTitle = "쿠쿠루삥뽕쿠루쿠루쿠삥뽕"))
+        data.add(FreesetData(freesetTitle = "전혀 성장하지 않았구나 쿠크셰이튼!"))
+        data.add(FreesetData(freesetTitle = "짓이겨주마 아브렐슈드!"))
+        data.add(FreesetData(freesetTitle = "끝이야 일리아칸!"))
+        data.add(FreesetData(freesetTitle = "이게 바로 레기오로스의 수염이라고~"))
+        data.add(FreesetData(freesetTitle = "용광로를 지펴라~ 망치를 꺼내라~"))
+        data.add(FreesetData(freesetTitle = "낡고 허름해 보이지만"))
+        data.add(FreesetData(freesetTitle = "우리의 혼이 쌓여있다고~"))
+        selected.add(false)
+
+        adapter.notifyDataSetChanged()
+    }
 
     fun initRecyclerView() {
         binding.recyclerViewFreeset.layoutManager = LinearLayoutManager(requireContext(),
