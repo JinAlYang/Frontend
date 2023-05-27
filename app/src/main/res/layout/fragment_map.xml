@@ -82,7 +82,7 @@
                         android:textSize="16sp" />
 
                     <TextView
-                        android:id="@+id/map_option_5"
+                        android:id="@+id/map_option_2"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginHorizontal="7dp"
@@ -96,7 +96,7 @@
                         android:fontFamily="@font/elicedigitalbaeum" />
 
                     <TextView
-                        android:id="@+id/map_option_2"
+                        android:id="@+id/map_option_3"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginHorizontal="7dp"
@@ -110,7 +110,7 @@
                         android:fontFamily="@font/elicedigitalbaeum" />
 
                     <TextView
-                        android:id="@+id/map_option_6"
+                        android:id="@+id/map_option_4"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginHorizontal="7dp"
@@ -124,7 +124,7 @@
                         android:fontFamily="@font/elicedigitalbaeum" />
 
                     <TextView
-                        android:id="@+id/map_option_3"
+                        android:id="@+id/map_option_5"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginHorizontal="7dp"
@@ -136,6 +136,53 @@
 
                         android:textSize="16sp"
                         android:fontFamily="@font/elicedigitalbaeum" />
+
+                    <TextView
+                        android:id="@+id/map_option_6"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginHorizontal="7dp"
+                        android:background="@drawable/background_map_option_expand"
+                        android:fontFamily="@font/elicedigitalbaeum"
+                        android:paddingHorizontal="6dp"
+
+                        android:paddingVertical="3dp"
+                        android:text="@string/map_option_6"
+
+                        android:textColor="@color/black_unselected_option"
+                        android:textSize="16sp" />
+
+                    <TextView
+                        android:id="@+id/map_option_7"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginHorizontal="7dp"
+                        android:background="@drawable/background_map_option_expand"
+                        android:fontFamily="@font/elicedigitalbaeum"
+                        android:paddingHorizontal="6dp"
+
+                        android:paddingVertical="3dp"
+                        android:text="@string/map_option_7"
+
+                        android:textColor="@color/black_unselected_option"
+                        android:textSize="16sp" />
+
+
+                    <TextView
+                        android:id="@+id/map_option_8"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginHorizontal="7dp"
+                        android:background="@drawable/background_map_option_expand"
+                        android:fontFamily="@font/elicedigitalbaeum"
+                        android:paddingHorizontal="6dp"
+
+                        android:paddingVertical="3dp"
+                        android:text="@string/map_option_8"
+
+                        android:textColor="@color/black_unselected_option"
+                        android:textSize="16sp" />
+
                 </LinearLayout>
 
             </HorizontalScrollView>
