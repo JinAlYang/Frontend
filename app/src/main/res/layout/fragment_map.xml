@@ -73,20 +73,22 @@
                         android:text="" />
 
                     <TextView
+                        android:id="@+id/map_option_1"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginHorizontal="7dp"
                         android:background="@drawable/background_map_option_expand"
+                        android:fontFamily="@font/elicedigitalbaeum"
                         android:paddingHorizontal="6dp"
+
                         android:paddingVertical="3dp"
-
                         android:text="@string/map_option_1"
-                        android:textColor="@color/gray_unselected_option"
 
-                        android:textSize="16sp"
-                        android:fontFamily="@font/elicedigitalbaeum" />
+                        android:textColor="@color/gray_unselected_option"
+                        android:textSize="16sp" />
 
                     <TextView
+                        android:id="@+id/map_option_5"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginHorizontal="7dp"
@@ -100,6 +102,7 @@
                         android:fontFamily="@font/elicedigitalbaeum" />
 
                     <TextView
+                        android:id="@+id/map_option_2"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginHorizontal="7dp"
@@ -113,6 +116,7 @@
                         android:fontFamily="@font/elicedigitalbaeum" />
 
                     <TextView
+                        android:id="@+id/map_option_6"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginHorizontal="7dp"
@@ -126,6 +130,7 @@
                         android:fontFamily="@font/elicedigitalbaeum" />
 
                     <TextView
+                        android:id="@+id/map_option_3"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginHorizontal="7dp"
@@ -173,7 +178,7 @@
                     android:gravity="center_horizontal"
                     android:layout_gravity="center">
                     <TextView
-                        android:id="@+id/map_option_1"
+                        android:id="@+id/map_option_1_extend"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginVertical="5dp"
@@ -189,7 +194,7 @@
                         android:fontFamily="@font/elicedigitalbaeum" />
 
                     <TextView
-                        android:id="@+id/map_option_2"
+                        android:id="@+id/map_option_2_extend"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginVertical="5dp"
@@ -203,7 +208,7 @@
                         android:fontFamily="@font/elicedigitalbaeum" />
 
                     <TextView
-                        android:id="@+id/map_option_3"
+                        android:id="@+id/map_option_3_extend"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginVertical="5dp"
@@ -217,7 +222,7 @@
                         android:fontFamily="@font/elicedigitalbaeum" />
 
                     <TextView
-                        android:id="@+id/map_option_4"
+                        android:id="@+id/map_option_4_extend"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginVertical="5dp"
@@ -240,7 +245,7 @@
                     android:gravity="center_horizontal"
                     android:layout_gravity="center">
                     <TextView
-                        android:id="@+id/map_option_5"
+                        android:id="@+id/map_option_5_extend"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginVertical="5dp"
@@ -255,7 +260,7 @@
                         android:fontFamily="@font/elicedigitalbaeum" />
 
                     <TextView
-                        android:id="@+id/map_option_6"
+                        android:id="@+id/map_option_6_extend"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginVertical="5dp"
@@ -269,7 +274,7 @@
                         android:fontFamily="@font/elicedigitalbaeum" />
 
                     <TextView
-                        android:id="@+id/map_option_7"
+                        android:id="@+id/map_option_7_extend"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginVertical="5dp"
@@ -283,7 +288,7 @@
                         android:fontFamily="@font/elicedigitalbaeum" />
 
                     <TextView
-                        android:id="@+id/map_option_8"
+                        android:id="@+id/map_option_8_extend"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginVertical="5dp"
