@@ -7,8 +7,13 @@ import com.example.dongsan2mong.databinding.RowFreesetBinding
 
 class FreesetDataAdapter (val items:ArrayList<FreesetData>, val selected:ArrayList<Boolean>)
     : RecyclerView.Adapter<FreesetDataAdapter.ViewHolder>() {
+    var onApplyClickListener: OnApplyClickListener? = null
     interface OnItemClickListener {
         fun OnItemClick(data: FreesetData, binding: RowFreesetBinding, position: Int)
+    }
+
+    interface OnApplyClickListener {
+        fun onApplyClick(data: FreesetData)
     }
 
     var itemClickListener: OnItemClickListener? = null
@@ -21,6 +26,13 @@ class FreesetDataAdapter (val items:ArrayList<FreesetData>, val selected:ArrayLi
                 else if (selected[adapterPosition] == true)
                     selected[adapterPosition] = false
                 itemClickListener?.OnItemClick(items[adapterPosition], binding, adapterPosition)
+            }
+
+            binding.freesetApply.setOnClickListener {
+                val clickedPosition = adapterPosition
+                val clickedData = items[clickedPosition]
+
+                onApplyClickListener?.onApplyClick(clickedData)
             }
         }
     }

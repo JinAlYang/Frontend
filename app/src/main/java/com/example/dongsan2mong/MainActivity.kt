@@ -47,7 +47,7 @@ class MainActivity : AppCompatActivity() {
         binding.drawerLayout.setDrawerLockMode(LOCK_MODE_LOCKED_CLOSED)
     }
 
-    private fun changeFragment(fragment: Fragment) {
+    fun changeFragment(fragment: Fragment) {
         supportFragmentManager
             .beginTransaction()
             .replace(binding.frameLayout.id, fragment)

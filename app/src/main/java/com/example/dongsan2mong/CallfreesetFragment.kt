@@ -25,6 +25,17 @@ class CallfreesetFragment: Fragment() {
         // Inflate the layout for this fragment
         binding = FragmentCallfreesetBinding.inflate(inflater, container, false)
         initRecyclerView()
+        adapter.onApplyClickListener = object : FreesetDataAdapter.OnApplyClickListener {
+            override fun onApplyClick(data: FreesetData) {
+                val mapFragment = MapFragment()
+                val bundle = Bundle()
+                bundle.putParcelable("freesetData", data)
+                mapFragment.arguments = bundle
+
+                val mainActivity = activity as? MainActivity
+                mainActivity?.changeFragment(MapFragment())
+            }
+        }
         initData()
         return binding.root
     }
@@ -41,7 +52,10 @@ class CallfreesetFragment: Fragment() {
         data.add(FreesetData(freesetTitle = "용광로를 지펴라~ 망치를 꺼내라~"))
         data.add(FreesetData(freesetTitle = "낡고 허름해 보이지만"))
         data.add(FreesetData(freesetTitle = "우리의 혼이 쌓여있다고~"))
-        selected.add(false)
+
+        for (i: Int in 0 until data.size) {
+            selected.add(false)
+        }
 
         adapter.notifyDataSetChanged()
     }
