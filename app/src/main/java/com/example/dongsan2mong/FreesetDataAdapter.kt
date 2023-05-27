@@ -50,6 +50,22 @@ class FreesetDataAdapter (val items:ArrayList<FreesetData>, val selected:ArrayLi
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         holder.binding.freesetTitle.text = items[position].freesetTitle
+        holder.binding.freesetApply.setOnClickListener {
+            val currentItem = items[position]
+            val currentBinding = holder.binding
+            itemClickListener?.OnItemClick(currentItem, currentBinding, position)
+            // 클릭 이벤트 처리 코드 작성
+        }
+
+        // freesetDelete ImageView 클릭 이벤트 처리
+        holder.binding.freesetDelete.setOnClickListener {
+            // 클릭한 아이템의 위치(position) 가져오기
+            val clickedPosition = holder.adapterPosition
+
+            // 해당 아이템 삭제
+            items.removeAt(clickedPosition)
+            notifyItemRemoved(clickedPosition)
+        }
     }
 
     fun updateItemAtPosition(position: Int, data: FreesetData) {
