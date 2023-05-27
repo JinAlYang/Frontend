@@ -6,12 +6,12 @@
     <string name="menu_title_planner">planner</string>
 
     <string name="map_option_1">지역</string>
-    <string name="map_option_2">건물유형</string>
-    <string name="map_option_3">매물유형</string>
-    <string name="map_option_4">평형</string>
-    <string name="map_option_5">방 갯수</string>
-    <string name="map_option_6">입주가능일시</string>
-    <string name="map_option_7">편의시설</string>
+    <string name="map_option_2">매매유형</string>
+    <string name="map_option_3">방 갯수</string>
+    <string name="map_option_4">편의시설</string>
+    <string name="map_option_5">건물유형</string>
+    <string name="map_option_6">평형</string>
+    <string name="map_option_7">입주가능일시</string>
     <string name="map_option_8">옵션</string>
 
     <string name="signup_title">회원가입</string>
