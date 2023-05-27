@@ -1,0 +1,315 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:paddingHorizontal="40dp"
+    tools:context=".SignupActivity">
+
+    <ImageView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:src="@drawable/logo"
+        android:layout_marginTop="25dp" />
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/signup_title"
+        android:fontFamily="@font/elicedigitalbaeum"
+        android:textSize="18sp"
+        android:layout_marginTop="20dp"
+        android:textColor="@color/black"/>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="30dp"
+        android:gravity="center_vertical"
+        android:orientation="horizontal">
+        <ImageView
+            android:id="@+id/loginWhereIcon"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/icon_login_kakaotalk" />
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:layout_marginLeft="20dp"
+            android:orientation="vertical">
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="진알양"
+                android:textSize="14sp"
+                android:fontFamily="@font/elicedigitalbaeum"
+                android:textColor="@color/black"/>
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="1" />
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="alchonjoa@konkuk.ac.kr"
+                android:textSize="14sp"
+                android:fontFamily="@font/elicedigitalbaeum"
+                android:textColor="@color/black"/>
+        </LinearLayout>
+
+
+    </LinearLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_marginVertical="20dp"
+        android:background="@color/gray_2" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/elicedigitalbaeum"
+            android:textColor="@color/main_blue"
+            android:text="필수 입력" />
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="15dp"
+            android:gravity="center_vertical"
+            android:orientation="horizontal">
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginVertical="5dp"
+                android:text="성별"
+                android:fontFamily="@font/elicedigitalbaeum"
+                android:textColor="@color/black" />
+
+            <RadioGroup
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="horizontal"
+                android:layout_marginLeft="40dp">
+
+                <RadioButton
+                    android:id="@+id/maleBtn"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="남성"
+                    android:textSize="14sp"
+                    android:layout_marginRight="10dp"
+                    android:checked="true"
+                    android:theme="@style/CustomRadioButton"
+                    android:fontFamily="@font/elicedigitalbaeum"/>
+
+                <RadioButton
+                    android:id="@+id/femaleBtn"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="여성"
+                    android:textSize="14sp"
+                    android:theme="@style/CustomRadioButton"
+                    android:fontFamily="@font/elicedigitalbaeum"/>
+            </RadioGroup>
+
+        </LinearLayout>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="15dp"
+            android:gravity="center_vertical"
+            android:orientation="horizontal">
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginVertical="5dp"
+                android:text="출생연도"
+                android:fontFamily="@font/elicedigitalbaeum"
+                android:textColor="@color/black" />
+            <Spinner
+                android:id="@+id/yearSpinner"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_gravity="end"
+                android:layout_marginLeft="20dp"
+                android:popupBackground="@drawable/spinner_popup_bg"
+                />
+        </LinearLayout>
+    </LinearLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_marginVertical="20dp"
+        android:background="@color/gray_2" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/elicedigitalbaeum"
+            android:textColor="@color/gray_3"
+            android:text="추가 정보" />
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="15dp"
+            android:gravity="center_vertical"
+            android:orientation="horizontal">
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginVertical="5dp"
+                android:text="월 실 수령액"
+                android:fontFamily="@font/elicedigitalbaeum"
+                android:textColor="@color/black" />
+            <EditText
+                android:layout_width="80dp"
+                android:layout_height="match_parent"
+                android:layout_marginLeft="10dp"
+                android:singleLine="true"
+                android:lines="1"
+                android:textAlignment="textEnd"
+                android:maxLength="6"
+                android:inputType="number"
+                android:outlineSpotShadowColor="@color/main_blue"
+                android:outlineAmbientShadowColor="@color/main_blue"
+                android:textSize="14dp"
+                android:background="@null"
+                android:fontFamily="@font/elicedigitalbaeum"/>
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="5dp"
+                android:text="만원"
+                android:fontFamily="@font/elicedigitalbaeum"/>
+        </LinearLayout>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="15dp"
+            android:gravity="center_vertical"
+            android:orientation="horizontal">
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginVertical="5dp"
+                android:text="생활비"
+                android:fontFamily="@font/elicedigitalbaeum"
+                android:textColor="@color/black" />
+            <EditText
+                android:layout_width="80dp"
+                android:layout_height="match_parent"
+                android:layout_marginLeft="42dp"
+                android:singleLine="true"
+                android:lines="1"
+                android:textAlignment="textEnd"
+                android:maxLength="6"
+                android:inputType="number"
+                android:outlineSpotShadowColor="@color/main_blue"
+                android:outlineAmbientShadowColor="@color/main_blue"
+                android:textSize="14dp"
+                android:background="@null"
+                android:fontFamily="@font/elicedigitalbaeum"/>
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="5dp"
+                android:text="만원"
+                android:fontFamily="@font/elicedigitalbaeum"/>
+        </LinearLayout>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="15dp"
+            android:gravity="center_vertical"
+            android:orientation="horizontal">
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginVertical="5dp"
+                android:text="저축액"
+                android:fontFamily="@font/elicedigitalbaeum"
+                android:textColor="@color/black" />
+            <EditText
+                android:layout_width="80dp"
+                android:layout_height="match_parent"
+                android:layout_marginLeft="42dp"
+                android:singleLine="true"
+                android:lines="1"
+                android:textAlignment="textEnd"
+                android:maxLength="8"
+                android:inputType="number"
+                android:outlineSpotShadowColor="@color/main_blue"
+                android:outlineAmbientShadowColor="@color/main_blue"
+                android:textSize="14dp"
+                android:background="@null"
+                android:fontFamily="@font/elicedigitalbaeum"/>
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="5dp"
+                android:text="만원"
+                android:fontFamily="@font/elicedigitalbaeum"/>
+        </LinearLayout>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="15dp"
+            android:gravity="center_vertical"
+            android:orientation="horizontal">
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginVertical="5dp"
+                android:text="대출이자"
+                android:fontFamily="@font/elicedigitalbaeum"
+                android:textColor="@color/black" />
+            <EditText
+                android:layout_width="80dp"
+                android:layout_height="match_parent"
+                android:layout_marginLeft="29dp"
+                android:singleLine="true"
+                android:lines="1"
+                android:textAlignment="textEnd"
+                android:maxLength="6"
+                android:inputType="number"
+                android:outlineSpotShadowColor="@color/main_blue"
+                android:outlineAmbientShadowColor="@color/main_blue"
+                android:textSize="14dp"
+                android:background="@null"
+                android:fontFamily="@font/elicedigitalbaeum"/>
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="5dp"
+                android:text="만원"
+                android:fontFamily="@font/elicedigitalbaeum"/>
+        </LinearLayout>
+    </LinearLayout>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="5dp">
+        <View
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1" />
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/signup_check" />
+    </LinearLayout>
+
+</LinearLayout>

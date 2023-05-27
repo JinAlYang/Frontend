@@ -9,6 +9,8 @@
     <color name="white">#FFFFFFFF</color>
     <color name="main_blue">#FF5544CC</color>
     <color name="gray_unselected_option">#FF000000</color>
+    <color name="gray_2">#FFBBBBBB</color>
+    <color name="gray_3">#FF999999</color>
 <!--    <color name="gray_unselected_option">#FF999999</color>-->
 <!--    <color name="white_transparent">#EEFFFFFF</color>-->
 </resources>

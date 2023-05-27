@@ -28,6 +28,7 @@
 
 
     <Button
+        android:id="@+id/loginKakaoBtn"
         android:layout_width="match_parent"
         android:layout_height="56dp"
         android:layout_gravity="center"
@@ -38,9 +39,10 @@
         android:text="카카오톡으로 시작"
         android:textColor="#3A1D1D"
         android:textSize="14sp"
-        android:textStyle="bold" />
+        android:fontFamily="@font/elicedigitalbaeum" />
 
     <Button
+        android:id="@+id/loginNaverBtn"
         android:layout_width="match_parent"
         android:layout_height="56dp"
         android:layout_gravity="center"
@@ -50,9 +52,10 @@
         android:backgroundTint="#1EC800"
         android:text="네이버로 시작"
         android:textSize="14sp"
-        android:textStyle="bold" />
+        android:fontFamily="@font/elicedigitalbaeum" />
 
     <ImageView
+        android:id="@+id/loginNullBtn"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
