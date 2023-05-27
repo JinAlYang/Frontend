@@ -1,6 +1,8 @@
 package com.example.dongsan2mong
 
+import android.annotation.SuppressLint
 import android.content.Intent
+import android.graphics.Color
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -17,6 +19,7 @@ class MapFragment : Fragment(), OnMapReadyCallback {
     lateinit var drawerOpenImageView: ImageView
     lateinit var drawerCloseImageView: ImageView
     lateinit var nMap: NaverMap
+    var optionClicked = Array<Int>(8, {0})
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -56,6 +59,7 @@ class MapFragment : Fragment(), OnMapReadyCallback {
         }
     }
 
+    @SuppressLint("ResourceAsColor")
     private fun init() {
         binding.apply {
             // 지도 옵션 오른쪽 화살표 버튼 클릭 시 펼치기
@@ -73,6 +77,102 @@ class MapFragment : Fragment(), OnMapReadyCallback {
                 var i = Intent(activity, SearchActivity::class.java)
                 startActivity(i)
             }
+            mapOption1.setOnClickListener {
+                if (optionClicked[0] == 0) {
+                    mapOption1.setTextColor(R.color.main_blue)
+                    mapOption1.setBackgroundResource(R.drawable.background_map_option_selected)
+                    optionClicked[0] = 1;
+                } else {
+                    mapOption1.setTextColor(Color.parseColor("#000000"))
+                    mapOption1.setBackgroundResource(R.drawable.background_map_option_expand)
+                    optionClicked[0] = 0;
+                }
+            }
+
+            mapOption2.setOnClickListener {
+                if (optionClicked[1] == 0) {
+                    mapOption2.setTextColor(R.color.main_blue)
+                    mapOption2.setBackgroundResource(R.drawable.background_map_option_selected)
+                    optionClicked[1] = 1;
+                } else {
+                    mapOption2.setTextColor(Color.parseColor("#000000"))
+                    mapOption2.setBackgroundResource(R.drawable.background_map_option_expand)
+                    optionClicked[1] = 0;
+                }
+            }
+
+            mapOption3.setOnClickListener {
+                if (optionClicked[2] == 0) {
+                    mapOption3.setTextColor(R.color.main_blue)
+                    mapOption3.setBackgroundResource(R.drawable.background_map_option_selected)
+                    optionClicked[2] = 1;
+                } else {
+                    mapOption3.setTextColor(Color.parseColor("#000000"))
+                    mapOption3.setBackgroundResource(R.drawable.background_map_option_expand)
+                    optionClicked[2] = 0;
+                }
+            }
+
+            mapOption4.setOnClickListener {
+                if (optionClicked[3] == 0) {
+                    mapOption4.setTextColor(R.color.main_blue)
+                    mapOption4.setBackgroundResource(R.drawable.background_map_option_selected)
+                    optionClicked[3] = 1;
+                } else {
+                    mapOption4.setTextColor(Color.parseColor("#000000"))
+                    mapOption4.setBackgroundResource(R.drawable.background_map_option_expand)
+                    optionClicked[3] = 0;
+                }
+            }
+
+            mapOption5.setOnClickListener {
+                if (optionClicked[4] == 0) {
+                    mapOption5.setTextColor(R.color.main_blue)
+                    mapOption5.setBackgroundResource(R.drawable.background_map_option_selected)
+                    optionClicked[4] = 1;
+                } else {
+                    mapOption5.setTextColor(Color.parseColor("#000000"))
+                    mapOption5.setBackgroundResource(R.drawable.background_map_option_expand)
+                    optionClicked[4] = 0;
+                }
+            }
+
+            mapOption6.setOnClickListener {
+                if (optionClicked[5] == 0) {
+                    mapOption6.setTextColor(R.color.main_blue)
+                    mapOption6.setBackgroundResource(R.drawable.background_map_option_selected)
+                    optionClicked[5] = 1;
+                } else {
+                    mapOption6.setTextColor(Color.parseColor("#000000"))
+                    mapOption6.setBackgroundResource(R.drawable.background_map_option_expand)
+                    optionClicked[5] = 0;
+                }
+            }
+
+            mapOption7.setOnClickListener {
+                if (optionClicked[6] == 0) {
+                    mapOption7.setTextColor(R.color.main_blue)
+                    mapOption7.setBackgroundResource(R.drawable.background_map_option_selected)
+                    optionClicked[6] = 1;
+                } else {
+                    mapOption7.setTextColor(Color.parseColor("#000000"))
+                    mapOption7.setBackgroundResource(R.drawable.background_map_option_expand)
+                    optionClicked[6] = 0;
+                }
+            }
+
+            mapOption8.setOnClickListener {
+                if (optionClicked[7] == 0) {
+                    mapOption8.setTextColor(R.color.main_blue)
+                    mapOption8.setBackgroundResource(R.drawable.background_map_option_selected)
+                    optionClicked[7] = 1;
+                } else {
+                    mapOption8.setTextColor(Color.parseColor("#000000"))
+                    mapOption8.setBackgroundResource(R.drawable.background_map_option_expand)
+                    optionClicked[7] = 0;
+                }
+            }
+
         }
     }
 
