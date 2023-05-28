@@ -11,6 +11,7 @@ import android.widget.ImageView
 import android.widget.Toast
 import androidx.annotation.UiThread
 import androidx.fragment.app.Fragment
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.dongsan2mong.databinding.FragmentMapBinding
 import com.naver.maps.geometry.LatLng
 import com.naver.maps.map.*
@@ -22,6 +23,8 @@ class MapFragment : Fragment(), OnMapReadyCallback {
     lateinit var nMap: NaverMap
     var optionClicked = Array<Int>(8, {0})
     var optionSelected = false
+    val areaSelected: ArrayList<String> = ArrayList()
+    lateinit var areaSelectedAdapter: MapSelectedAreaAdapter
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -64,6 +67,16 @@ class MapFragment : Fragment(), OnMapReadyCallback {
     @SuppressLint("ResourceAsColor")
     private fun init() {
         binding.apply {
+            // recyclerView 연결
+            mapAreaRecyclerView.layoutManager = LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
+            areaSelectedAdapter = MapSelectedAreaAdapter(areaSelected)
+            areaSelectedAdapter.itemClickListener = object : MapSelectedAreaAdapter.OnItemClickListener {
+                override fun OnItemClick(position: Int) {
+                    areaSelectedAdapter.removeItem(position)
+                    areaSelectedAdapter.notifyDataSetChanged()
+                }
+            }
+
             // 지도 옵션 오른쪽 화살표 버튼 클릭 시 펼치기
             mapOpenOptionBtn.setOnClickListener {
                 mapOptionLayout.visibility = View.VISIBLE
@@ -86,15 +99,20 @@ class MapFragment : Fragment(), OnMapReadyCallback {
                     mapOption1.setBackgroundResource(R.drawable.background_map_option_selected)
                     mapOption1Extend.setTextColor(R.color.main_blue)
                     mapOption1Extend.setBackgroundResource(R.drawable.background_map_option_selected)
+                    mapOption1Page.visibility = View.VISIBLE
                     optionClicked[0] = 1;
                 } else {
                     mapOption1.setTextColor(Color.parseColor("#000000"))
                     mapOption1.setBackgroundResource(R.drawable.background_map_option_expand)
                     mapOption1Extend.setTextColor(Color.parseColor("#000000"))
                     mapOption1Extend.setBackgroundResource(R.drawable.background_map_option_expand)
+                    mapOption1Page.visibility = View.GONE
                     optionClicked[0] = 0;
                 }
                 checkOptionSelected()
+
+                // 미니 창 열기
+
             }
 
             mapOption5.setOnClickListener {
