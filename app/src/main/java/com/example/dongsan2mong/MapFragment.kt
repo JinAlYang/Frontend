@@ -141,14 +141,28 @@ class MapFragment : Fragment(), OnMapReadyCallback {
                         else -> deeperArr = resources.getStringArray(R.array.spinner_region_seoul_gangnam)
                     }
                     seoulPos = p1
+
+                    println(seoulPos)
+
                     deeperAdapter = SeoulAdapter(deeperArr)
                     deeperRecyclerView.adapter = deeperAdapter
+
+                    deeperAdapter.itemClickListener = object : SeoulAdapter.OnItemClickListener {
+                        override fun OnItemClick(p2: Int) {
+                            val str: String = seoulArr[seoulPos] + " " + deeperArr[p2]
+                            println(str)
+                            areaSelected.add(str)
+                            areaSelectedAdapter.notifyDataSetChanged()
+
+                        }
+                    }
                 }
             }
 
             deeperAdapter.itemClickListener = object : SeoulAdapter.OnItemClickListener {
                 override fun OnItemClick(p2: Int) {
                     val str: String = seoulArr[seoulPos] + " " + deeperArr[p2]
+                    println(str)
                     areaSelected.add(str)
                     areaSelectedAdapter.notifyDataSetChanged()
 
