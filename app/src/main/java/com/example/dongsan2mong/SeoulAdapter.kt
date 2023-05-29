@@ -5,7 +5,7 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.example.dongsan2mong.databinding.SelectedDistrictBinding
-class SeoulAdapter(val items: Array<String>)
+class SeoulAdapter(val items: Array<String>, var count: Array<Boolean>)
     : RecyclerView.Adapter<SeoulAdapter.ViewHolder>() {
     var selectedPosition = -1
     interface OnItemClickListener {
@@ -45,11 +45,21 @@ class SeoulAdapter(val items: Array<String>)
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         holder.binding.selectedDistrictName.text = items[position]
         val item = items[position]
-        if (position == selectedPosition) {
+//        if (position == selectedPosition) {
+//            holder.binding.selectedDistrictName.setTextColor(R.color.main_blue)
+//            holder.binding.selectedDistrictName.
+//            setBackgroundResource(R.drawable.background_map_option_selected)
+//        } else {
+//            holder.binding.selectedDistrictName.setTextColor(R.color.black)
+//            holder.binding.selectedDistrictName.
+//            setBackgroundResource(R.drawable.background_map_option_expand)
+//        }
+        if (count[position] || position == selectedPosition) {
             holder.binding.selectedDistrictName.setTextColor(R.color.main_blue)
             holder.binding.selectedDistrictName.
             setBackgroundResource(R.drawable.background_map_option_selected)
-        } else {
+        }
+        else {
             holder.binding.selectedDistrictName.setTextColor(R.color.black)
             holder.binding.selectedDistrictName.
             setBackgroundResource(R.drawable.background_map_option_expand)
