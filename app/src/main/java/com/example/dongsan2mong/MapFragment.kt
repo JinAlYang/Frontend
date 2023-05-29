@@ -171,6 +171,11 @@ class MapFragment : Fragment(), OnMapReadyCallback {
             deeperRecyclerView.adapter = deeperAdapter
             seoulRecyclerView.adapter = seoulAdapter
 
+            refreshAreaIcon.setOnClickListener {
+                areaSelected.clear()
+                areaSelectedAdapter.notifyDataSetChanged()
+            }
+
             mapOption1.setOnClickListener {
                 if (optionClicked[0] == 0) {
                     mapOption1.setTextColor(R.color.main_blue)
