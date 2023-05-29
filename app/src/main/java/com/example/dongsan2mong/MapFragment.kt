@@ -60,14 +60,10 @@ class MapFragment : Fragment(), OnMapReadyCallback {
         BooleanArray(6)
     )
 
-    /*
-    val array = arrayOf<BooleanArray>(
-    BooleanArray(3),
-    BooleanArray(4),
-    BooleanArray(2)
-)
 
-     */
+    // 선택된 지역 카운트 변수
+    var numOfSelectedArea: Int = 0
+    var firstSelectedArea: String = ""
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -156,33 +152,87 @@ class MapFragment : Fragment(), OnMapReadyCallback {
             seoulAdapter.itemClickListener = object : SeoulAdapter.OnItemClickListener {
                 override fun OnItemClick(p1: Int) {
                     when (p1) {
-                        0 -> deeperArr = resources.getStringArray(R.array.spinner_region_seoul_gangnam)
-                        1 -> deeperArr = resources.getStringArray(R.array.spinner_region_seoul_gangdong)
-                        2 -> deeperArr = resources.getStringArray(R.array.spinner_region_seoul_gangbuk)
-                        3 -> deeperArr = resources.getStringArray(R.array.spinner_region_seoul_gangseo)
-                        4 -> deeperArr = resources.getStringArray(R.array.spinner_region_seoul_gwanak)
-                        5 -> deeperArr = resources.getStringArray(R.array.spinner_region_seoul_gwangjin)
-                        6 -> deeperArr = resources.getStringArray(R.array.spinner_region_seoul_guro)
-                        7 -> deeperArr = resources.getStringArray(R.array.spinner_region_seoul_geumcheon)
-                        8 -> deeperArr = resources.getStringArray(R.array.spinner_region_seoul_nowon)
-                        9 -> deeperArr = resources.getStringArray(R.array.spinner_region_seoul_dobong)
-                        10 -> deeperArr = resources.getStringArray(R.array.spinner_region_seoul_dongdaemun)
-                        11 -> deeperArr = resources.getStringArray(R.array.spinner_region_seoul_dongjag)
-                        12 -> deeperArr = resources.getStringArray(R.array.spinner_region_seoul_mapo)
-                        13 -> deeperArr = resources.getStringArray(R.array.spinner_region_seoul_seodaemun)
-                        14 -> deeperArr = resources.getStringArray(R.array.spinner_region_seoul_seocho)
-                        15 -> deeperArr = resources.getStringArray(R.array.spinner_region_seoul_seongdong)
-                        16 -> deeperArr = resources.getStringArray(R.array.spinner_region_seoul_seongbuk)
-                        17 -> deeperArr = resources.getStringArray(R.array.spinner_region_seoul_songpa)
-                        18 -> deeperArr = resources.getStringArray(R.array.spinner_region_seoul_yangcheon)
-                        19 -> deeperArr = resources.getStringArray(R.array.spinner_region_seoul_yeongdeungpo)
-                        20 -> deeperArr = resources.getStringArray(R.array.spinner_region_seoul_yongsan)
-                        21 -> deeperArr = resources.getStringArray(R.array.spinner_region_seoul_eunpyeong)
-                        22 -> deeperArr = resources.getStringArray(R.array.spinner_region_seoul_jongno)
-                        23 -> deeperArr = resources.getStringArray(R.array.spinner_region_seoul_jung)
-                        24 -> deeperArr = resources.getStringArray(R.array.spinner_region_seoul_jungnanggu)
-                        else -> deeperArr = resources.getStringArray(R.array.spinner_region_seoul_gangnam)
+                        0 ->  {
+                            deeperArr = resources.getStringArray(R.array.spinner_region_seoul_gangnam)
+                        }
+                        1 -> {
+                            deeperArr = resources.getStringArray(R.array.spinner_region_seoul_gangdong)
+                        }
+                        2 -> {
+                            deeperArr = resources.getStringArray(R.array.spinner_region_seoul_gangbuk)
+                        }
+                        3 -> {
+                            deeperArr = resources.getStringArray(R.array.spinner_region_seoul_gangseo)
+                        }
+                        4 -> {
+                            deeperArr = resources.getStringArray(R.array.spinner_region_seoul_gwanak)
+                        }
+                        5 -> {
+                            deeperArr = resources.getStringArray(R.array.spinner_region_seoul_gwangjin)
+                        }
+                        6 -> {
+                            deeperArr = resources.getStringArray(R.array.spinner_region_seoul_guro)
+                        }
+                        7 -> {
+                            deeperArr = resources.getStringArray(R.array.spinner_region_seoul_geumcheon)
+                        }
+                        8 -> {
+                            deeperArr = resources.getStringArray(R.array.spinner_region_seoul_nowon)
+                        }
+                        9 -> {
+                            deeperArr = resources.getStringArray(R.array.spinner_region_seoul_dobong)
+                        }
+                        10 -> {
+                            deeperArr = resources.getStringArray(R.array.spinner_region_seoul_dongdaemun)
+                        }
+                        11 -> {
+                            deeperArr = resources.getStringArray(R.array.spinner_region_seoul_dongjag)
+                        }
+                        12 -> {
+                            deeperArr = resources.getStringArray(R.array.spinner_region_seoul_mapo)
+                        }
+                        13 -> {
+                            deeperArr = resources.getStringArray(R.array.spinner_region_seoul_seodaemun)
+                        }
+                        14 -> {
+                            deeperArr = resources.getStringArray(R.array.spinner_region_seoul_seocho)
+                        }
+                        15 -> {
+                            deeperArr = resources.getStringArray(R.array.spinner_region_seoul_seongdong)
+                        }
+                        16 -> {
+                            deeperArr = resources.getStringArray(R.array.spinner_region_seoul_seongbuk)
+                        }
+                        17 -> {
+                            deeperArr = resources.getStringArray(R.array.spinner_region_seoul_songpa)
+                        }
+                        18 -> {
+                            deeperArr = resources.getStringArray(R.array.spinner_region_seoul_yangcheon)
+                        }
+                        19 -> {
+                            deeperArr = resources.getStringArray(R.array.spinner_region_seoul_yeongdeungpo)
+                        }
+                        20 -> {
+                            deeperArr = resources.getStringArray(R.array.spinner_region_seoul_yongsan)
+                        }
+                        21 -> {
+                            deeperArr = resources.getStringArray(R.array.spinner_region_seoul_eunpyeong)
+                        }
+                        22 -> {
+                            deeperArr = resources.getStringArray(R.array.spinner_region_seoul_jongno)
+                        }
+                        23 -> {
+                            deeperArr = resources.getStringArray(R.array.spinner_region_seoul_jung)
+                        }
+                        24 -> {
+                            deeperArr = resources.getStringArray(R.array.spinner_region_seoul_jungnanggu)
+                        }
+                        else -> {
+                            deeperArr = resources.getStringArray(R.array.spinner_region_seoul_gangnam)
+                        }
                     }
+                    seoulAdapter.selectedPosition = p1
+                    seoulAdapter.notifyDataSetChanged()
                     seoulPos = p1
 
                     println(seoulPos)
@@ -199,7 +249,14 @@ class MapFragment : Fragment(), OnMapReadyCallback {
                                 selectedHashMap.put(str, Pair(seoulPos, p2))
                                 areaSelected.add(str)
                                 areaSelectedAdapter.notifyDataSetChanged()
+                                if (numOfSelectedArea == 0)
+                                    firstSelectedArea = str
+                                numOfSelectedArea++ // 카운트 증가
+                                mapOption1.text = firstSelectedArea + " +" +
+                                        numOfSelectedArea.toString()
                             }
+                            deeperAdapter.selectedPosition = p2
+                            deeperAdapter.notifyDataSetChanged()
                         }
                     }
                 }
@@ -214,7 +271,14 @@ class MapFragment : Fragment(), OnMapReadyCallback {
                         selectedHashMap.put(str, Pair(seoulPos, p2))
                         areaSelected.add(str)
                         areaSelectedAdapter.notifyDataSetChanged()
+                        if (numOfSelectedArea == 0)
+                            firstSelectedArea = str
+                        numOfSelectedArea++ // 카운트 증가
+                        mapOption1.text = firstSelectedArea + " +" +
+                                numOfSelectedArea.toString()
                     }
+                    deeperAdapter.selectedPosition = p2
+                    deeperAdapter.notifyDataSetChanged()
                 }
             }
             deeperRecyclerView.adapter = deeperAdapter
@@ -222,6 +286,8 @@ class MapFragment : Fragment(), OnMapReadyCallback {
 
             refreshAreaIcon.setOnClickListener {
                 areaSelected.clear()
+                numOfSelectedArea = 0 // 카운트 0으로 초기화
+                mapOption1.text = "지역"
                 selectedHashMap.clear()
                 for (i in isSelectedArea.indices) {
                     isSelectedArea[i].fill(false)
