@@ -60,6 +60,9 @@ class MapFragment : Fragment(), OnMapReadyCallback {
         BooleanArray(6)
     )
 
+    var isSelectedSeoulArea = Array<Boolean>(25) {false}
+
+    lateinit var tempArr : Array<Boolean>
 
     // 선택된 지역 카운트 변수
     var numOfSelectedArea: Int = 0
@@ -118,9 +121,19 @@ class MapFragment : Fragment(), OnMapReadyCallback {
                     areaSelectedAdapter.removeItem(position)
                     var first = selectedHashMap.get(item)?.first
                     var second = selectedHashMap.get(item)?.second
-                    if (first != null && second != null)
+                    if (first != null && second != null) {
                         isSelectedArea[first][second] = false
+
+                        if (second == deeperAdapter.selectedPosition) {
+                            deeperAdapter.selectedPosition = -1
+                        }
+                        tempArr[second] = false
+                        deeperAdapter.notifyDataSetChanged()
+                    }
+
                     selectedHashMap.remove(item)
+
+
                     areaSelectedAdapter.notifyDataSetChanged()
                 }
             }
@@ -144,11 +157,13 @@ class MapFragment : Fragment(), OnMapReadyCallback {
             }
 
             seoulArr = resources.getStringArray(R.array.spinner_region_seoul)
-            seoulAdapter = SeoulAdapter(seoulArr)
+            seoulAdapter = SeoulAdapter(seoulArr, isSelectedSeoulArea)
             deeperArr = resources.getStringArray(R.array.spinner_region_seoul_gangnam)
-            deeperAdapter = SeoulAdapter(deeperArr)
+            tempArr = isSelectedArea[0].toTypedArray()
+            deeperAdapter = SeoulAdapter(deeperArr, tempArr)
 
             var seoulPos : Int = 0
+            seoulAdapter.selectedPosition = seoulPos
             seoulAdapter.itemClickListener = object : SeoulAdapter.OnItemClickListener {
                 override fun OnItemClick(p1: Int) {
                     when (p1) {
@@ -237,7 +252,8 @@ class MapFragment : Fragment(), OnMapReadyCallback {
 
                     println(seoulPos)
 
-                    deeperAdapter = SeoulAdapter(deeperArr)
+                    tempArr = isSelectedArea[seoulPos].toTypedArray()
+                    deeperAdapter = SeoulAdapter(deeperArr, tempArr)
                     deeperRecyclerView.adapter = deeperAdapter
 
                     deeperAdapter.itemClickListener = object : SeoulAdapter.OnItemClickListener {
@@ -246,6 +262,11 @@ class MapFragment : Fragment(), OnMapReadyCallback {
                                 val str: String = seoulArr[seoulPos] + " " + deeperArr[p2]
                                 println(str)
                                 isSelectedArea[seoulPos][p2] = true
+                                tempArr[p2] = true
+                                // temp
+                                deeperAdapter.notifyItemChanged(p2)
+
+
                                 selectedHashMap.put(str, Pair(seoulPos, p2))
                                 areaSelected.add(str)
                                 areaSelectedAdapter.notifyDataSetChanged()
@@ -268,6 +289,11 @@ class MapFragment : Fragment(), OnMapReadyCallback {
                         val str: String = seoulArr[seoulPos] + " " + deeperArr[p2]
                         println(str)
                         isSelectedArea[seoulPos][p2] = true
+                        tempArr[p2] = true
+
+                        // temp
+                        deeperAdapter.notifyItemChanged(p2)
+
                         selectedHashMap.put(str, Pair(seoulPos, p2))
                         areaSelected.add(str)
                         areaSelectedAdapter.notifyDataSetChanged()
@@ -276,6 +302,9 @@ class MapFragment : Fragment(), OnMapReadyCallback {
                         numOfSelectedArea++ // 카운트 증가
                         mapOption1.text = firstSelectedArea + " +" +
                                 numOfSelectedArea.toString()
+
+
+
                     }
                     deeperAdapter.selectedPosition = p2
                     deeperAdapter.notifyDataSetChanged()
@@ -292,6 +321,9 @@ class MapFragment : Fragment(), OnMapReadyCallback {
                 for (i in isSelectedArea.indices) {
                     isSelectedArea[i].fill(false)
                 }
+                tempArr.fill(false)
+                deeperAdapter.notifyDataSetChanged()
+                deeperAdapter.selectedPosition = -1
                 areaSelectedAdapter.notifyDataSetChanged()
             }
 
