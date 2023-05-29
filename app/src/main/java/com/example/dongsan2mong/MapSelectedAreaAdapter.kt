@@ -3,7 +3,7 @@ package com.example.dongsan2mong
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
-import com.example.dongsan2mong.databinding.SelectedareaBinding
+import com.example.dongsan2mong.databinding.SelectedAreaBinding
 
 class MapSelectedAreaAdapter(val items: ArrayList<String>)
     : RecyclerView.Adapter<MapSelectedAreaAdapter.ViewHolder>() {
@@ -14,7 +14,7 @@ class MapSelectedAreaAdapter(val items: ArrayList<String>)
 
     var itemClickListener: OnItemClickListener ?= null
 
-        inner class ViewHolder(val binding: SelectedareaBinding): RecyclerView.ViewHolder(binding.root) {
+        inner class ViewHolder(val binding: SelectedAreaBinding): RecyclerView.ViewHolder(binding.root) {
             init {
                 binding.selectedAreaName.setOnClickListener {
                     itemClickListener?.OnItemClick(adapterPosition, items[adapterPosition])
@@ -29,7 +29,7 @@ class MapSelectedAreaAdapter(val items: ArrayList<String>)
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
-        val view = SelectedareaBinding.inflate(
+        val view = SelectedAreaBinding.inflate(
             LayoutInflater.from(parent.context),
             parent, false)
         return ViewHolder(view)
