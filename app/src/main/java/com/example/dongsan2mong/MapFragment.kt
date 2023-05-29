@@ -30,6 +30,44 @@ class MapFragment : Fragment(), OnMapReadyCallback {
 
     lateinit var seoulArr : Array<String>
     lateinit var deeperArr : Array<String>
+    var selectedHashMap = HashMap<String, Pair<Int, Int>>()
+
+    var isSelectedArea = arrayOf<BooleanArray>(
+        BooleanArray(14),
+        BooleanArray(9),
+        BooleanArray(4),
+        BooleanArray(13),
+        BooleanArray(3),
+        BooleanArray(7),
+        BooleanArray(10),
+        BooleanArray(3),
+        BooleanArray(5),
+        BooleanArray(4),
+        BooleanArray(10),
+        BooleanArray(9),
+        BooleanArray(26),
+        BooleanArray(20),
+        BooleanArray(10),
+        BooleanArray(17),
+        BooleanArray(39),
+        BooleanArray(13),
+        BooleanArray(3),
+        BooleanArray(34),
+        BooleanArray(36),
+        BooleanArray(11),
+        BooleanArray(87),
+        BooleanArray(74),
+        BooleanArray(6)
+    )
+
+    /*
+    val array = arrayOf<BooleanArray>(
+    BooleanArray(3),
+    BooleanArray(4),
+    BooleanArray(2)
+)
+
+     */
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -80,8 +118,13 @@ class MapFragment : Fragment(), OnMapReadyCallback {
             areaSelectedAdapter = MapSelectedAreaAdapter(areaSelected)
 
             areaSelectedAdapter.itemClickListener = object : MapSelectedAreaAdapter.OnItemClickListener {
-                override fun OnItemClick(position: Int) {
+                override fun OnItemClick(position: Int, item: String) {
                     areaSelectedAdapter.removeItem(position)
+                    var first = selectedHashMap.get(item)?.first
+                    var second = selectedHashMap.get(item)?.second
+                    if (first != null && second != null)
+                        isSelectedArea[first][second] = false
+                    selectedHashMap.remove(item)
                     areaSelectedAdapter.notifyDataSetChanged()
                 }
             }
@@ -149,11 +192,14 @@ class MapFragment : Fragment(), OnMapReadyCallback {
 
                     deeperAdapter.itemClickListener = object : SeoulAdapter.OnItemClickListener {
                         override fun OnItemClick(p2: Int) {
-                            val str: String = seoulArr[seoulPos] + " " + deeperArr[p2]
-                            println(str)
-                            areaSelected.add(str)
-                            areaSelectedAdapter.notifyDataSetChanged()
-
+                            if (!isSelectedArea[seoulPos][p2]) {
+                                val str: String = seoulArr[seoulPos] + " " + deeperArr[p2]
+                                println(str)
+                                isSelectedArea[seoulPos][p2] = true
+                                selectedHashMap.put(str, Pair(seoulPos, p2))
+                                areaSelected.add(str)
+                                areaSelectedAdapter.notifyDataSetChanged()
+                            }
                         }
                     }
                 }
@@ -161,11 +207,14 @@ class MapFragment : Fragment(), OnMapReadyCallback {
 
             deeperAdapter.itemClickListener = object : SeoulAdapter.OnItemClickListener {
                 override fun OnItemClick(p2: Int) {
-                    val str: String = seoulArr[seoulPos] + " " + deeperArr[p2]
-                    println(str)
-                    areaSelected.add(str)
-                    areaSelectedAdapter.notifyDataSetChanged()
-
+                    if (!isSelectedArea[seoulPos][p2]) {
+                        val str: String = seoulArr[seoulPos] + " " + deeperArr[p2]
+                        println(str)
+                        isSelectedArea[seoulPos][p2] = true
+                        selectedHashMap.put(str, Pair(seoulPos, p2))
+                        areaSelected.add(str)
+                        areaSelectedAdapter.notifyDataSetChanged()
+                    }
                 }
             }
             deeperRecyclerView.adapter = deeperAdapter
@@ -173,6 +222,10 @@ class MapFragment : Fragment(), OnMapReadyCallback {
 
             refreshAreaIcon.setOnClickListener {
                 areaSelected.clear()
+                selectedHashMap.clear()
+                for (i in isSelectedArea.indices) {
+                    isSelectedArea[i].fill(false)
+                }
                 areaSelectedAdapter.notifyDataSetChanged()
             }
 

@@ -9,7 +9,7 @@ class MapSelectedAreaAdapter(val items: ArrayList<String>)
     : RecyclerView.Adapter<MapSelectedAreaAdapter.ViewHolder>() {
 
     interface OnItemClickListener {
-        fun OnItemClick (position: Int)
+        fun OnItemClick (position: Int, item: String)
     }
 
     var itemClickListener: OnItemClickListener ?= null
@@ -17,7 +17,7 @@ class MapSelectedAreaAdapter(val items: ArrayList<String>)
         inner class ViewHolder(val binding: SelectedareaBinding): RecyclerView.ViewHolder(binding.root) {
             init {
                 binding.selectedAreaName.setOnClickListener {
-                    itemClickListener?.OnItemClick(adapterPosition)
+                    itemClickListener?.OnItemClick(adapterPosition, items[adapterPosition])
                 }
 
             }
