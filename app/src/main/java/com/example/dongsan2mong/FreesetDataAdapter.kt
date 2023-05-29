@@ -18,7 +18,9 @@ class FreesetDataAdapter (val items:ArrayList<FreesetData>, val selected:ArrayLi
 
     var itemClickListener: OnItemClickListener? = null
 
-    inner class ViewHolder(val binding: RowFreesetBinding) : RecyclerView.ViewHolder(binding.root) {
+    inner class ViewHolder(val binding: RowFreesetBinding)
+        : RecyclerView.ViewHolder(binding.root) {
+        private val mainActivity: MainActivity? = binding.root.context as? MainActivity
         init {
             binding.freeset.setOnClickListener {
                 if (selected[adapterPosition] == false)
@@ -31,8 +33,7 @@ class FreesetDataAdapter (val items:ArrayList<FreesetData>, val selected:ArrayLi
             binding.freesetApply.setOnClickListener {
                 val clickedPosition = adapterPosition
                 val clickedData = items[clickedPosition]
-
-                onApplyClickListener?.onApplyClick(clickedData)
+                mainActivity?.changeFragment(MapFragment())
             }
         }
     }

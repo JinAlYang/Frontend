@@ -11,6 +11,7 @@ import android.widget.ImageView
 import android.widget.Toast
 import androidx.annotation.UiThread
 import androidx.fragment.app.Fragment
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.dongsan2mong.databinding.FragmentMapBinding
 import com.naver.maps.geometry.LatLng
 import com.naver.maps.map.*
@@ -22,6 +23,47 @@ class MapFragment : Fragment(), OnMapReadyCallback {
     lateinit var nMap: NaverMap
     var optionClicked = Array<Int>(8, {0})
     var optionSelected = false
+    val areaSelected: ArrayList<String> = ArrayList()
+    lateinit var areaSelectedAdapter: MapSelectedAreaAdapter
+    lateinit var seoulAdapter: SeoulAdapter
+    lateinit var deeperAdapter: SeoulAdapter
+
+    lateinit var seoulArr : Array<String>
+    lateinit var deeperArr : Array<String>
+    var selectedHashMap = HashMap<String, Pair<Int, Int>>()
+
+    var isSelectedArea = arrayOf<BooleanArray>(
+        BooleanArray(14),
+        BooleanArray(9),
+        BooleanArray(4),
+        BooleanArray(13),
+        BooleanArray(3),
+        BooleanArray(7),
+        BooleanArray(10),
+        BooleanArray(3),
+        BooleanArray(5),
+        BooleanArray(4),
+        BooleanArray(10),
+        BooleanArray(9),
+        BooleanArray(26),
+        BooleanArray(20),
+        BooleanArray(10),
+        BooleanArray(17),
+        BooleanArray(39),
+        BooleanArray(13),
+        BooleanArray(3),
+        BooleanArray(34),
+        BooleanArray(36),
+        BooleanArray(11),
+        BooleanArray(87),
+        BooleanArray(74),
+        BooleanArray(6)
+    )
+
+
+    // 선택된 지역 카운트 변수
+    var numOfSelectedArea: Int = 0
+    var firstSelectedArea: String = ""
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -64,6 +106,27 @@ class MapFragment : Fragment(), OnMapReadyCallback {
     @SuppressLint("ResourceAsColor")
     private fun init() {
         binding.apply {
+            // recyclerView 연결
+            mapAreaRecyclerView.layoutManager = LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
+            seoulRecyclerView.layoutManager = LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
+            deeperRecyclerView.layoutManager = LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
+
+            areaSelectedAdapter = MapSelectedAreaAdapter(areaSelected)
+
+            areaSelectedAdapter.itemClickListener = object : MapSelectedAreaAdapter.OnItemClickListener {
+                override fun OnItemClick(position: Int, item: String) {
+                    areaSelectedAdapter.removeItem(position)
+                    var first = selectedHashMap.get(item)?.first
+                    var second = selectedHashMap.get(item)?.second
+                    if (first != null && second != null)
+                        isSelectedArea[first][second] = false
+                    selectedHashMap.remove(item)
+                    areaSelectedAdapter.notifyDataSetChanged()
+                }
+            }
+
+            mapAreaRecyclerView.adapter = areaSelectedAdapter
+
             // 지도 옵션 오른쪽 화살표 버튼 클릭 시 펼치기
             mapOpenOptionBtn.setOnClickListener {
                 mapOptionLayout.visibility = View.VISIBLE
@@ -80,21 +143,180 @@ class MapFragment : Fragment(), OnMapReadyCallback {
                 startActivity(i)
             }
 
+            seoulArr = resources.getStringArray(R.array.spinner_region_seoul)
+            seoulAdapter = SeoulAdapter(seoulArr)
+            deeperArr = resources.getStringArray(R.array.spinner_region_seoul_gangnam)
+            deeperAdapter = SeoulAdapter(deeperArr)
+
+            var seoulPos : Int = 0
+            seoulAdapter.itemClickListener = object : SeoulAdapter.OnItemClickListener {
+                override fun OnItemClick(p1: Int) {
+                    when (p1) {
+                        0 ->  {
+                            deeperArr = resources.getStringArray(R.array.spinner_region_seoul_gangnam)
+                        }
+                        1 -> {
+                            deeperArr = resources.getStringArray(R.array.spinner_region_seoul_gangdong)
+                        }
+                        2 -> {
+                            deeperArr = resources.getStringArray(R.array.spinner_region_seoul_gangbuk)
+                        }
+                        3 -> {
+                            deeperArr = resources.getStringArray(R.array.spinner_region_seoul_gangseo)
+                        }
+                        4 -> {
+                            deeperArr = resources.getStringArray(R.array.spinner_region_seoul_gwanak)
+                        }
+                        5 -> {
+                            deeperArr = resources.getStringArray(R.array.spinner_region_seoul_gwangjin)
+                        }
+                        6 -> {
+                            deeperArr = resources.getStringArray(R.array.spinner_region_seoul_guro)
+                        }
+                        7 -> {
+                            deeperArr = resources.getStringArray(R.array.spinner_region_seoul_geumcheon)
+                        }
+                        8 -> {
+                            deeperArr = resources.getStringArray(R.array.spinner_region_seoul_nowon)
+                        }
+                        9 -> {
+                            deeperArr = resources.getStringArray(R.array.spinner_region_seoul_dobong)
+                        }
+                        10 -> {
+                            deeperArr = resources.getStringArray(R.array.spinner_region_seoul_dongdaemun)
+                        }
+                        11 -> {
+                            deeperArr = resources.getStringArray(R.array.spinner_region_seoul_dongjag)
+                        }
+                        12 -> {
+                            deeperArr = resources.getStringArray(R.array.spinner_region_seoul_mapo)
+                        }
+                        13 -> {
+                            deeperArr = resources.getStringArray(R.array.spinner_region_seoul_seodaemun)
+                        }
+                        14 -> {
+                            deeperArr = resources.getStringArray(R.array.spinner_region_seoul_seocho)
+                        }
+                        15 -> {
+                            deeperArr = resources.getStringArray(R.array.spinner_region_seoul_seongdong)
+                        }
+                        16 -> {
+                            deeperArr = resources.getStringArray(R.array.spinner_region_seoul_seongbuk)
+                        }
+                        17 -> {
+                            deeperArr = resources.getStringArray(R.array.spinner_region_seoul_songpa)
+                        }
+                        18 -> {
+                            deeperArr = resources.getStringArray(R.array.spinner_region_seoul_yangcheon)
+                        }
+                        19 -> {
+                            deeperArr = resources.getStringArray(R.array.spinner_region_seoul_yeongdeungpo)
+                        }
+                        20 -> {
+                            deeperArr = resources.getStringArray(R.array.spinner_region_seoul_yongsan)
+                        }
+                        21 -> {
+                            deeperArr = resources.getStringArray(R.array.spinner_region_seoul_eunpyeong)
+                        }
+                        22 -> {
+                            deeperArr = resources.getStringArray(R.array.spinner_region_seoul_jongno)
+                        }
+                        23 -> {
+                            deeperArr = resources.getStringArray(R.array.spinner_region_seoul_jung)
+                        }
+                        24 -> {
+                            deeperArr = resources.getStringArray(R.array.spinner_region_seoul_jungnanggu)
+                        }
+                        else -> {
+                            deeperArr = resources.getStringArray(R.array.spinner_region_seoul_gangnam)
+                        }
+                    }
+                    seoulAdapter.selectedPosition = p1
+                    seoulAdapter.notifyDataSetChanged()
+                    seoulPos = p1
+
+                    println(seoulPos)
+
+                    deeperAdapter = SeoulAdapter(deeperArr)
+                    deeperRecyclerView.adapter = deeperAdapter
+
+                    deeperAdapter.itemClickListener = object : SeoulAdapter.OnItemClickListener {
+                        override fun OnItemClick(p2: Int) {
+                            if (!isSelectedArea[seoulPos][p2]) {
+                                val str: String = seoulArr[seoulPos] + " " + deeperArr[p2]
+                                println(str)
+                                isSelectedArea[seoulPos][p2] = true
+                                selectedHashMap.put(str, Pair(seoulPos, p2))
+                                areaSelected.add(str)
+                                areaSelectedAdapter.notifyDataSetChanged()
+                                if (numOfSelectedArea == 0)
+                                    firstSelectedArea = str
+                                numOfSelectedArea++ // 카운트 증가
+                                mapOption1.text = firstSelectedArea + " +" +
+                                        numOfSelectedArea.toString()
+                            }
+                            deeperAdapter.selectedPosition = p2
+                            deeperAdapter.notifyDataSetChanged()
+                        }
+                    }
+                }
+            }
+
+            deeperAdapter.itemClickListener = object : SeoulAdapter.OnItemClickListener {
+                override fun OnItemClick(p2: Int) {
+                    if (!isSelectedArea[seoulPos][p2]) {
+                        val str: String = seoulArr[seoulPos] + " " + deeperArr[p2]
+                        println(str)
+                        isSelectedArea[seoulPos][p2] = true
+                        selectedHashMap.put(str, Pair(seoulPos, p2))
+                        areaSelected.add(str)
+                        areaSelectedAdapter.notifyDataSetChanged()
+                        if (numOfSelectedArea == 0)
+                            firstSelectedArea = str
+                        numOfSelectedArea++ // 카운트 증가
+                        mapOption1.text = firstSelectedArea + " +" +
+                                numOfSelectedArea.toString()
+                    }
+                    deeperAdapter.selectedPosition = p2
+                    deeperAdapter.notifyDataSetChanged()
+                }
+            }
+            deeperRecyclerView.adapter = deeperAdapter
+            seoulRecyclerView.adapter = seoulAdapter
+
+            refreshAreaIcon.setOnClickListener {
+                areaSelected.clear()
+                numOfSelectedArea = 0 // 카운트 0으로 초기화
+                mapOption1.text = "지역"
+                selectedHashMap.clear()
+                for (i in isSelectedArea.indices) {
+                    isSelectedArea[i].fill(false)
+                }
+                areaSelectedAdapter.notifyDataSetChanged()
+            }
+
             mapOption1.setOnClickListener {
                 if (optionClicked[0] == 0) {
                     mapOption1.setTextColor(R.color.main_blue)
                     mapOption1.setBackgroundResource(R.drawable.background_map_option_selected)
                     mapOption1Extend.setTextColor(R.color.main_blue)
                     mapOption1Extend.setBackgroundResource(R.drawable.background_map_option_selected)
+                    mapOption1Page.visibility = View.VISIBLE
                     optionClicked[0] = 1;
+//            deeperArr = resources.getStringArray(R.array)
+//            deeperAdapter = MapSelectedAreaAdapter()
                 } else {
                     mapOption1.setTextColor(Color.parseColor("#000000"))
                     mapOption1.setBackgroundResource(R.drawable.background_map_option_expand)
                     mapOption1Extend.setTextColor(Color.parseColor("#000000"))
                     mapOption1Extend.setBackgroundResource(R.drawable.background_map_option_expand)
+                    mapOption1Page.visibility = View.GONE
                     optionClicked[0] = 0;
                 }
                 checkOptionSelected()
+
+                // 미니 창 열기
+
             }
 
             mapOption5.setOnClickListener {
