@@ -13,6 +13,7 @@
         android:textColor="@color/white"
         android:paddingVertical="3dp"
         android:paddingHorizontal="6dp"
+        android:layout_marginLeft="3dp"
         android:background="@drawable/background_map_area_selected"
         />
 
