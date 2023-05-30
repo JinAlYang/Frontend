@@ -78,22 +78,22 @@ class MapFragment : Fragment(), OnMapReadyCallback {
     // recyclerView (selected) id : mapSaleTypeRecyclerView
     // recyclerView id : saleTypeRecyclerView
     // refreshIcon id : refreshAreaIcon2
-    lateinit var saleTypeSelectedAdapter: MapSelectedAreaAdapter
-    val saleTypeSelected: ArrayList<String> = ArrayList()
-
-    lateinit var saleTypeAdapter: SeoulAdapter
-    lateinit var saleTypeArr : Array<String>
-    var isSelectedSaleType = Array<Boolean>(7) { false }
-
-    // 선택된 saleType
-    var numOfSelectedSaleType: Int = 0
-    var firstSelectedSaleType: String = ""
 
     // 방갯수 옵션 어댑터
     // linearLayout id : mapOption3Page
     // recyclerView (selected) id : mapRoomNumRecyclerView
     // recyclerView id :
     // refreshIcon id : refreshAreaIcon3
+    lateinit var roomNumSelectedAdapter: MapSelectedAreaAdapter
+    val roomNumSelected: ArrayList<String> = ArrayList()
+
+    lateinit var roomNumAdapter: SeoulAdapter
+    lateinit var roomNumArr : Array<String>
+    var isSelectedRoomNum = Array<Boolean>(7) { false }
+
+    // 선택된 roomType
+    var numOfSelectedRoomNum: Int = 0
+    var firstSelectedRoomNum: String = ""
 
     // 편의시설 옵션 어댑터
     // linearLayout id : mapOption4Page
@@ -211,9 +211,9 @@ class MapFragment : Fragment(), OnMapReadyCallback {
             seoulRecyclerView.layoutManager = LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
             deeperRecyclerView.layoutManager = LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
             mapSaleTypeRecyclerView.layoutManager = LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
-            saleTypeRecyclerView.layoutManager = LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
+//            saleTypeRecyclerView.layoutManager = LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
             mapRoomNumRecyclerView.layoutManager = LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
-            // roomNumRecyclerView.layoutManager = LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
+            roomNumRecyclerView.layoutManager = LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
             mapConvTypeRecyclerView.layoutManager = LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
             convTypeRecyclerView.layoutManager = LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
             mapBuildTypeRecyclerView.layoutManager = LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
@@ -226,43 +226,43 @@ class MapFragment : Fragment(), OnMapReadyCallback {
             inclTypeRecyclerView.layoutManager = LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
 
 
-            saleTypeSelectedAdapter = MapSelectedAreaAdapter(saleTypeSelected)
-            saleTypeSelectedAdapter.itemClickListener = object : MapSelectedAreaAdapter.OnItemClickListener {
+            roomNumSelectedAdapter = MapSelectedAreaAdapter(roomNumSelected)
+            roomNumSelectedAdapter.itemClickListener = object : MapSelectedAreaAdapter.OnItemClickListener {
                 override fun OnItemClick(position: Int, item: String) {
-                    saleTypeSelectedAdapter.removeItem(position)
-                    isSelectedSaleType[position] = false
-                    if (position == saleTypeAdapter.selectedPosition) {
-                        saleTypeAdapter.selectedPosition = -1
+                    roomNumSelectedAdapter.removeItem(position)
+                    isSelectedRoomNum[position] = false
+                    roomNumAdapter.notifyDataSetChanged()
+                    if (position == roomNumAdapter.selectedPosition) {
+                        roomNumAdapter.selectedPosition = -1
                     }
-                    saleTypeAdapter.notifyDataSetChanged()
-                    saleTypeSelectedAdapter.notifyDataSetChanged()
+
+                    roomNumSelectedAdapter.notifyDataSetChanged()
                 }
             }
-            mapSaleTypeRecyclerView.adapter = saleTypeSelectedAdapter
+            mapRoomNumRecyclerView.adapter = roomNumSelectedAdapter
 
-            saleTypeArr = resources.getStringArray(R.array.saleType)
-            saleTypeAdapter = SeoulAdapter(saleTypeArr, isSelectedSaleType)
-            // var saleTypePos : Int = 0
-            saleTypeAdapter.selectedPosition = -1
-            saleTypeAdapter.itemClickListener = object : SeoulAdapter.OnItemClickListener {
+            roomNumArr = resources.getStringArray(R.array.roomNum)
+            roomNumAdapter = SeoulAdapter(roomNumArr, isSelectedRoomNum)
+            roomNumAdapter.selectedPosition = -1
+            roomNumAdapter.itemClickListener = object : SeoulAdapter.OnItemClickListener {
                 override fun OnItemClick(position: Int) {
-                    if (!isSelectedSaleType[position]) {
-                        isSelectedSaleType[position] = true
-                        saleTypeAdapter.notifyItemChanged(position)
+                    if (!isSelectedRoomNum[position]) {
+                        isSelectedRoomNum[position] = true
+                        roomNumAdapter.notifyItemChanged(position)
 
-                        saleTypeSelected.add(saleTypeArr[position])
-                        saleTypeSelectedAdapter.notifyDataSetChanged()
-                        if (numOfSelectedSaleType == 0)
-                            firstSelectedSaleType = saleTypeArr[position]
-                        numOfSelectedSaleType++
-                        mapOption2.text = firstSelectedSaleType + " +" + numOfSelectedSaleType.toString()
+                        roomNumSelected.add(roomNumArr[position])
+                        roomNumSelectedAdapter.notifyDataSetChanged()
+                        if (numOfSelectedRoomNum == 0)
+                            firstSelectedRoomNum = roomNumArr[position]
+                        numOfSelectedRoomNum++
+                        mapOption3.text = firstSelectedRoomNum + " +" + numOfSelectedRoomNum.toString()
                     }
-                    saleTypeAdapter.selectedPosition = position
-                    saleTypeAdapter.notifyDataSetChanged()
+                    roomNumAdapter.selectedPosition = position
+                    roomNumAdapter.notifyDataSetChanged()
                 }
             }
-            saleTypeAdapter.notifyDataSetChanged()
-            saleTypeRecyclerView.adapter = saleTypeAdapter
+            roomNumAdapter.notifyDataSetChanged()
+            roomNumRecyclerView.adapter = roomNumAdapter
 
             /*
             mapRoomRecyclerView 어댑터 설정하세요~
@@ -296,7 +296,7 @@ class MapFragment : Fragment(), OnMapReadyCallback {
                         if (numOfSelectedConvType == 0)
                             firstSelectedConvType = convTypeArr[position]
                         numOfSelectedConvType++
-                        mapOption2.text = firstSelectedConvType + " +" + numOfSelectedConvType.toString()
+                        mapOption4.text = firstSelectedConvType + " +" + numOfSelectedConvType.toString()
                     }
                     convTypeAdapter.selectedPosition = position
                     convTypeAdapter.notifyDataSetChanged()
@@ -333,13 +333,14 @@ class MapFragment : Fragment(), OnMapReadyCallback {
                         if (numOfSelectedBuildType == 0)
                             firstSelectedBuildType = buildTypeArr[position]
                         numOfSelectedBuildType++
-                        mapOption2.text = firstSelectedBuildType + " +" + numOfSelectedBuildType.toString()
+                        mapOption5.text = firstSelectedBuildType + " +" + numOfSelectedBuildType.toString()
                     }
                     buildTypeAdapter.selectedPosition = position
                     buildTypeAdapter.notifyDataSetChanged()
                 }
             }
             buildTypeAdapter.notifyDataSetChanged()
+
             buildTypeRecyclerView.adapter = buildTypeAdapter
 
             /*
@@ -374,7 +375,7 @@ class MapFragment : Fragment(), OnMapReadyCallback {
                         if (numOfSelectedFloorNum == 0)
                             firstSelectedFloorNum = floorNumArr[position]
                         numOfSelectedFloorNum++
-                        mapOption2.text = firstSelectedFloorNum + " +" + numOfSelectedFloorNum.toString()
+                        mapOption7.text = firstSelectedFloorNum + " +" + numOfSelectedFloorNum.toString()
                     }
                     floorNumAdapter.selectedPosition = position
                     floorNumAdapter.notifyDataSetChanged()
@@ -411,7 +412,7 @@ class MapFragment : Fragment(), OnMapReadyCallback {
                         if (numOfSelectedInclType == 0)
                             firstSelectedInclType = inclTypeArr[position]
                         numOfSelectedInclType++
-                        mapOption2.text = firstSelectedInclType + " +" + numOfSelectedInclType.toString()
+                        mapOption8.text = firstSelectedInclType + " +" + numOfSelectedInclType.toString()
                     }
                     inclTypeAdapter.selectedPosition = position
                     inclTypeAdapter.notifyDataSetChanged()
@@ -608,9 +609,6 @@ class MapFragment : Fragment(), OnMapReadyCallback {
                         numOfSelectedArea++ // 카운트 증가
                         mapOption1.text = firstSelectedArea + " +" +
                                 numOfSelectedArea.toString()
-
-
-
                     }
                     deeperAdapter.selectedPosition = p2
                     deeperAdapter.notifyDataSetChanged()
@@ -634,19 +632,19 @@ class MapFragment : Fragment(), OnMapReadyCallback {
             }
 
             refreshAreaIcon2.setOnClickListener {
-                saleTypeSelected.clear()
-                numOfSelectedSaleType = 0
-                mapOption2.text = getString(R.string.map_option_2)
-                isSelectedSaleType.fill(false)
-                saleTypeAdapter.selectedPosition = -1
-                saleTypeAdapter.notifyDataSetChanged()
-                saleTypeSelectedAdapter.notifyDataSetChanged()
+                /*
+                saleType에서 refreshAreaIcon2 클릭하면~
+                 */
             }
 
             refreshAreaIcon3.setOnClickListener {
-                /*
-                roomType에서 refreshAreaIcon3 클릭하면~
-                 */
+                roomNumSelected.clear()
+                numOfSelectedRoomNum = 0
+                mapOption2.text = getString(R.string.map_option_3)
+                isSelectedRoomNum.fill(false)
+                roomNumAdapter.selectedPosition = -1
+                roomNumAdapter.notifyDataSetChanged()
+                roomNumSelectedAdapter.notifyDataSetChanged()
             }
 
             refreshAreaIcon4.setOnClickListener {

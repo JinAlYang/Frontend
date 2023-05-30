@@ -273,14 +273,6 @@
                     android:src="@drawable/icon_refresh_area"/>
             </LinearLayout>
 
-            <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/saleTypeRecyclerView"
-                android:layout_width="match_parent"
-                android:scrollbars="none"
-                android:layout_height="match_parent"
-                android:orientation="horizontal">
-            </androidx.recyclerview.widget.RecyclerView>
-
         </LinearLayout>
 
         <LinearLayout
@@ -312,6 +304,14 @@
                     android:layout_height="wrap_content"
                     android:src="@drawable/icon_refresh_area"/>
             </LinearLayout>
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/roomNumRecyclerView"
+                android:layout_width="match_parent"
+                android:scrollbars="none"
+                android:layout_height="match_parent"
+                android:orientation="horizontal">
+            </androidx.recyclerview.widget.RecyclerView>
 
 
         </LinearLayout>
