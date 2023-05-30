@@ -11,7 +11,7 @@
     <string name="map_option_4">편의시설</string>
     <string name="map_option_5">건물유형</string>
     <string name="map_option_6">평형</string>
-    <string name="map_option_7">입주가능일시</string>
+    <string name="map_option_7">층 수</string>
     <string name="map_option_8">옵션</string>
 
     <string name="signup_title">회원가입</string>
@@ -38,6 +38,46 @@
         <item>매매유형5</item>
         <item>매매유형6</item>
         <item>매매유형7</item>
+    </string-array>
+
+    <string-array name="convType">
+        <item>편의시설1</item>
+        <item>편의시설2</item>
+        <item>편의시설3</item>
+        <item>편의시설4</item>
+        <item>편의시설5</item>
+        <item>편의시설6</item>
+        <item>편의시설7</item>
+    </string-array>
+
+    <string-array name="buildType">
+        <item>건물유형1</item>
+        <item>건물유형2</item>
+        <item>건물유형3</item>
+        <item>건물유형4</item>
+        <item>건물유형5</item>
+        <item>건물유형6</item>
+        <item>건물유형7</item>
+    </string-array>
+
+    <string-array name="floorNum">
+        <item>층수1</item>
+        <item>층수2</item>
+        <item>층수3</item>
+        <item>층수4</item>
+        <item>층수5</item>
+        <item>층수6</item>
+        <item>층수7</item>
+    </string-array>
+
+    <string-array name="inclType">
+        <item>옵션1</item>
+        <item>옵션2</item>
+        <item>옵션3</item>
+        <item>옵션4</item>
+        <item>옵션5</item>
+        <item>옵션6</item>
+        <item>옵션7</item>
     </string-array>
 
 </resources>

@@ -284,6 +284,231 @@
         </LinearLayout>
 
         <LinearLayout
+            android:id="@+id/mapOption3Page"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/white"
+            android:layout_marginTop="48dp"
+            android:clickable="true"
+            android:visibility="gone"
+            android:orientation="vertical" >
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="horizontal" >
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/mapRoomNumRecyclerView"
+                    android:layout_width="0dp"
+                    android:layout_weight="1"
+                    android:scrollbars="none"
+                    android:layout_height="match_parent"
+                    android:orientation="horizontal">
+                </androidx.recyclerview.widget.RecyclerView>
+
+                <ImageView
+                    android:id="@+id/refreshAreaIcon3"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/icon_refresh_area"/>
+            </LinearLayout>
+
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/mapOption4Page"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/white"
+            android:layout_marginTop="48dp"
+            android:clickable="true"
+            android:visibility="gone"
+            android:orientation="vertical" >
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="horizontal" >
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/mapConvTypeRecyclerView"
+                    android:layout_width="0dp"
+                    android:layout_weight="1"
+                    android:scrollbars="none"
+                    android:layout_height="match_parent"
+                    android:orientation="horizontal">
+                </androidx.recyclerview.widget.RecyclerView>
+
+                <ImageView
+                    android:id="@+id/refreshAreaIcon4"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/icon_refresh_area"/>
+            </LinearLayout>
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/convTypeRecyclerView"
+                android:layout_width="match_parent"
+                android:scrollbars="none"
+                android:layout_height="match_parent"
+                android:orientation="horizontal">
+            </androidx.recyclerview.widget.RecyclerView>
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/mapOption5Page"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/white"
+            android:layout_marginTop="48dp"
+            android:clickable="true"
+            android:visibility="gone"
+            android:orientation="vertical" >
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="horizontal" >
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/mapBuildTypeRecyclerView"
+                    android:layout_width="0dp"
+                    android:layout_weight="1"
+                    android:scrollbars="none"
+                    android:layout_height="match_parent"
+                    android:orientation="horizontal">
+                </androidx.recyclerview.widget.RecyclerView>
+
+                <ImageView
+                    android:id="@+id/refreshAreaIcon5"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/icon_refresh_area"/>
+            </LinearLayout>
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/buildTypeRecyclerView"
+                android:layout_width="match_parent"
+                android:scrollbars="none"
+                android:layout_height="match_parent"
+                android:orientation="horizontal">
+            </androidx.recyclerview.widget.RecyclerView>
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/mapOption6Page"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/white"
+            android:layout_marginTop="48dp"
+            android:clickable="true"
+            android:visibility="gone"
+            android:orientation="vertical" >
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="horizontal" >
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/mapSpaceTypeRecyclerView"
+                    android:layout_width="0dp"
+                    android:layout_weight="1"
+                    android:scrollbars="none"
+                    android:layout_height="match_parent"
+                    android:orientation="horizontal">
+                </androidx.recyclerview.widget.RecyclerView>
+
+                <ImageView
+                    android:id="@+id/refreshAreaIcon6"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/icon_refresh_area"/>
+            </LinearLayout>
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/mapOption7Page"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/white"
+            android:layout_marginTop="48dp"
+            android:clickable="true"
+            android:visibility="gone"
+            android:orientation="vertical" >
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="horizontal" >
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/mapFloorNumRecyclerView"
+                    android:layout_width="0dp"
+                    android:layout_weight="1"
+                    android:scrollbars="none"
+                    android:layout_height="match_parent"
+                    android:orientation="horizontal">
+                </androidx.recyclerview.widget.RecyclerView>
+
+                <ImageView
+                    android:id="@+id/refreshAreaIcon7"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/icon_refresh_area"/>
+            </LinearLayout>
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/floorNumRecyclerView"
+                android:layout_width="match_parent"
+                android:scrollbars="none"
+                android:layout_height="match_parent"
+                android:orientation="horizontal">
+            </androidx.recyclerview.widget.RecyclerView>
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/mapOption8Page"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/white"
+            android:layout_marginTop="48dp"
+            android:clickable="true"
+            android:visibility="gone"
+            android:orientation="vertical" >
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="horizontal" >
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/mapInclTypeRecyclerView"
+                    android:layout_width="0dp"
+                    android:layout_weight="1"
+                    android:scrollbars="none"
+                    android:layout_height="match_parent"
+                    android:orientation="horizontal">
+                </androidx.recyclerview.widget.RecyclerView>
+
+                <ImageView
+                    android:id="@+id/refreshAreaIcon8"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/icon_refresh_area"/>
+            </LinearLayout>
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/inclTypeRecyclerView"
+                android:layout_width="match_parent"
+                android:scrollbars="none"
+                android:layout_height="match_parent"
+                android:orientation="horizontal">
+            </androidx.recyclerview.widget.RecyclerView>
+
+        </LinearLayout>
+
+        <LinearLayout
             android:id="@+id/mapOptionLayout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
