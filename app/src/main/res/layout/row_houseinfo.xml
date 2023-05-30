@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/houseInfo"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:orientation="horizontal">
@@ -16,6 +17,7 @@
         android:orientation="vertical">
 
         <TextView
+            android:id="@+id/typeAndPrice"
             android:layout_width="wrap_content"
             android:layout_height="24dp"
             android:layout_marginTop="17dp"
@@ -25,6 +27,7 @@
             android:textSize="16sp"
             android:fontFamily="@font/elicedigitalbaeum"/>
         <TextView
+            android:id="@+id/spaceAndFloor"
             android:layout_width="wrap_content"
             android:layout_height="20dp"
             android:layout_marginBottom="4dp"
@@ -33,6 +36,7 @@
             android:textSize="16sp"
             android:fontFamily="@font/elicedigitalbaeum"/>
         <TextView
+            android:id="@+id/area"
             android:layout_width="wrap_content"
             android:layout_height="20dp"
             android:layout_marginBottom="4dp"
@@ -41,6 +45,7 @@
             android:textSize="16sp"
             android:fontFamily="@font/elicedigitalbaeum"/>
         <TextView
+            android:id="@+id/roomNum"
             android:layout_width="wrap_content"
             android:layout_height="20dp"
             android:text="오픈형 원룸"

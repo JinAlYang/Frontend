@@ -1,5 +1,6 @@
 package com.example.dongsan2mong
 
+import android.content.Intent
 import android.os.Bundle
 import android.widget.ArrayAdapter
 import android.widget.ListPopupWindow
@@ -32,7 +33,11 @@ class SignupActivity : AppCompatActivity() {
         if (!isKakao) {
             binding.loginWhereIcon.setImageResource(R.drawable.icon_login_naver)
         }
-
+        binding.signupCheck.setOnClickListener {
+            val i = Intent(this@SignupActivity, MainActivity::class.java)
+            startActivity(i)
+            finish()
+        }
 
         setupSpinnerYear()
 

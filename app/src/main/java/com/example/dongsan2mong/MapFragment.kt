@@ -23,26 +23,16 @@ class MapFragment : Fragment(), OnMapReadyCallback {
     lateinit var nMap: NaverMap
     var optionClicked = Array<Int>(8, {0})
     var optionSelected = false
+
+    // 지역 옵션 어댑터
+    // linearLayout id : mapOption1Page
+    // recyclerView (selected) id : mapAreaRecyclerView
+    // recyclerView id : seoulRecyclerView, deeperRecyclerView
+    // refreshIcon id : refreshAreaIcon1
     val areaSelected: ArrayList<String> = ArrayList()
     lateinit var areaSelectedAdapter: MapSelectedAreaAdapter
     lateinit var seoulAdapter: SeoulAdapter
     lateinit var deeperAdapter: SeoulAdapter
-
-    // saleType (saleType) 선택 후 나타나는 어댑터
-    lateinit var saleTypeSelectedAdapter: MapSelectedAreaAdapter
-    val saleTypeSelected: ArrayList<String> = ArrayList()
-
-    lateinit var saleTypeAdapter: SeoulAdapter
-    lateinit var saleTypeArr : Array<String>
-    var isSelectedSaleType = Array<Boolean>(7) { false }
-    /*
-    var numOfSelectedArea: Int = 0
-    var firstSelectedArea: String = ""
-     */
-    // 선택된 saleType
-    var numOfSelectedSaleType: Int = 0
-    var firstSelectedSaleType: String = ""
-
     lateinit var seoulArr : Array<String>
     lateinit var deeperArr : Array<String>
     var selectedHashMap = HashMap<String, Pair<Int, Int>>()
@@ -83,7 +73,99 @@ class MapFragment : Fragment(), OnMapReadyCallback {
     var numOfSelectedArea: Int = 0
     var firstSelectedArea: String = ""
 
-    override fun onCreate(savedInstanceState: Bundle?) {
+    // 매매유형 옵션 어댑터
+    // linearLayout id : mapOption2Page
+    // recyclerView (selected) id : mapSaleTypeRecyclerView
+    // recyclerView id : saleTypeRecyclerView
+    // refreshIcon id : refreshAreaIcon2
+
+    // 방갯수 옵션 어댑터
+    // linearLayout id : mapOption3Page
+    // recyclerView (selected) id : mapRoomNumRecyclerView
+    // recyclerView id :
+    // refreshIcon id : refreshAreaIcon3
+    lateinit var roomNumSelectedAdapter: MapSelectedAreaAdapter
+    val roomNumSelected: ArrayList<String> = ArrayList()
+
+    lateinit var roomNumAdapter: SeoulAdapter
+    lateinit var roomNumArr : Array<String>
+    var isSelectedRoomNum = Array<Boolean>(7) { false }
+
+    // 선택된 roomType
+    var numOfSelectedRoomNum: Int = 0
+    var firstSelectedRoomNum: String = ""
+
+    // 편의시설 옵션 어댑터
+    // linearLayout id : mapOption4Page
+    // recyclerView (selected) id : mapConvTypeRecyclerView
+    // recyclerView id : convTypeRecyclerView
+    // refreshIcon id : refreshAreaIcon4
+    lateinit var convTypeSelectedAdapter: MapSelectedAreaAdapter
+    val convTypeSelected: ArrayList<String> = ArrayList()
+
+    lateinit var convTypeAdapter: SeoulAdapter
+    lateinit var convTypeArr : Array<String>
+    var isSelectedConvType = Array<Boolean>(7) { false }
+
+    // 선택된 convType
+    var numOfSelectedConvType: Int = 0
+    var firstSelectedConvType: String = ""
+
+    // 건물유형 옵션 어댑터
+    // linearLayout id : mapOption5Page
+    // recyclerView (selected) id : mapBuildTypeRecyclerView
+    // recyclerView id : buildTypeRecyclerView
+    // refreshIcon id : refreshAreaIcon5
+    lateinit var buildTypeSelectedAdapter: MapSelectedAreaAdapter
+    val buildTypeSelected: ArrayList<String> = ArrayList()
+
+    lateinit var buildTypeAdapter: SeoulAdapter
+    lateinit var buildTypeArr : Array<String>
+    var isSelectedBuildType = Array<Boolean>(7) { false }
+
+    // 선택된 buildType
+    var numOfSelectedBuildType: Int = 0
+    var firstSelectedBuildType: String = ""
+
+    // 평형 옵션 어댑터
+    // linearLayout id : mapOption6Page
+    // recyclerView (selected) id : mapSpaceTypeRecyclerView
+    // recyclerView id :
+    // refreshIcon id : refreshAreaIcon6
+
+    // 층 수 옵션 어댑터
+    // linearLayout id : mapOption7Page
+    // recyclerView (selected) id : mapFloorNumRecyclerView
+    // recyclerView id : floorNumRecyclerView
+    // refreshIcon id : refreshAreaIcon7
+    lateinit var floorNumSelectedAdapter: MapSelectedAreaAdapter
+    val floorNumSelected: ArrayList<String> = ArrayList()
+
+    lateinit var floorNumAdapter: SeoulAdapter
+    lateinit var floorNumArr : Array<String>
+    var isSelectedFloorNum = Array<Boolean>(7) { false }
+
+    // 선택된 floorNum
+    var numOfSelectedFloorNum: Int = 0
+    var firstSelectedFloorNum: String = ""
+
+    // 옵션 옵션 어댑터 (inclusive)
+    // linearLayout id : mapOption8Page
+    // recyclerView (selected) id : mapInclTypeRecyclerView
+    // recyclerView id : inclTypeRecyclerView
+    // refreshIcon id : refreshAreaIcon8
+    lateinit var inclTypeSelectedAdapter: MapSelectedAreaAdapter
+    val inclTypeSelected: ArrayList<String> = ArrayList()
+
+    lateinit var inclTypeAdapter: SeoulAdapter
+    lateinit var inclTypeArr : Array<String>
+    var isSelectedInclType = Array<Boolean>(7) { false }
+
+    // 선택된 inclType
+    var numOfSelectedInclType: Int = 0
+    var firstSelectedInclType: String = ""
+
+   override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         val fm = childFragmentManager
         val initialMapOption = NaverMapOptions()
@@ -129,52 +211,223 @@ class MapFragment : Fragment(), OnMapReadyCallback {
             seoulRecyclerView.layoutManager = LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
             deeperRecyclerView.layoutManager = LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
             mapSaleTypeRecyclerView.layoutManager = LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
-            saleTypeRecyclerView.layoutManager = LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
+//            saleTypeRecyclerView.layoutManager = LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
+            mapRoomNumRecyclerView.layoutManager = LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
+            roomNumRecyclerView.layoutManager = LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
+            mapConvTypeRecyclerView.layoutManager = LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
+            convTypeRecyclerView.layoutManager = LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
+            mapBuildTypeRecyclerView.layoutManager = LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
+            buildTypeRecyclerView.layoutManager = LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
+            mapSpaceTypeRecyclerView.layoutManager = LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
+            // spaceTypeRecyclerView.layoutManager = LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
+            mapFloorNumRecyclerView.layoutManager = LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
+            floorNumRecyclerView.layoutManager = LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
+            mapInclTypeRecyclerView.layoutManager = LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
+            inclTypeRecyclerView.layoutManager = LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
 
-            saleTypeSelectedAdapter = MapSelectedAreaAdapter(saleTypeSelected)
-            saleTypeSelectedAdapter.itemClickListener = object : MapSelectedAreaAdapter.OnItemClickListener {
+
+            roomNumSelectedAdapter = MapSelectedAreaAdapter(roomNumSelected)
+            roomNumSelectedAdapter.itemClickListener = object : MapSelectedAreaAdapter.OnItemClickListener {
                 override fun OnItemClick(position: Int, item: String) {
-                    saleTypeSelectedAdapter.removeItem(position)
-                    isSelectedSaleType[position] = false
-                    if (position == saleTypeAdapter.selectedPosition) {
-                        saleTypeAdapter.selectedPosition = -1
+                    roomNumSelectedAdapter.removeItem(position)
+                    isSelectedRoomNum[position] = false
+                    roomNumAdapter.notifyDataSetChanged()
+                    if (position == roomNumAdapter.selectedPosition) {
+                        roomNumAdapter.selectedPosition = -1
                     }
-                    saleTypeAdapter.notifyDataSetChanged()
-                    saleTypeSelectedAdapter.notifyDataSetChanged()
+
+                    roomNumSelectedAdapter.notifyDataSetChanged()
                 }
             }
-            mapSaleTypeRecyclerView.adapter = saleTypeSelectedAdapter
+            mapRoomNumRecyclerView.adapter = roomNumSelectedAdapter
 
-            saleTypeArr = resources.getStringArray(R.array.saleType)
-            saleTypeAdapter = SeoulAdapter(saleTypeArr, isSelectedSaleType)
-            // var saleTypePos : Int = 0
-            saleTypeAdapter.selectedPosition = -1
-            saleTypeAdapter.itemClickListener = object : SeoulAdapter.OnItemClickListener {
+            roomNumArr = resources.getStringArray(R.array.roomNum)
+            roomNumAdapter = SeoulAdapter(roomNumArr, isSelectedRoomNum)
+            roomNumAdapter.selectedPosition = -1
+            roomNumAdapter.itemClickListener = object : SeoulAdapter.OnItemClickListener {
                 override fun OnItemClick(position: Int) {
-                    if (!isSelectedSaleType[position]) {
-                        isSelectedSaleType[position] = true
-                        saleTypeAdapter.notifyItemChanged(position)
+                    if (!isSelectedRoomNum[position]) {
+                        isSelectedRoomNum[position] = true
+                        roomNumAdapter.notifyItemChanged(position)
 
-                        saleTypeSelected.add(saleTypeArr[position])
-                        saleTypeSelectedAdapter.notifyDataSetChanged()
-                        if (numOfSelectedSaleType == 0)
-                            firstSelectedSaleType = saleTypeArr[position]
-                        numOfSelectedSaleType++
-                        mapOption2.text = firstSelectedSaleType + " +" + numOfSelectedSaleType.toString()
+                        roomNumSelected.add(roomNumArr[position])
+                        roomNumSelectedAdapter.notifyDataSetChanged()
+                        if (numOfSelectedRoomNum == 0)
+                            firstSelectedRoomNum = roomNumArr[position]
+                        numOfSelectedRoomNum++
+                        mapOption3.text = firstSelectedRoomNum + " +" + numOfSelectedRoomNum.toString()
                     }
-                    saleTypeAdapter.selectedPosition = position
-                    saleTypeAdapter.notifyDataSetChanged()
+                    roomNumAdapter.selectedPosition = position
+                    roomNumAdapter.notifyDataSetChanged()
                 }
             }
-            saleTypeAdapter.notifyDataSetChanged()
-            saleTypeRecyclerView.adapter = saleTypeAdapter
+            roomNumAdapter.notifyDataSetChanged()
+            roomNumRecyclerView.adapter = roomNumAdapter
 
+            /*
+            mapRoomRecyclerView 어댑터 설정하세요~
+             */
+
+            convTypeSelectedAdapter = MapSelectedAreaAdapter(convTypeSelected)
+            convTypeSelectedAdapter.itemClickListener = object : MapSelectedAreaAdapter.OnItemClickListener {
+                override fun OnItemClick(position: Int, item: String) {
+                    convTypeSelectedAdapter.removeItem(position)
+                    isSelectedConvType[position] = false
+                    if (position == convTypeAdapter.selectedPosition) {
+                        convTypeAdapter.selectedPosition = -1
+                    }
+                    convTypeAdapter.notifyDataSetChanged()
+                    convTypeSelectedAdapter.notifyDataSetChanged()
+                }
+            }
+            mapConvTypeRecyclerView.adapter = convTypeSelectedAdapter
+
+            convTypeArr = resources.getStringArray(R.array.convType)
+            convTypeAdapter = SeoulAdapter(convTypeArr, isSelectedConvType)
+            convTypeAdapter.selectedPosition = -1
+            convTypeAdapter.itemClickListener = object : SeoulAdapter.OnItemClickListener {
+                override fun OnItemClick(position: Int) {
+                    if (!isSelectedConvType[position]) {
+                        isSelectedConvType[position] = true
+                        convTypeAdapter.notifyItemChanged(position)
+
+                        convTypeSelected.add(convTypeArr[position])
+                        convTypeSelectedAdapter.notifyDataSetChanged()
+                        if (numOfSelectedConvType == 0)
+                            firstSelectedConvType = convTypeArr[position]
+                        numOfSelectedConvType++
+                        mapOption4.text = firstSelectedConvType + " +" + numOfSelectedConvType.toString()
+                    }
+                    convTypeAdapter.selectedPosition = position
+                    convTypeAdapter.notifyDataSetChanged()
+                }
+            }
+            convTypeAdapter.notifyDataSetChanged()
+            convTypeRecyclerView.adapter = convTypeAdapter
+
+            buildTypeSelectedAdapter = MapSelectedAreaAdapter(buildTypeSelected)
+            buildTypeSelectedAdapter.itemClickListener = object : MapSelectedAreaAdapter.OnItemClickListener {
+                override fun OnItemClick(position: Int, item: String) {
+                    buildTypeSelectedAdapter.removeItem(position)
+                    isSelectedBuildType[position] = false
+                    if (position == buildTypeAdapter.selectedPosition) {
+                        buildTypeAdapter.selectedPosition = -1
+                    }
+                    buildTypeAdapter.notifyDataSetChanged()
+                    buildTypeSelectedAdapter.notifyDataSetChanged()
+                }
+            }
+            mapBuildTypeRecyclerView.adapter = buildTypeSelectedAdapter
+
+            buildTypeArr = resources.getStringArray(R.array.buildType)
+            buildTypeAdapter = SeoulAdapter(buildTypeArr, isSelectedBuildType)
+            buildTypeAdapter.selectedPosition = -1
+            buildTypeAdapter.itemClickListener = object : SeoulAdapter.OnItemClickListener {
+                override fun OnItemClick(position: Int) {
+                    if (!isSelectedBuildType[position]) {
+                        isSelectedBuildType[position] = true
+                        buildTypeAdapter.notifyItemChanged(position)
+
+                        buildTypeSelected.add(buildTypeArr[position])
+                        buildTypeSelectedAdapter.notifyDataSetChanged()
+                        if (numOfSelectedBuildType == 0)
+                            firstSelectedBuildType = buildTypeArr[position]
+                        numOfSelectedBuildType++
+                        mapOption5.text = firstSelectedBuildType + " +" + numOfSelectedBuildType.toString()
+                    }
+                    buildTypeAdapter.selectedPosition = position
+                    buildTypeAdapter.notifyDataSetChanged()
+                }
+            }
+            buildTypeAdapter.notifyDataSetChanged()
+
+            buildTypeRecyclerView.adapter = buildTypeAdapter
+
+            /*
+            spaceTypeAdapter 구현하세여~
+             */
+
+            floorNumSelectedAdapter = MapSelectedAreaAdapter(floorNumSelected)
+            floorNumSelectedAdapter.itemClickListener = object : MapSelectedAreaAdapter.OnItemClickListener {
+                override fun OnItemClick(position: Int, item: String) {
+                    floorNumSelectedAdapter.removeItem(position)
+                    isSelectedFloorNum[position] = false
+                    if (position == floorNumAdapter.selectedPosition) {
+                        floorNumAdapter.selectedPosition = -1
+                    }
+                    floorNumAdapter.notifyDataSetChanged()
+                    floorNumSelectedAdapter.notifyDataSetChanged()
+                }
+            }
+            mapFloorNumRecyclerView.adapter = floorNumSelectedAdapter
+
+            floorNumArr = resources.getStringArray(R.array.floorNum)
+            floorNumAdapter = SeoulAdapter(floorNumArr, isSelectedFloorNum)
+            floorNumAdapter.selectedPosition = -1
+            floorNumAdapter.itemClickListener = object : SeoulAdapter.OnItemClickListener {
+                override fun OnItemClick(position: Int) {
+                    if (!isSelectedFloorNum[position]) {
+                        isSelectedFloorNum[position] = true
+                        floorNumAdapter.notifyItemChanged(position)
+
+                        floorNumSelected.add(floorNumArr[position])
+                        floorNumSelectedAdapter.notifyDataSetChanged()
+                        if (numOfSelectedFloorNum == 0)
+                            firstSelectedFloorNum = floorNumArr[position]
+                        numOfSelectedFloorNum++
+                        mapOption7.text = firstSelectedFloorNum + " +" + numOfSelectedFloorNum.toString()
+                    }
+                    floorNumAdapter.selectedPosition = position
+                    floorNumAdapter.notifyDataSetChanged()
+                }
+            }
+            floorNumAdapter.notifyDataSetChanged()
+            floorNumRecyclerView.adapter = floorNumAdapter
+
+            inclTypeSelectedAdapter = MapSelectedAreaAdapter(inclTypeSelected)
+            inclTypeSelectedAdapter.itemClickListener = object : MapSelectedAreaAdapter.OnItemClickListener {
+                override fun OnItemClick(position: Int, item: String) {
+                    inclTypeSelectedAdapter.removeItem(position)
+                    isSelectedInclType[position] = false
+                    if (position == inclTypeAdapter.selectedPosition) {
+                        inclTypeAdapter.selectedPosition = -1
+                    }
+                    inclTypeAdapter.notifyDataSetChanged()
+                    inclTypeSelectedAdapter.notifyDataSetChanged()
+                }
+            }
+            mapInclTypeRecyclerView.adapter = inclTypeSelectedAdapter
+
+            inclTypeArr = resources.getStringArray(R.array.inclType)
+            inclTypeAdapter = SeoulAdapter(inclTypeArr, isSelectedInclType)
+            inclTypeAdapter.selectedPosition = -1
+            inclTypeAdapter.itemClickListener = object : SeoulAdapter.OnItemClickListener {
+                override fun OnItemClick(position: Int) {
+                    if (!isSelectedInclType[position]) {
+                        isSelectedInclType[position] = true
+                        inclTypeAdapter.notifyItemChanged(position)
+
+                        inclTypeSelected.add(inclTypeArr[position])
+                        inclTypeSelectedAdapter.notifyDataSetChanged()
+                        if (numOfSelectedInclType == 0)
+                            firstSelectedInclType = inclTypeArr[position]
+                        numOfSelectedInclType++
+                        mapOption8.text = firstSelectedInclType + " +" + numOfSelectedInclType.toString()
+                    }
+                    inclTypeAdapter.selectedPosition = position
+                    inclTypeAdapter.notifyDataSetChanged()
+                }
+            }
+            inclTypeAdapter.notifyDataSetChanged()
+            inclTypeRecyclerView.adapter = inclTypeAdapter
 
             areaSelectedAdapter = MapSelectedAreaAdapter(areaSelected)
 
+            // 선택한 구, 동 정보가 담기는 리사이클러뷰의 아이템을 클릭했을 때 해당 아이템을 삭제해주는 이벤트
             areaSelectedAdapter.itemClickListener = object : MapSelectedAreaAdapter.OnItemClickListener {
                 override fun OnItemClick(position: Int, item: String) {
                     areaSelectedAdapter.removeItem(position)
+
                     var first = selectedHashMap.get(item)?.first
                     var second = selectedHashMap.get(item)?.second
                     if (first != null && second != null) {
@@ -188,7 +441,13 @@ class MapFragment : Fragment(), OnMapReadyCallback {
                     }
 
                     selectedHashMap.remove(item)
-
+                    // 아이템 삭제 후 지역 옵션 텍스트뷰 텍스트 변환 작업
+                    numOfSelectedArea--
+                    if (numOfSelectedArea == 0) {
+                        mapOption1.text = getString(R.string.map_option_1)
+                    }
+                    else
+                        mapOption1.text = firstSelectedArea + " +" + numOfSelectedArea.toString()
 
                     areaSelectedAdapter.notifyDataSetChanged()
                 }
@@ -358,9 +617,6 @@ class MapFragment : Fragment(), OnMapReadyCallback {
                         numOfSelectedArea++ // 카운트 증가
                         mapOption1.text = firstSelectedArea + " +" +
                                 numOfSelectedArea.toString()
-
-
-
                     }
                     deeperAdapter.selectedPosition = p2
                     deeperAdapter.notifyDataSetChanged()
@@ -372,7 +628,7 @@ class MapFragment : Fragment(), OnMapReadyCallback {
             refreshAreaIcon.setOnClickListener {
                 areaSelected.clear()
                 numOfSelectedArea = 0 // 카운트 0으로 초기화
-                mapOption1.text = "지역"
+                mapOption1.text = getString(R.string.map_option_1)
                 selectedHashMap.clear()
                 for (i in isSelectedArea.indices) {
                     isSelectedArea[i].fill(false)
@@ -384,13 +640,65 @@ class MapFragment : Fragment(), OnMapReadyCallback {
             }
 
             refreshAreaIcon2.setOnClickListener {
-                saleTypeSelected.clear()
-                numOfSelectedSaleType = 0
-                mapOption2.text = "매매유형"
-                isSelectedSaleType.fill(false)
-                saleTypeAdapter.selectedPosition = -1
-                saleTypeAdapter.notifyDataSetChanged()
-                saleTypeSelectedAdapter.notifyDataSetChanged()
+                /*
+                saleType에서 refreshAreaIcon2 클릭하면~
+                 */
+            }
+
+            refreshAreaIcon3.setOnClickListener {
+                roomNumSelected.clear()
+                numOfSelectedRoomNum = 0
+                mapOption2.text = getString(R.string.map_option_3)
+                isSelectedRoomNum.fill(false)
+                roomNumAdapter.selectedPosition = -1
+                roomNumAdapter.notifyDataSetChanged()
+                roomNumSelectedAdapter.notifyDataSetChanged()
+            }
+
+            refreshAreaIcon4.setOnClickListener {
+                convTypeSelected.clear()
+                numOfSelectedConvType = 0
+                mapOption4.text = getString(R.string.map_option_4)
+                isSelectedConvType.fill(false)
+                convTypeAdapter.selectedPosition = -1
+                convTypeAdapter.notifyDataSetChanged()
+                convTypeSelectedAdapter.notifyDataSetChanged()
+            }
+
+            refreshAreaIcon5.setOnClickListener {
+                buildTypeSelected.clear()
+                numOfSelectedBuildType = 0
+                mapOption5.text = getString(R.string.map_option_5)
+                isSelectedBuildType.fill(false)
+                buildTypeAdapter.selectedPosition = -1
+                buildTypeAdapter.notifyDataSetChanged()
+                buildTypeSelectedAdapter.notifyDataSetChanged()
+            }
+
+            refreshAreaIcon6.setOnClickListener {
+                /*
+                spaceType에서 refreshAreaIcon6 클릭하면~
+                 */
+            }
+
+            refreshAreaIcon7.setOnClickListener {
+                floorNumSelected.clear()
+                numOfSelectedFloorNum = 0
+                mapOption7.text = getString(R.string.map_option_7)
+                isSelectedFloorNum.fill(false)
+                floorNumAdapter.selectedPosition = -1
+                floorNumAdapter.notifyDataSetChanged()
+                floorNumSelectedAdapter.notifyDataSetChanged()
+            }
+
+            refreshAreaIcon8.setOnClickListener {
+                inclTypeSelected.clear()
+                numOfSelectedInclType = 0
+                mapOption8.text = getString(R.string.map_option_8)
+                isSelectedInclType.fill(false)
+                inclTypeAdapter.selectedPosition = -1
+                inclTypeAdapter.notifyDataSetChanged()
+                inclTypeSelectedAdapter.notifyDataSetChanged()
             }
 
             mapOption1.setOnClickListener {
@@ -418,23 +726,6 @@ class MapFragment : Fragment(), OnMapReadyCallback {
 
             }
 
-            mapOption5.setOnClickListener {
-                if (optionClicked[4] == 0) {
-                    mapOption5.setTextColor(R.color.main_blue)
-                    mapOption5.setBackgroundResource(R.drawable.background_map_option_selected)
-                    mapOption5Extend.setTextColor(R.color.main_blue)
-                    mapOption5Extend.setBackgroundResource(R.drawable.background_map_option_selected)
-                    optionClicked[4] = 1;
-                } else {
-                    mapOption5.setTextColor(Color.parseColor("#000000"))
-                    mapOption5.setBackgroundResource(R.drawable.background_map_option_expand)
-                    mapOption5Extend.setTextColor(Color.parseColor("#000000"))
-                    mapOption5Extend.setBackgroundResource(R.drawable.background_map_option_expand)
-                    optionClicked[4] = 0;
-                }
-                checkOptionSelected()
-            }
-
             mapOption2.setOnClickListener {
                 if (optionClicked[1] == 0) {
                     mapOption2.setTextColor(R.color.main_blue)
@@ -455,36 +746,122 @@ class MapFragment : Fragment(), OnMapReadyCallback {
                 checkOptionSelected()
             }
 
-            mapOption6.setOnClickListener {
-                if (optionClicked[5] == 0) {
-                    mapOption6.setTextColor(R.color.main_blue)
-                    mapOption6.setBackgroundResource(R.drawable.background_map_option_selected)
-                    mapOption6Extend.setTextColor(R.color.main_blue)
-                    mapOption6Extend.setBackgroundResource(R.drawable.background_map_option_selected)
-                    optionClicked[5] = 1;
-                } else {
-                    mapOption6.setTextColor(Color.parseColor("#000000"))
-                    mapOption6.setBackgroundResource(R.drawable.background_map_option_expand)
-                    mapOption6Extend.setTextColor(Color.parseColor("#000000"))
-                    mapOption6Extend.setBackgroundResource(R.drawable.background_map_option_expand)
-                    optionClicked[5] = 0;
-                }
-                checkOptionSelected()
-            }
-
             mapOption3.setOnClickListener {
                 if (optionClicked[2] == 0) {
                     mapOption3.setTextColor(R.color.main_blue)
                     mapOption3.setBackgroundResource(R.drawable.background_map_option_selected)
                     mapOption3Extend.setTextColor(R.color.main_blue)
                     mapOption3Extend.setBackgroundResource(R.drawable.background_map_option_selected)
+                    allOptionPageGone()
+                    mapOption3Page.visibility = View.VISIBLE
                     optionClicked[2] = 1;
                 } else {
                     mapOption3.setTextColor(Color.parseColor("#000000"))
                     mapOption3.setBackgroundResource(R.drawable.background_map_option_expand)
                     mapOption3Extend.setTextColor(Color.parseColor("#000000"))
                     mapOption3Extend.setBackgroundResource(R.drawable.background_map_option_expand)
+                    mapOption3Page.visibility = View.GONE
                     optionClicked[2] = 0;
+                }
+                checkOptionSelected()
+            }
+
+            mapOption4.setOnClickListener {
+                if (optionClicked[3] == 0) {
+                    mapOption4.setTextColor(R.color.main_blue)
+                    mapOption4.setBackgroundResource(R.drawable.background_map_option_selected)
+                    mapOption4Extend.setTextColor(R.color.main_blue)
+                    mapOption4Extend.setBackgroundResource(R.drawable.background_map_option_selected)
+                    allOptionPageGone()
+                    mapOption4Page.visibility = View.VISIBLE
+                    optionClicked[3] = 1;
+                } else {
+                    mapOption4.setTextColor(Color.parseColor("#000000"))
+                    mapOption4.setBackgroundResource(R.drawable.background_map_option_expand)
+                    mapOption4Extend.setTextColor(Color.parseColor("#000000"))
+                    mapOption4Extend.setBackgroundResource(R.drawable.background_map_option_expand)
+                    mapOption4Page.visibility = View.GONE
+                    optionClicked[3] = 0;
+                }
+                checkOptionSelected()
+            }
+
+            mapOption5.setOnClickListener {
+                if (optionClicked[4] == 0) {
+                    mapOption5.setTextColor(R.color.main_blue)
+                    mapOption5.setBackgroundResource(R.drawable.background_map_option_selected)
+                    mapOption5Extend.setTextColor(R.color.main_blue)
+                    mapOption5Extend.setBackgroundResource(R.drawable.background_map_option_selected)
+                    allOptionPageGone()
+                    mapOption5Page.visibility = View.VISIBLE
+                    optionClicked[4] = 1;
+                } else {
+                    mapOption5.setTextColor(Color.parseColor("#000000"))
+                    mapOption5.setBackgroundResource(R.drawable.background_map_option_expand)
+                    mapOption5Extend.setTextColor(Color.parseColor("#000000"))
+                    mapOption5Extend.setBackgroundResource(R.drawable.background_map_option_expand)
+                    mapOption5Page.visibility = View.GONE
+                    optionClicked[4] = 0;
+                }
+                checkOptionSelected()
+            }
+
+            mapOption6.setOnClickListener {
+                if (optionClicked[5] == 0) {
+                    mapOption6.setTextColor(R.color.main_blue)
+                    mapOption6.setBackgroundResource(R.drawable.background_map_option_selected)
+                    mapOption6Extend.setTextColor(R.color.main_blue)
+                    mapOption6Extend.setBackgroundResource(R.drawable.background_map_option_selected)
+                    allOptionPageGone()
+                    mapOption6Page.visibility = View.VISIBLE
+                    optionClicked[5] = 1;
+                } else {
+                    mapOption6.setTextColor(Color.parseColor("#000000"))
+                    mapOption6.setBackgroundResource(R.drawable.background_map_option_expand)
+                    mapOption6Extend.setTextColor(Color.parseColor("#000000"))
+                    mapOption6Extend.setBackgroundResource(R.drawable.background_map_option_expand)
+                    mapOption6Page.visibility = View.GONE
+                    optionClicked[5] = 0;
+                }
+                checkOptionSelected()
+            }
+
+            mapOption7.setOnClickListener {
+                if (optionClicked[6] == 0) {
+                    mapOption7.setTextColor(R.color.main_blue)
+                    mapOption7.setBackgroundResource(R.drawable.background_map_option_selected)
+                    mapOption7Extend.setTextColor(R.color.main_blue)
+                    mapOption7Extend.setBackgroundResource(R.drawable.background_map_option_selected)
+                    allOptionPageGone()
+                    mapOption7Page.visibility = View.VISIBLE
+                    optionClicked[6] = 1;
+                } else {
+                    mapOption7.setTextColor(Color.parseColor("#000000"))
+                    mapOption7.setBackgroundResource(R.drawable.background_map_option_expand)
+                    mapOption7Extend.setTextColor(Color.parseColor("#000000"))
+                    mapOption7Extend.setBackgroundResource(R.drawable.background_map_option_expand)
+                    mapOption7Page.visibility = View.GONE
+                    optionClicked[6] = 0;
+                }
+                checkOptionSelected()
+            }
+
+            mapOption8.setOnClickListener {
+                if (optionClicked[7] == 0) {
+                    mapOption8.setTextColor(R.color.main_blue)
+                    mapOption8.setBackgroundResource(R.drawable.background_map_option_selected)
+                    mapOption8Extend.setTextColor(R.color.main_blue)
+                    mapOption8Extend.setBackgroundResource(R.drawable.background_map_option_selected)
+                    allOptionPageGone()
+                    mapOption8Page.visibility = View.VISIBLE
+                    optionClicked[7] = 1;
+                } else {
+                    mapOption8.setTextColor(Color.parseColor("#000000"))
+                    mapOption8.setBackgroundResource(R.drawable.background_map_option_expand)
+                    mapOption8Extend.setTextColor(Color.parseColor("#000000"))
+                    mapOption8Extend.setBackgroundResource(R.drawable.background_map_option_expand)
+                    mapOption8Page.visibility = View.GONE
+                    optionClicked[7] = 0;
                 }
                 checkOptionSelected()
             }
@@ -653,14 +1030,21 @@ class MapFragment : Fragment(), OnMapReadyCallback {
         binding.apply {
             mapOption1.setTextColor(Color.parseColor("#000000"))
             mapOption1.setBackgroundResource(R.drawable.background_map_option_expand)
-            mapOption5.setTextColor(Color.parseColor("#000000"))
-            mapOption5.setBackgroundResource(R.drawable.background_map_option_expand)
             mapOption2.setTextColor(Color.parseColor("#000000"))
             mapOption2.setBackgroundResource(R.drawable.background_map_option_expand)
-            mapOption6.setTextColor(Color.parseColor("#000000"))
-            mapOption6.setBackgroundResource(R.drawable.background_map_option_expand)
             mapOption3.setTextColor(Color.parseColor("#000000"))
             mapOption3.setBackgroundResource(R.drawable.background_map_option_expand)
+            mapOption4.setTextColor(Color.parseColor("#000000"))
+            mapOption4.setBackgroundResource(R.drawable.background_map_option_expand)
+            mapOption5.setTextColor(Color.parseColor("#000000"))
+            mapOption5.setBackgroundResource(R.drawable.background_map_option_expand)
+            mapOption6.setTextColor(Color.parseColor("#000000"))
+            mapOption6.setBackgroundResource(R.drawable.background_map_option_expand)
+            mapOption7.setTextColor(Color.parseColor("#000000"))
+            mapOption7.setBackgroundResource(R.drawable.background_map_option_expand)
+            mapOption8.setTextColor(Color.parseColor("#000000"))
+            mapOption8.setBackgroundResource(R.drawable.background_map_option_expand)
+
 
             mapOption1Extend.setTextColor(Color.parseColor("#000000"))
             mapOption1Extend.setBackgroundResource(R.drawable.background_map_option_expand)
@@ -697,6 +1081,12 @@ class MapFragment : Fragment(), OnMapReadyCallback {
         binding.apply {
             mapOption1Page.visibility = View.GONE
             mapOption2Page.visibility = View.GONE
+            mapOption3Page.visibility = View.GONE
+            mapOption4Page.visibility = View.GONE
+            mapOption5Page.visibility = View.GONE
+            mapOption6Page.visibility = View.GONE
+            mapOption7Page.visibility = View.GONE
+            mapOption8Page.visibility = View.GONE
         }
     }
 }

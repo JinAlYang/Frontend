@@ -45,6 +45,11 @@ class MainActivity : AppCompatActivity() {
             true
         }
         binding.drawerLayout.setDrawerLockMode(LOCK_MODE_LOCKED_CLOSED)
+
+        binding.logout.setOnClickListener {
+            finish()
+        }
+
     }
 
     fun changeFragment(fragment: Fragment) {
