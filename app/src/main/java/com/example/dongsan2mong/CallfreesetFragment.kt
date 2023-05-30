@@ -41,17 +41,10 @@ class CallfreesetFragment: Fragment() {
     }
 
     fun initData() {
-        data.add(FreesetData(freesetTitle = "슉슈슈슈슉슈슈슈슈슈슉"))
-        data.add(FreesetData(freesetTitle = "오의1각성2지배배마"))
-        data.add(FreesetData(freesetTitle = "배틀마스터는집짓는비버야"))
-        data.add(FreesetData(freesetTitle = "쿠쿠루삥뽕쿠루쿠루쿠삥뽕"))
-        data.add(FreesetData(freesetTitle = "전혀 성장하지 않았구나 쿠크셰이튼!"))
-        data.add(FreesetData(freesetTitle = "짓이겨주마 아브렐슈드!"))
-        data.add(FreesetData(freesetTitle = "끝이야 일리아칸!"))
-        data.add(FreesetData(freesetTitle = "이게 바로 레기오로스의 수염이라고~"))
-        data.add(FreesetData(freesetTitle = "용광로를 지펴라~ 망치를 꺼내라~"))
-        data.add(FreesetData(freesetTitle = "낡고 허름해 보이지만"))
-        data.add(FreesetData(freesetTitle = "우리의 혼이 쌓여있다고~"))
+        data.add(FreesetData(freesetTitle = "어대역보증금3000이상"))
+        data.add(FreesetData(freesetTitle = "화양동,자양동오피스텔만"))
+        data.add(FreesetData(freesetTitle = "구의동3층이상투룸월세70이하"))
+
 
         for (i: Int in 0 until data.size) {
             selected.add(false)
