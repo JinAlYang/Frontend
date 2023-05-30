@@ -423,9 +423,11 @@ class MapFragment : Fragment(), OnMapReadyCallback {
 
             areaSelectedAdapter = MapSelectedAreaAdapter(areaSelected)
 
+            // 선택한 구, 동 정보가 담기는 리사이클러뷰의 아이템을 클릭했을 때 해당 아이템을 삭제해주는 이벤트
             areaSelectedAdapter.itemClickListener = object : MapSelectedAreaAdapter.OnItemClickListener {
                 override fun OnItemClick(position: Int, item: String) {
                     areaSelectedAdapter.removeItem(position)
+
                     var first = selectedHashMap.get(item)?.first
                     var second = selectedHashMap.get(item)?.second
                     if (first != null && second != null) {
@@ -439,7 +441,13 @@ class MapFragment : Fragment(), OnMapReadyCallback {
                     }
 
                     selectedHashMap.remove(item)
-
+                    // 아이템 삭제 후 지역 옵션 텍스트뷰 텍스트 변환 작업
+                    numOfSelectedArea--
+                    if (numOfSelectedArea == 0) {
+                        mapOption1.text = getString(R.string.map_option_1)
+                    }
+                    else
+                        mapOption1.text = firstSelectedArea + " +" + numOfSelectedArea.toString()
 
                     areaSelectedAdapter.notifyDataSetChanged()
                 }
