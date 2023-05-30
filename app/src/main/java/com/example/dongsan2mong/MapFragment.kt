@@ -28,6 +28,21 @@ class MapFragment : Fragment(), OnMapReadyCallback {
     lateinit var seoulAdapter: SeoulAdapter
     lateinit var deeperAdapter: SeoulAdapter
 
+    // saleType (saleType) 선택 후 나타나는 어댑터
+    lateinit var saleTypeSelectedAdapter: MapSelectedAreaAdapter
+    val saleTypeSelected: ArrayList<String> = ArrayList()
+
+    lateinit var saleTypeAdapter: SeoulAdapter
+    lateinit var saleTypeArr : Array<String>
+    var isSelectedSaleType = Array<Boolean>(7) { false }
+    /*
+    var numOfSelectedArea: Int = 0
+    var firstSelectedArea: String = ""
+     */
+    // 선택된 saleType
+    var numOfSelectedSaleType: Int = 0
+    var firstSelectedSaleType: String = ""
+
     lateinit var seoulArr : Array<String>
     lateinit var deeperArr : Array<String>
     var selectedHashMap = HashMap<String, Pair<Int, Int>>()
@@ -113,6 +128,47 @@ class MapFragment : Fragment(), OnMapReadyCallback {
             mapAreaRecyclerView.layoutManager = LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
             seoulRecyclerView.layoutManager = LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
             deeperRecyclerView.layoutManager = LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
+            mapSaleTypeRecyclerView.layoutManager = LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
+            saleTypeRecyclerView.layoutManager = LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
+
+            saleTypeSelectedAdapter = MapSelectedAreaAdapter(saleTypeSelected)
+            saleTypeSelectedAdapter.itemClickListener = object : MapSelectedAreaAdapter.OnItemClickListener {
+                override fun OnItemClick(position: Int, item: String) {
+                    saleTypeSelectedAdapter.removeItem(position)
+                    isSelectedSaleType[position] = false
+                    if (position == saleTypeAdapter.selectedPosition) {
+                        saleTypeAdapter.selectedPosition = -1
+                    }
+                    saleTypeAdapter.notifyDataSetChanged()
+                    saleTypeSelectedAdapter.notifyDataSetChanged()
+                }
+            }
+            mapSaleTypeRecyclerView.adapter = saleTypeSelectedAdapter
+
+            saleTypeArr = resources.getStringArray(R.array.saleType)
+            saleTypeAdapter = SeoulAdapter(saleTypeArr, isSelectedSaleType)
+            // var saleTypePos : Int = 0
+            saleTypeAdapter.selectedPosition = -1
+            saleTypeAdapter.itemClickListener = object : SeoulAdapter.OnItemClickListener {
+                override fun OnItemClick(position: Int) {
+                    if (!isSelectedSaleType[position]) {
+                        isSelectedSaleType[position] = true
+                        saleTypeAdapter.notifyItemChanged(position)
+
+                        saleTypeSelected.add(saleTypeArr[position])
+                        saleTypeSelectedAdapter.notifyDataSetChanged()
+                        if (numOfSelectedSaleType == 0)
+                            firstSelectedSaleType = saleTypeArr[position]
+                        numOfSelectedSaleType++
+                        mapOption2.text = firstSelectedSaleType + " +" + numOfSelectedSaleType.toString()
+                    }
+                    saleTypeAdapter.selectedPosition = position
+                    saleTypeAdapter.notifyDataSetChanged()
+                }
+            }
+            saleTypeAdapter.notifyDataSetChanged()
+            saleTypeRecyclerView.adapter = saleTypeAdapter
+
 
             areaSelectedAdapter = MapSelectedAreaAdapter(areaSelected)
 
@@ -327,12 +383,23 @@ class MapFragment : Fragment(), OnMapReadyCallback {
                 areaSelectedAdapter.notifyDataSetChanged()
             }
 
+            refreshAreaIcon2.setOnClickListener {
+                saleTypeSelected.clear()
+                numOfSelectedSaleType = 0
+                mapOption2.text = "매매유형"
+                isSelectedSaleType.fill(false)
+                saleTypeAdapter.selectedPosition = -1
+                saleTypeAdapter.notifyDataSetChanged()
+                saleTypeSelectedAdapter.notifyDataSetChanged()
+            }
+
             mapOption1.setOnClickListener {
                 if (optionClicked[0] == 0) {
                     mapOption1.setTextColor(R.color.main_blue)
                     mapOption1.setBackgroundResource(R.drawable.background_map_option_selected)
                     mapOption1Extend.setTextColor(R.color.main_blue)
                     mapOption1Extend.setBackgroundResource(R.drawable.background_map_option_selected)
+                    allOptionPageGone()
                     mapOption1Page.visibility = View.VISIBLE
                     optionClicked[0] = 1;
 //            deeperArr = resources.getStringArray(R.array)
@@ -375,12 +442,15 @@ class MapFragment : Fragment(), OnMapReadyCallback {
                     mapOption2Extend.setTextColor(R.color.main_blue)
                     mapOption2Extend.setBackgroundResource(R.drawable.background_map_option_selected)
                     optionClicked[1] = 1;
+                    allOptionPageGone()
+                    mapOption2Page.visibility = View.VISIBLE
                 } else {
                     mapOption2.setTextColor(Color.parseColor("#000000"))
                     mapOption2.setBackgroundResource(R.drawable.background_map_option_expand)
                     mapOption2Extend.setTextColor(Color.parseColor("#000000"))
                     mapOption2Extend.setBackgroundResource(R.drawable.background_map_option_expand)
                     optionClicked[1] = 0;
+                    mapOption2Page.visibility = View.GONE
                 }
                 checkOptionSelected()
             }
@@ -621,5 +691,12 @@ class MapFragment : Fragment(), OnMapReadyCallback {
         // ...
         println("onMapReady!!!")
         nMap = naverMap
+    }
+
+    fun allOptionPageGone() {
+        binding.apply {
+            mapOption1Page.visibility = View.GONE
+            mapOption2Page.visibility = View.GONE
+        }
     }
 }

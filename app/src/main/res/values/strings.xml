@@ -30,4 +30,14 @@
         <item>1929</item><item>1928</item><item>1927</item><item>1926</item><item>1925</item><item>1924</item><item>1923</item>
     </string-array>
 
+    <string-array name="saleType">
+        <item>매매유형1</item>
+        <item>매매유형2</item>
+        <item>매매유형3</item>
+        <item>매매유형4</item>
+        <item>매매유형5</item>
+        <item>매매유형6</item>
+        <item>매매유형7</item>
+    </string-array>
+
 </resources>
