@@ -214,6 +214,8 @@ class MapFragment : Fragment(), OnMapReadyCallback {
             saleTypeRecyclerView.layoutManager = LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
             mapRoomNumRecyclerView.layoutManager = LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
             // roomNumRecyclerView.layoutManager = LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
+            mapConvTypeRecyclerView.layoutManager = LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
+            convTypeRecyclerView.layoutManager = LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
             mapBuildTypeRecyclerView.layoutManager = LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
             buildTypeRecyclerView.layoutManager = LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
             mapSpaceTypeRecyclerView.layoutManager = LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
@@ -265,43 +267,6 @@ class MapFragment : Fragment(), OnMapReadyCallback {
             /*
             mapRoomRecyclerView 어댑터 설정하세요~
              */
-
-//            convTypeSelectedAdapter = MapSelectedAreaAdapter(convTypeSelected)
-//            convTypeSelectedAdapter.itemClickListener = object : MapSelectedAreaAdapter.OnItemClickListener {
-//                override fun OnItemClick(position: Int, item: String) {
-//                    convTypeSelectedAdapter.removeItem(position)
-//                    isSelectedConvType[position] = false
-//                    if (position == convTypeAdapter.selectedPosition) {
-//                        convTypeAdapter.selectedPosition = -1
-//                    }
-//                    convTypeAdapter.notifyDataSetChanged()
-//                    convTypeSelectedAdapter.notifyDataSetChanged()
-//                }
-//            }
-//            mapConvTypeRecyclerView.adapter = convTypeSelectedAdapter
-//
-//            convTypeArr = resources.getStringArray(R.array.convType)
-//            convTypeAdapter = SeoulAdapter(convTypeArr, isSelectedConvType)
-//            convTypeAdapter.selectedPosition = -1
-//            convTypeAdapter.itemClickListener = object : SeoulAdapter.OnItemClickListener {
-//                override fun OnItemClick(position: Int) {
-//                    if (!isSelectedConvType[position]) {
-//                        isSelectedConvType[position] = true
-//                        convTypeAdapter.notifyItemChanged(position)
-//
-//                        convTypeSelected.add(convTypeArr[position])
-//                        convTypeSelectedAdapter.notifyDataSetChanged()
-//                        if (numOfSelectedConvType == 0)
-//                            firstSelectedConvType = convTypeArr[position]
-//                        numOfSelectedConvType++
-//                        mapOption2.text = firstSelectedConvType + " +" + numOfSelectedConvType.toString()
-//                    }
-//                    convTypeAdapter.selectedPosition = position
-//                    convTypeAdapter.notifyDataSetChanged()
-//                }
-//            }
-//            convTypeAdapter.notifyDataSetChanged()
-//            convTypeRecyclerView.adapter = convTypeAdapter
 
             convTypeSelectedAdapter = MapSelectedAreaAdapter(convTypeSelected)
             convTypeSelectedAdapter.itemClickListener = object : MapSelectedAreaAdapter.OnItemClickListener {
