@@ -1,10 +1,12 @@
-package com.example.dongsan2mong
+package com.example.dongsan2mong.adapter
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
+import com.example.dongsan2mong.data.HouseInfoData
+import com.example.dongsan2mong.R
+import com.example.dongsan2mong.activity.MainActivity
 import com.example.dongsan2mong.databinding.RowHouseinfoBinding
-import kotlinx.coroutines.NonDisposableHandle.parent
 
 class HouseInfoDataAdapter (val items:ArrayList<HouseInfoData>, val selected:ArrayList<Boolean>)
     : RecyclerView.Adapter<HouseInfoDataAdapter.ViewHolder>() {
@@ -13,7 +15,7 @@ class HouseInfoDataAdapter (val items:ArrayList<HouseInfoData>, val selected:Arr
         fun OnItemClick(data: HouseInfoData, binding: RowHouseinfoBinding, position: Int)
     }
 
-    var itemClickListener: HouseInfoDataAdapter.OnItemClickListener? = null
+    var itemClickListener: OnItemClickListener? = null
 
     inner class ViewHolder(val binding: RowHouseinfoBinding)
         : RecyclerView.ViewHolder(binding.root) {

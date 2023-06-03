@@ -1,9 +1,10 @@
-package com.example.dongsan2mong
+package com.example.dongsan2mong.adapter
 
 import android.annotation.SuppressLint
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
+import com.example.dongsan2mong.R
 import com.example.dongsan2mong.databinding.SelectedDistrictBinding
 class SeoulAdapter(val items: Array<String>, var count: Array<Boolean>)
     : RecyclerView.Adapter<SeoulAdapter.ViewHolder>() {
@@ -12,7 +13,7 @@ class SeoulAdapter(val items: Array<String>, var count: Array<Boolean>)
         fun OnItemClick (position: Int)
     }
 
-    var itemClickListener: OnItemClickListener ?= null
+    var itemClickListener: OnItemClickListener?= null
 
     inner class ViewHolder(val binding: SelectedDistrictBinding): RecyclerView.ViewHolder(binding.root) {
         init {

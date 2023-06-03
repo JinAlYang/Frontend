@@ -1,10 +1,11 @@
-package com.example.dongsan2mong
+package com.example.dongsan2mong.fragment
 
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import com.example.dongsan2mong.adapter.WishlistViewPagerAdapter
 import com.example.dongsan2mong.databinding.FragmentWishlistBinding
 import com.google.android.material.tabs.TabLayoutMediator
 

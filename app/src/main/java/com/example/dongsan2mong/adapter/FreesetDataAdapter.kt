@@ -1,9 +1,12 @@
-package com.example.dongsan2mong
+package com.example.dongsan2mong.adapter
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
+import com.example.dongsan2mong.data.FreesetData
+import com.example.dongsan2mong.activity.MainActivity
 import com.example.dongsan2mong.databinding.RowFreesetBinding
+import com.example.dongsan2mong.fragment.MapFragment
 
 class FreesetDataAdapter (val items:ArrayList<FreesetData>, val selected:ArrayList<Boolean>)
     : RecyclerView.Adapter<FreesetDataAdapter.ViewHolder>() {

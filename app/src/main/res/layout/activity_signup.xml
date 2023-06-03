@@ -6,7 +6,7 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     android:paddingHorizontal="40dp"
-    tools:context=".SignupActivity">
+    tools:context=".activity.SignupActivity">
 
     <ImageView
         android:layout_width="match_parent"

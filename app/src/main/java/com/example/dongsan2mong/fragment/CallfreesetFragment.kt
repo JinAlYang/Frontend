@@ -1,4 +1,4 @@
-package com.example.dongsan2mong
+package com.example.dongsan2mong.fragment
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -8,6 +8,9 @@ import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.example.dongsan2mong.data.FreesetData
+import com.example.dongsan2mong.adapter.FreesetDataAdapter
+import com.example.dongsan2mong.activity.MainActivity
 import com.example.dongsan2mong.databinding.FragmentCallfreesetBinding
 import com.example.dongsan2mong.databinding.RowFreesetBinding
 
@@ -57,7 +60,7 @@ class CallfreesetFragment: Fragment() {
         binding.recyclerViewFreeset.layoutManager = LinearLayoutManager(requireContext(),
             LinearLayoutManager.VERTICAL, false)
         adapter = FreesetDataAdapter(data, selected)
-        adapter.itemClickListener = object :FreesetDataAdapter.OnItemClickListener {
+        adapter.itemClickListener = object : FreesetDataAdapter.OnItemClickListener {
             override fun OnItemClick(data: FreesetData, binding: RowFreesetBinding, position: Int) {
                 adapter.updateItemAtPosition(position, data)
             }
