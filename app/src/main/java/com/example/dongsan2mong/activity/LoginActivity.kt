@@ -1,4 +1,4 @@
-package com.example.dongsan2mong
+package com.example.dongsan2mong.activity
 
 import android.app.Activity
 import android.content.Intent

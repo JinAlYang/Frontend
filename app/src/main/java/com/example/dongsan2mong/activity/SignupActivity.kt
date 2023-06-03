@@ -1,11 +1,10 @@
-package com.example.dongsan2mong
+package com.example.dongsan2mong.activity
 
 import android.content.Intent
 import android.os.Bundle
 import android.widget.ArrayAdapter
-import android.widget.ListPopupWindow
-import android.widget.Spinner
 import androidx.appcompat.app.AppCompatActivity
+import com.example.dongsan2mong.R
 import com.example.dongsan2mong.databinding.ActivitySignupBinding
 
 class SignupActivity : AppCompatActivity() {
