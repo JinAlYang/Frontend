@@ -9,9 +9,16 @@
     <color name="white">#FFFFFFFF</color>
     <color name="main_blue">#FF5544CC</color>
     <color name="black_unselected_option">#FF000000</color>
+    <color name="gray_1">#FFD9D9D9</color>
     <color name="gray_2">#FFBBBBBB</color>
     <color name="gray_3">#FF999999</color>
+    <color name="gray_4">#FF909090</color>
+    <color name="gray_5">#FF434343</color>
+    <color name="yellow">#FFF7E600</color>
+    <color name="brown">#FF3A1D1D</color>
+    <color name="blue">#FF3A7CE5</color>
     <color name="gray_unselected_option">#FF999999</color>
+    <color name="red_brown">#FF740000</color>
 
 <!--    <color name="white_transparent">#EEFFFFFF</color>-->
 </resources>

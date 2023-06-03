@@ -13,8 +13,13 @@ import androidx.annotation.UiThread
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.dongsan2mong.databinding.FragmentMapBinding
+import com.google.android.material.slider.LabelFormatter
 import com.naver.maps.geometry.LatLng
 import com.naver.maps.map.*
+import java.util.*
+import kotlin.collections.ArrayList
+import kotlin.collections.HashMap
+
 
 class MapFragment : Fragment(), OnMapReadyCallback {
     lateinit var binding: FragmentMapBinding
@@ -75,8 +80,7 @@ class MapFragment : Fragment(), OnMapReadyCallback {
 
     // 매매유형 옵션 어댑터
     // linearLayout id : mapOption2Page
-    // recyclerView (selected) id : mapSaleTypeRecyclerView
-    // recyclerView id : saleTypeRecyclerView
+    // textView id : mapSaleTypeBtn1 .. 3
     // refreshIcon id : refreshAreaIcon2
 
     // 방갯수 옵션 어댑터
@@ -210,7 +214,7 @@ class MapFragment : Fragment(), OnMapReadyCallback {
             mapAreaRecyclerView.layoutManager = LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
             seoulRecyclerView.layoutManager = LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
             deeperRecyclerView.layoutManager = LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
-            mapSaleTypeRecyclerView.layoutManager = LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
+//            mapSaleTypeRecyclerView.layoutManager = LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
 //            saleTypeRecyclerView.layoutManager = LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
             mapRoomNumRecyclerView.layoutManager = LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
             roomNumRecyclerView.layoutManager = LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
@@ -1062,6 +1066,21 @@ class MapFragment : Fragment(), OnMapReadyCallback {
             mapOption7Extend.setBackgroundResource(R.drawable.background_map_option_expand)
             mapOption8Extend.setTextColor(Color.parseColor("#000000"))
             mapOption8Extend.setBackgroundResource(R.drawable.background_map_option_expand)
+        }
+    }
+
+    private fun initRangeSlider() {
+        binding.apply {
+//            saleTypeSlider1.setLabelFormatter(LabelFormatter { value -> //It is just an example
+//                when (value) {
+//                    0.0f -> ""
+//                    1.0f -> ""
+//                    else -> ""
+//
+//                }
+//                // else java.lang.String.format(Locale.US, "%.0f", value)
+//            })
+//            saleTypeSlider1.text
         }
     }
     @UiThread
