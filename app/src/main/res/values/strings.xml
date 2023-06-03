@@ -80,4 +80,47 @@
         <item>옵션7</item>
     </string-array>
 
+    <string-array name="saleType1">
+        <item>전체</item>
+        <item>500만 이하</item>
+        <item>~1500만</item>
+        <item>~3000만</item>
+        <item>~5000만</item>
+        <item>~1억</item>
+        <item>~2.5억</item>
+        <item>2.5억 이상</item>
+    </string-array>
+
+    <string-array name="saleType2">
+        <item>전체</item>
+        <item>20만 이하</item>
+        <item>~50만</item>
+        <item>~100만</item>
+        <item>~250만</item>
+        <item>250만 이상</item>
+    </string-array>
+
+    <array name="initial_slider_values">
+        <item>2.0</item>
+        <item>7.0</item>
+    </array>
+
+
+    <!--
+    <string name="saleType1_1">전체</string>
+    <string name="saleType1_2">5백만 이하</string>
+    <string name="saleType1_3">~1500만</string>
+    <string name="saleType1_4">~3000만</string>
+    <string name="saleType1_5">~5000만</string>
+    <string name="saleType1_6">~1억</string>
+    <string name="saleType1_7">~2.5억</string>
+    <string name="saleType1_8">2.5억 이상</string>
+
+    <string name="salyType2_1">전체</string>
+    <string name="salyType2_2">20만 이하</string>
+    <string name="salyType2_3">~50만</string>
+    <string name="salyType2_4">~100만</string>
+    <string name="salyType2_5">~250만</string>
+    <string name="salyType2_6">250만 이상</string>
+    !-->
 </resources>
