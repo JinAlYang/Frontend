@@ -6,7 +6,7 @@
     <string name="menu_title_planner">planner</string>
 
     <string name="map_option_1">지역</string>
-    <string name="map_option_2">매매유형</string>
+    <string name="map_option_2">거래유형</string>
     <string name="map_option_3">방 갯수</string>
     <string name="map_option_4">편의시설</string>
     <string name="map_option_5">건물유형</string>
@@ -81,28 +81,65 @@
     </string-array>
 
     <string-array name="saleType1">
-        <item>전체</item>
-        <item>500만 이하</item>
-        <item>~1500만</item>
-        <item>~3000만</item>
-        <item>~5000만</item>
-        <item>~1억</item>
-        <item>~2.5억</item>
-        <item>2.5억 이상</item>
+        <item>최소</item>
+        <item>50</item>
+        <item>100</item>
+        <item>200</item>
+        <item>300</item>
+        <item>500</item>
+        <item>1,000</item>
+        <item>2,000</item>
+        <item>3,000</item>
+        <item>4,000</item>
+        <item>5,000</item>
+        <item>6,000</item>
+        <item>7,000</item>
+        <item>8,000</item>
+        <item>9,000</item>
+        <item>1억</item>
+        <item>1억 2,000</item>
+        <item>1억 5,000</item>
+        <item>1억 7,000</item>
+        <item>2억</item>
+        <item>2억 5,000</item>
+        <item>3억</item>
+        <item>3억 5,000</item>
+        <item>4억</item>
+        <item>5억</item>
+        <item>7억</item>
+        <item>10억</item>
+        <item>12억</item>
+        <item>15억</item>
+        <item>20억</item>
+        <item>1</item>
     </string-array>
 
     <string-array name="saleType2">
-        <item>전체</item>
-        <item>20만 이하</item>
-        <item>~50만</item>
-        <item>~100만</item>
-        <item>~250만</item>
-        <item>250만 이상</item>
+        <item>0</item>
+        <item>5</item>
+        <item>10</item>
+        <item>20</item>
+        <item>25</item>
+        <item>30</item>
+        <item>35</item>
+        <item>40</item>
+        <item>50</item>
+        <item>60</item>
+        <item>70</item>
+        <item>100</item>
+        <item>150</item>
+        <item>200</item>
+        <item>250</item>
+        <item>300</item>
+        <item>400</item>
+        <item>500</item>
+        <item>1</item>
     </string-array>
+
 
     <array name="initial_slider_values">
         <item>2.0</item>
-        <item>7.0</item>
+        <item>6.0</item>
     </array>
 
 

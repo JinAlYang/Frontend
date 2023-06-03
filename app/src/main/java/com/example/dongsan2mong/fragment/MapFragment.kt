@@ -19,11 +19,11 @@ import com.example.dongsan2mong.activity.SearchActivity
 import com.example.dongsan2mong.adapter.MapSelectedAreaAdapter
 import com.example.dongsan2mong.adapter.SeoulAdapter
 import com.example.dongsan2mong.databinding.FragmentMapBinding
+import com.google.android.material.slider.RangeSlider
+import com.google.android.material.slider.Slider
 import com.naver.maps.geometry.LatLng
 import com.naver.maps.map.*
 import java.util.*
-import kotlin.collections.ArrayList
-import kotlin.collections.HashMap
 
 
 class MapFragment : Fragment(), OnMapReadyCallback {
@@ -227,7 +227,7 @@ class MapFragment : Fragment(), OnMapReadyCallback {
             convTypeRecyclerView.layoutManager = LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
             mapBuildTypeRecyclerView.layoutManager = LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
             buildTypeRecyclerView.layoutManager = LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
-            mapSpaceTypeRecyclerView.layoutManager = LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
+//            mapSpaceTypeRecyclerView.layoutManager = LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
             // spaceTypeRecyclerView.layoutManager = LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
             mapFloorNumRecyclerView.layoutManager = LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
             floorNumRecyclerView.layoutManager = LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
@@ -658,6 +658,14 @@ class MapFragment : Fragment(), OnMapReadyCallback {
                 /*
                 saleType에서 refreshAreaIcon2 클릭하면~
                  */
+                saleTypeSlider1.setValues(0.0f, 30.0f)
+                saleTypeSliderPrice1.text = "전체"
+                saleTypeSlider2.setValues(0.0f, 18.0f)
+                saleTypeSliderPrice2.text = "전체"
+                mapSaleTypeBtn1.isSelected = true
+                mapSaleTypeBtn2.isSelected = false
+                mapSaleTypeBtn3.isSelected = false
+                saleTypeLinear.visibility = View.VISIBLE
             }
 
             refreshAreaIcon3.setOnClickListener {
@@ -694,6 +702,8 @@ class MapFragment : Fragment(), OnMapReadyCallback {
                 /*
                 spaceType에서 refreshAreaIcon6 클릭하면~
                  */
+                spaceTypeSlider.setValues(0.0f, 6.0f)
+                spaceTypeSizeText.text = "전체"
             }
 
             refreshAreaIcon7.setOnClickListener {
@@ -1017,6 +1027,7 @@ class MapFragment : Fragment(), OnMapReadyCallback {
 
             }
         }
+        initRangeSlider()
     }
 
     private fun checkOptionSelected(){
@@ -1082,16 +1093,104 @@ class MapFragment : Fragment(), OnMapReadyCallback {
 
     private fun initRangeSlider() {
         binding.apply {
-//            saleTypeSlider1.setLabelFormatter(LabelFormatter { value -> //It is just an example
-//                when (value) {
-//                    0.0f -> ""
-//                    1.0f -> ""
-//                    else -> ""
-//
-//                }
-//                // else java.lang.String.format(Locale.US, "%.0f", value)
-//            })
-//            saleTypeSlider1.text
+            mapSaleTypeBtn1.isSelected = true
+            mapSaleTypeBtn1.setOnClickListener {
+                println("mapSaleTypeBtn1")
+                if (!mapSaleTypeBtn1.isSelected) {
+                    println("mapSaleTypeBtn1!!")
+                    mapSaleTypeBtn1.isSelected = true
+                    mapSaleTypeBtn2.isSelected = false
+                    mapSaleTypeBtn3.isSelected = false
+                    saleTypeSliderText.text = "보증금"
+                    saleTypeLinear.visibility = View.VISIBLE
+                }
+            }
+
+            mapSaleTypeBtn2.setOnClickListener {
+                println("mapSaleTypeBtn2")
+                // mapSaleTypeBtn3.chec
+                if (!mapSaleTypeBtn2.isSelected) {
+                    println("mapSaleTypeBtn2!!")
+                    mapSaleTypeBtn1.isSelected = false
+                    mapSaleTypeBtn2.isSelected = true
+                    mapSaleTypeBtn3.isSelected = false
+                    saleTypeSliderText.text = "전세금"
+                    saleTypeLinear.visibility = View.GONE
+                }
+            }
+
+            mapSaleTypeBtn3.setOnClickListener {
+                println("mapSaleTypeBtn3")
+                if (!mapSaleTypeBtn3.isSelected) {
+                    println("mapSaleTypeBtn3!!")
+                    mapSaleTypeBtn1.isSelected = false
+                    mapSaleTypeBtn2.isSelected = false
+                    mapSaleTypeBtn3.isSelected = true
+                    saleTypeLinear.visibility = View.VISIBLE
+                }
+            }
+
+            val saleTypeArr1: Array<String> = resources.getStringArray(R.array.saleType1)
+            val saleTypeArr2: Array<String> = resources.getStringArray(R.array.saleType2)
+
+
+            saleTypeSlider1.setValues(0.0f, 30.0f)
+            saleTypeSliderPrice1.text = "전체"
+            saleTypeSlider1.addOnChangeListener(RangeSlider.OnChangeListener { slider, _, _ ->
+                //Use the value
+                var strFrom: String = saleTypeArr1[slider.values[0].toInt()]
+                // var realStrFrom: String = ""
+
+                if (strFrom.equals("0")) strFrom = "최소"
+                if (strFrom.equals("1")) strFrom = "최대"
+                var strTo: String = saleTypeArr1[slider.values[1].toInt()]
+                if (strTo.equals("0")) strTo = "최소"
+                if (strTo.equals("1")) strTo = "최대"
+                var str = "$strFrom ~ $strTo"
+                if (strFrom.equals("최소") && strTo.equals("최대"))
+                    str = "전체"
+                saleTypeSlider1.setMinSeparationValue(1.0f)
+                saleTypeSliderPrice1.text = str
+            })
+
+            saleTypeSlider2.setValues(0.0f, 18.0f)
+            saleTypeSliderPrice2.text = "전체"
+            saleTypeSlider2.addOnChangeListener(RangeSlider.OnChangeListener { slider, _, _ ->
+                //Use the value
+                var strFrom: String = saleTypeArr2[slider.values[0].toInt()]
+                // var realStrFrom: String = ""
+
+                if (strFrom.equals("0")) strFrom = "최소"
+                else if (strFrom.equals("1")) strFrom = "최대"
+                var strTo: String = saleTypeArr2[slider.values[1].toInt()]
+                if (strTo.equals("0")) strTo = "최소"
+                else if (strTo.equals("1")) strTo = "최대"
+                var str = "$strFrom ~ $strTo"
+                if (strFrom.equals("최소") && strTo.equals("최대"))
+                    str = "전체"
+                saleTypeSlider2.setMinSeparationValue(1.0f)
+                saleTypeSliderPrice2.text = str
+            })
+
+            spaceTypeSlider.setValues(0.0f, 6.0f)
+            spaceTypeSizeText.text = "전체"
+            spaceTypeSlider.addOnChangeListener(RangeSlider.OnChangeListener { slider, _, _ ->
+                //Use the value
+                var strFrom: String = slider.values[0].toInt().toString() + "0"
+                // var realStrFrom: String = ""
+                if (strFrom.equals("00")) strFrom = "최소"
+                else if (strFrom.equals("60")) strFrom = "최대"
+                else strFrom += "평"
+                var strTo: String = slider.values[1].toInt().toString() + "0"
+                if (strTo.equals("00")) strTo = "최소"
+                else if (strTo.equals("60")) strTo = "최대"
+                else strTo += "평"
+                var str = strFrom + " ~ " + strTo
+                if (strFrom.equals("최소") && strTo.equals("최대"))
+                    str = "전체"
+                spaceTypeSlider.setMinSeparationValue(1.0f)
+                spaceTypeSizeText.text = str
+            })
         }
     }
     @UiThread
