@@ -1,8 +1,11 @@
-package com.example.dongsan2mong
+package com.example.dongsan2mong.adapter
 
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentActivity
 import androidx.viewpager2.adapter.FragmentStateAdapter
+import com.example.dongsan2mong.fragment.CallfreesetFragment
+import com.example.dongsan2mong.fragment.DibshomeFragment
+import com.example.dongsan2mong.fragment.LatesthomeFragment
 
 class WishlistViewPagerAdapter(fragmentActivity: FragmentActivity)
     : FragmentStateAdapter(fragmentActivity){

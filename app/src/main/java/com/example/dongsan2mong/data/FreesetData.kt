@@ -1,4 +1,4 @@
-package com.example.dongsan2mong
+package com.example.dongsan2mong.data
 
 
 import android.os.Parcel

@@ -1,4 +1,4 @@
-package com.example.dongsan2mong
+package com.example.dongsan2mong.fragment
 
 import android.annotation.SuppressLint
 import android.content.Intent
@@ -12,8 +12,13 @@ import android.widget.Toast
 import androidx.annotation.UiThread
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.example.dongsan2mong.*
+import com.example.dongsan2mong.R
+import com.example.dongsan2mong.activity.MainActivity
+import com.example.dongsan2mong.activity.SearchActivity
+import com.example.dongsan2mong.adapter.MapSelectedAreaAdapter
+import com.example.dongsan2mong.adapter.SeoulAdapter
 import com.example.dongsan2mong.databinding.FragmentMapBinding
-import com.google.android.material.slider.LabelFormatter
 import com.naver.maps.geometry.LatLng
 import com.naver.maps.map.*
 import java.util.*
@@ -231,7 +236,8 @@ class MapFragment : Fragment(), OnMapReadyCallback {
 
 
             roomNumSelectedAdapter = MapSelectedAreaAdapter(roomNumSelected)
-            roomNumSelectedAdapter.itemClickListener = object : MapSelectedAreaAdapter.OnItemClickListener {
+            roomNumSelectedAdapter.itemClickListener = object :
+                MapSelectedAreaAdapter.OnItemClickListener {
                 override fun OnItemClick(position: Int, item: String) {
                     roomNumSelectedAdapter.removeItem(position)
                     isSelectedRoomNum[position] = false
@@ -273,7 +279,8 @@ class MapFragment : Fragment(), OnMapReadyCallback {
              */
 
             convTypeSelectedAdapter = MapSelectedAreaAdapter(convTypeSelected)
-            convTypeSelectedAdapter.itemClickListener = object : MapSelectedAreaAdapter.OnItemClickListener {
+            convTypeSelectedAdapter.itemClickListener = object :
+                MapSelectedAreaAdapter.OnItemClickListener {
                 override fun OnItemClick(position: Int, item: String) {
                     convTypeSelectedAdapter.removeItem(position)
                     isSelectedConvType[position] = false
@@ -310,7 +317,8 @@ class MapFragment : Fragment(), OnMapReadyCallback {
             convTypeRecyclerView.adapter = convTypeAdapter
 
             buildTypeSelectedAdapter = MapSelectedAreaAdapter(buildTypeSelected)
-            buildTypeSelectedAdapter.itemClickListener = object : MapSelectedAreaAdapter.OnItemClickListener {
+            buildTypeSelectedAdapter.itemClickListener = object :
+                MapSelectedAreaAdapter.OnItemClickListener {
                 override fun OnItemClick(position: Int, item: String) {
                     buildTypeSelectedAdapter.removeItem(position)
                     isSelectedBuildType[position] = false
@@ -352,7 +360,8 @@ class MapFragment : Fragment(), OnMapReadyCallback {
              */
 
             floorNumSelectedAdapter = MapSelectedAreaAdapter(floorNumSelected)
-            floorNumSelectedAdapter.itemClickListener = object : MapSelectedAreaAdapter.OnItemClickListener {
+            floorNumSelectedAdapter.itemClickListener = object :
+                MapSelectedAreaAdapter.OnItemClickListener {
                 override fun OnItemClick(position: Int, item: String) {
                     floorNumSelectedAdapter.removeItem(position)
                     isSelectedFloorNum[position] = false
@@ -389,7 +398,8 @@ class MapFragment : Fragment(), OnMapReadyCallback {
             floorNumRecyclerView.adapter = floorNumAdapter
 
             inclTypeSelectedAdapter = MapSelectedAreaAdapter(inclTypeSelected)
-            inclTypeSelectedAdapter.itemClickListener = object : MapSelectedAreaAdapter.OnItemClickListener {
+            inclTypeSelectedAdapter.itemClickListener = object :
+                MapSelectedAreaAdapter.OnItemClickListener {
                 override fun OnItemClick(position: Int, item: String) {
                     inclTypeSelectedAdapter.removeItem(position)
                     isSelectedInclType[position] = false
@@ -428,7 +438,8 @@ class MapFragment : Fragment(), OnMapReadyCallback {
             areaSelectedAdapter = MapSelectedAreaAdapter(areaSelected)
 
             // 선택한 구, 동 정보가 담기는 리사이클러뷰의 아이템을 클릭했을 때 해당 아이템을 삭제해주는 이벤트
-            areaSelectedAdapter.itemClickListener = object : MapSelectedAreaAdapter.OnItemClickListener {
+            areaSelectedAdapter.itemClickListener = object :
+                MapSelectedAreaAdapter.OnItemClickListener {
                 override fun OnItemClick(position: Int, item: String) {
                     areaSelectedAdapter.removeItem(position)
 

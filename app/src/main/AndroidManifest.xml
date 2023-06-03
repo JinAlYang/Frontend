@@ -11,7 +11,7 @@
         android:theme="@style/Theme.DongSan2Mong"
         tools:targetApi="31">
         <activity
-            android:name=".SignupActivity"
+            android:name=".activity.SignupActivity"
             android:exported="false" />
 
         <meta-data
@@ -19,13 +19,13 @@
             android:value="0rza5wnq5k" />
 
         <activity
-            android:name=".SearchActivity"
+            android:name=".activity.SearchActivity"
             android:exported="false" />
         <activity
-            android:name=".MainActivity"
+            android:name=".activity.MainActivity"
             android:exported="false" />
         <activity
-            android:name=".LoginActivity"
+            android:name=".activity.LoginActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

@@ -1,4 +1,4 @@
-package com.example.dongsan2mong
+package com.example.dongsan2mong.adapter
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
@@ -12,7 +12,7 @@ class MapSelectedAreaAdapter(val items: ArrayList<String>)
         fun OnItemClick (position: Int, item: String)
     }
 
-    var itemClickListener: OnItemClickListener ?= null
+    var itemClickListener: OnItemClickListener?= null
 
         inner class ViewHolder(val binding: SelectedAreaBinding): RecyclerView.ViewHolder(binding.root) {
             init {
