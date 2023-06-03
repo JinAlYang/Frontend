@@ -10,7 +10,8 @@ data class HouseInfoData(
     val floor: String = "15층",
     val area: String = "광진구 화양동",
     val roomNum: String = "오픈형 원룸",
-    val tempImg: Int = 0
+    val tempImg: Int = 0,
+    val location: Array<Double> = arrayOf(0.0, 0.0)
 ) : Parcelable {
     constructor(parcel: Parcel) : this(
         parcel.readString() ?: "월세",
