@@ -222,7 +222,7 @@ class MapFragment : Fragment(), OnMapReadyCallback {
             convTypeRecyclerView.layoutManager = LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
             mapBuildTypeRecyclerView.layoutManager = LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
             buildTypeRecyclerView.layoutManager = LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
-            mapSpaceTypeRecyclerView.layoutManager = LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
+//            mapSpaceTypeRecyclerView.layoutManager = LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
             // spaceTypeRecyclerView.layoutManager = LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
             mapFloorNumRecyclerView.layoutManager = LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
             floorNumRecyclerView.layoutManager = LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
@@ -1006,6 +1006,7 @@ class MapFragment : Fragment(), OnMapReadyCallback {
 
             }
         }
+        initRangeSlider()
     }
 
     private fun checkOptionSelected(){
@@ -1071,16 +1072,44 @@ class MapFragment : Fragment(), OnMapReadyCallback {
 
     private fun initRangeSlider() {
         binding.apply {
-//            saleTypeSlider1.setLabelFormatter(LabelFormatter { value -> //It is just an example
-//                when (value) {
-//                    0.0f -> ""
-//                    1.0f -> ""
-//                    else -> ""
-//
-//                }
-//                // else java.lang.String.format(Locale.US, "%.0f", value)
-//            })
-//            saleTypeSlider1.text
+            mapSaleTypeBtn1.isSelected = true
+            mapSaleTypeBtn1.setOnClickListener {
+                println("mapSaleTypeBtn1")
+                if (!mapSaleTypeBtn1.isSelected) {
+                    println("mapSaleTypeBtn1!!")
+                    mapSaleTypeBtn1.isSelected = true
+                    mapSaleTypeBtn2.isSelected = false
+                    mapSaleTypeBtn3.isSelected = false
+                    saleTypeSliderText.text = "보증금"
+                    saleTypeLinear.visibility = View.VISIBLE
+                }
+            }
+
+            mapSaleTypeBtn2.setOnClickListener {
+                println("mapSaleTypeBtn2")
+                // mapSaleTypeBtn3.chec
+                if (!mapSaleTypeBtn2.isSelected) {
+                    println("mapSaleTypeBtn2!!")
+                    mapSaleTypeBtn1.isSelected = false
+                    mapSaleTypeBtn2.isSelected = true
+                    mapSaleTypeBtn3.isSelected = false
+                    saleTypeSliderText.text = "전세금"
+                    saleTypeLinear.visibility = View.GONE
+                }
+            }
+
+            mapSaleTypeBtn3.setOnClickListener {
+                println("mapSaleTypeBtn3")
+                if (!mapSaleTypeBtn3.isSelected) {
+                    println("mapSaleTypeBtn3!!")
+                    mapSaleTypeBtn1.isSelected = false
+                    mapSaleTypeBtn2.isSelected = false
+                    mapSaleTypeBtn3.isSelected = true
+                    saleTypeLinear.visibility = View.VISIBLE
+                }
+            }
+
+
         }
     }
     @UiThread
