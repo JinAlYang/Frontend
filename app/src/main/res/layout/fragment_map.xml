@@ -662,22 +662,23 @@
                         />
 
                     <TextView
+                        android:id="@+id/spaceTypeSizeText"
                         android:layout_width="0dp"
                         android:layout_weight="1"
                         android:layout_height="wrap_content"
                         android:textColor="@color/main_blue"
-                        android:text="~ 10평"
+                        android:text="전체"
                         android:textSize="14sp"
                         android:fontFamily="@font/elicedigitalbaeum"
                         android:textAlignment="textEnd" />
-                </LinearLayout>
 
-                <ImageView
-                    android:id="@+id/refreshAreaIcon6"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="19dp"
-                    android:src="@drawable/icon_refresh_area"/>
+                    <ImageView
+                        android:id="@+id/refreshAreaIcon6"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="19dp"
+                        android:src="@drawable/icon_refresh_area"/>
+                </LinearLayout>
 
             </LinearLayout>
 

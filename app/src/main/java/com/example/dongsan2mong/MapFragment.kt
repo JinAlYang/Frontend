@@ -690,7 +690,8 @@ class MapFragment : Fragment(), OnMapReadyCallback {
                 /*
                 spaceType에서 refreshAreaIcon6 클릭하면~
                  */
-
+                spaceTypeSlider.setValues(0.0f, 6.0f)
+                spaceTypeSizeText.text = "전체"
             }
 
             refreshAreaIcon7.setOnClickListener {
@@ -1148,10 +1149,10 @@ class MapFragment : Fragment(), OnMapReadyCallback {
                 // var realStrFrom: String = ""
 
                 if (strFrom.equals("0")) strFrom = "최소"
-                if (strFrom.equals("1")) strFrom = "최대"
+                else if (strFrom.equals("1")) strFrom = "최대"
                 var strTo: String = saleTypeArr2[slider.values[1].toInt()]
                 if (strTo.equals("0")) strTo = "최소"
-                if (strTo.equals("1")) strTo = "최대"
+                else if (strTo.equals("1")) strTo = "최대"
                 var str = "$strFrom ~ $strTo"
                 if (strFrom.equals("최소") && strTo.equals("최대"))
                     str = "전체"
@@ -1159,10 +1160,25 @@ class MapFragment : Fragment(), OnMapReadyCallback {
                 saleTypeSliderPrice2.text = str
             })
 
-
-
-
-
+            spaceTypeSlider.setValues(0.0f, 6.0f)
+            spaceTypeSizeText.text = "전체"
+            spaceTypeSlider.addOnChangeListener(RangeSlider.OnChangeListener { slider, _, _ ->
+                //Use the value
+                var strFrom: String = slider.values[0].toInt().toString() + "0"
+                // var realStrFrom: String = ""
+                if (strFrom.equals("00")) strFrom = "최소"
+                else if (strFrom.equals("60")) strFrom = "최대"
+                else strFrom += "평"
+                var strTo: String = slider.values[1].toInt().toString() + "0"
+                if (strTo.equals("00")) strTo = "최소"
+                else if (strTo.equals("60")) strTo = "최대"
+                else strTo += "평"
+                var str = strFrom + " ~ " + strTo
+                if (strFrom.equals("최소") && strTo.equals("최대"))
+                    str = "전체"
+                spaceTypeSlider.setMinSeparationValue(1.0f)
+                spaceTypeSizeText.text = str
+            })
         }
     }
     @UiThread
