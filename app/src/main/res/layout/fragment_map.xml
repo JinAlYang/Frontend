@@ -334,6 +334,7 @@
                     android:textAlignment="textStart"
                     />
                 <TextView
+                    android:id="@+id/saleTypeSliderPrice1"
                     android:layout_width="0dp"
                     android:layout_weight="1"
                     android:layout_height="wrap_content"
@@ -429,6 +430,7 @@
                         android:textAlignment="textStart"
                         />
                     <TextView
+                        android:id="@+id/saleTypeSliderPrice2"
                         android:layout_width="0dp"
                         android:layout_weight="1"
                         android:layout_height="wrap_content"

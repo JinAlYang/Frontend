@@ -13,12 +13,11 @@ import androidx.annotation.UiThread
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.dongsan2mong.databinding.FragmentMapBinding
-import com.google.android.material.slider.LabelFormatter
+import com.google.android.material.slider.RangeSlider
+import com.google.android.material.slider.Slider
 import com.naver.maps.geometry.LatLng
 import com.naver.maps.map.*
 import java.util.*
-import kotlin.collections.ArrayList
-import kotlin.collections.HashMap
 
 
 class MapFragment : Fragment(), OnMapReadyCallback {
@@ -647,6 +646,14 @@ class MapFragment : Fragment(), OnMapReadyCallback {
                 /*
                 saleType에서 refreshAreaIcon2 클릭하면~
                  */
+                saleTypeSlider1.setValues(0.0f, 30.0f)
+                saleTypeSliderPrice1.text = "전체"
+                saleTypeSlider2.setValues(0.0f, 18.0f)
+                saleTypeSliderPrice2.text = "전체"
+                mapSaleTypeBtn1.isSelected = true
+                mapSaleTypeBtn2.isSelected = false
+                mapSaleTypeBtn3.isSelected = false
+                saleTypeLinear.visibility = View.VISIBLE
             }
 
             refreshAreaIcon3.setOnClickListener {
@@ -683,6 +690,7 @@ class MapFragment : Fragment(), OnMapReadyCallback {
                 /*
                 spaceType에서 refreshAreaIcon6 클릭하면~
                  */
+
             }
 
             refreshAreaIcon7.setOnClickListener {
@@ -1108,6 +1116,51 @@ class MapFragment : Fragment(), OnMapReadyCallback {
                     saleTypeLinear.visibility = View.VISIBLE
                 }
             }
+
+            val saleTypeArr1: Array<String> = resources.getStringArray(R.array.saleType1)
+            val saleTypeArr2: Array<String> = resources.getStringArray(R.array.saleType2)
+
+
+            saleTypeSlider1.setValues(0.0f, 30.0f)
+            saleTypeSliderPrice1.text = "전체"
+            saleTypeSlider1.addOnChangeListener(RangeSlider.OnChangeListener { slider, _, _ ->
+                //Use the value
+                var strFrom: String = saleTypeArr1[slider.values[0].toInt()]
+                // var realStrFrom: String = ""
+
+                if (strFrom.equals("0")) strFrom = "최소"
+                if (strFrom.equals("1")) strFrom = "최대"
+                var strTo: String = saleTypeArr1[slider.values[1].toInt()]
+                if (strTo.equals("0")) strTo = "최소"
+                if (strTo.equals("1")) strTo = "최대"
+                var str = "$strFrom ~ $strTo"
+                if (strFrom.equals("최소") && strTo.equals("최대"))
+                    str = "전체"
+                saleTypeSlider1.setMinSeparationValue(1.0f)
+                saleTypeSliderPrice1.text = str
+            })
+
+            saleTypeSlider2.setValues(0.0f, 18.0f)
+            saleTypeSliderPrice2.text = "전체"
+            saleTypeSlider2.addOnChangeListener(RangeSlider.OnChangeListener { slider, _, _ ->
+                //Use the value
+                var strFrom: String = saleTypeArr2[slider.values[0].toInt()]
+                // var realStrFrom: String = ""
+
+                if (strFrom.equals("0")) strFrom = "최소"
+                if (strFrom.equals("1")) strFrom = "최대"
+                var strTo: String = saleTypeArr2[slider.values[1].toInt()]
+                if (strTo.equals("0")) strTo = "최소"
+                if (strTo.equals("1")) strTo = "최대"
+                var str = "$strFrom ~ $strTo"
+                if (strFrom.equals("최소") && strTo.equals("최대"))
+                    str = "전체"
+                saleTypeSlider2.setMinSeparationValue(1.0f)
+                saleTypeSliderPrice2.text = str
+            })
+
+
+
 
 
         }
