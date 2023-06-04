@@ -5,7 +5,7 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.example.dongsan2mong.activity.MainActivity
 import com.example.dongsan2mong.data.PresetData
-import com.example.dongsan2mong.databinding.RowFreesetBinding
+import com.example.dongsan2mong.databinding.RowPresetBinding
 import com.example.dongsan2mong.fragment.MapFragment
 
 class PresetDataAdapter(val items: ArrayList<PresetData>, val selected: ArrayList<Boolean>) :
@@ -13,7 +13,7 @@ class PresetDataAdapter(val items: ArrayList<PresetData>, val selected: ArrayLis
     var onApplyClickListener: OnApplyClickListener? = null
 
     interface OnItemClickListener {
-        fun OnItemClick(data: PresetData, binding: RowFreesetBinding, position: Int)
+        fun OnItemClick(data: PresetData, binding: RowPresetBinding, position: Int)
     }
 
     interface OnApplyClickListener {
@@ -22,8 +22,8 @@ class PresetDataAdapter(val items: ArrayList<PresetData>, val selected: ArrayLis
 
     var itemClickListener: OnItemClickListener? = null
 
-    inner class ViewHolder(val binding: RowFreesetBinding) : RecyclerView.ViewHolder(binding.root) {
-        private val mainActivity: MainActivity? = binding.root.context
+    inner class ViewHolder(val binding: RowPresetBinding) : RecyclerView.ViewHolder(binding.root) {
+        private val mainActivity: MainActivity? = binding.root.context as MainActivity?
 
         init {
             binding.freeset.setOnClickListener {
@@ -55,7 +55,7 @@ class PresetDataAdapter(val items: ArrayList<PresetData>, val selected: ArrayLis
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
-        val view = RowFreesetBinding.inflate(
+        val view = RowPresetBinding.inflate(
             LayoutInflater.from(parent.context),
             parent, false
         )

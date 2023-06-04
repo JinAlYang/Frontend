@@ -11,11 +11,11 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.dongsan2mong.activity.MainActivity
 import com.example.dongsan2mong.adapter.PresetDataAdapter
 import com.example.dongsan2mong.data.PresetData
-import com.example.dongsan2mong.databinding.FragmentCallfreesetBinding
-import com.example.dongsan2mong.databinding.RowFreesetBinding
+import com.example.dongsan2mong.databinding.FragmentCallpresetBinding
+import com.example.dongsan2mong.databinding.RowPresetBinding
 
-class CallfreesetFragment : Fragment() {
-    lateinit var binding: FragmentCallfreesetBinding
+class CallPresetFragment : Fragment() {
+    lateinit var binding: FragmentCallpresetBinding
     lateinit var adapter: PresetDataAdapter
 
     val data: ArrayList<PresetData> = ArrayList()
@@ -26,7 +26,7 @@ class CallfreesetFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         // Inflate the layout for this fragment
-        binding = FragmentCallfreesetBinding.inflate(inflater, container, false)
+        binding = FragmentCallpresetBinding.inflate(inflater, container, false)
         initRecyclerView()
         adapter.onApplyClickListener = object : PresetDataAdapter.OnApplyClickListener {
             override fun onApplyClick(data: PresetData) {
@@ -63,7 +63,7 @@ class CallfreesetFragment : Fragment() {
         )
         adapter = PresetDataAdapter(data, selected)
         adapter.itemClickListener = object : PresetDataAdapter.OnItemClickListener {
-            override fun OnItemClick(data: PresetData, binding: RowFreesetBinding, position: Int) {
+            override fun OnItemClick(data: PresetData, binding: RowPresetBinding, position: Int) {
                 adapter.updateItemAtPosition(position, data)
             }
 
