@@ -27,6 +27,8 @@ interface RetrofitService {
     @GET("wishList/zzimHome/{memberId}")
     fun getZzimHomeList(@Path("memberId") number: Int): Call<WishListInfoData>
 
+    @POST("wishList/recentHome")
+
 
     //RealEstateDetail
     @GET("RealEstateDetail/{RealEstate_id}")
@@ -46,10 +48,24 @@ interface RetrofitService {
     fun getPreset(
         @Path("member_id") number: Int,
         @Path("preset_id") presetId: Int
-    ): Call<ResponseData>
+    ): Call<PresetInfoData>
+
+    @POST("preset/alter/{member_id}")
+    fun addPreset(@Body params: PresetInfoData): Call<PresetInfoData>
+
+    @DELETE("preset/alter/{member_id}/{preset_id}")
+    fun deletePreset()
 
 
     //Map
+    @GET("realEstate/bbox")
+    fun getRealEstateInMap()
+
+    @GET("realEstate/bbox")
+    fun getRealEstateInMapWithNoOption()
+
+    @GET("realEstate/bbox")
+    fun getRealEstateInCluster()
 
 
     // Example
