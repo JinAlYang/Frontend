@@ -1,9 +1,7 @@
 package com.example.dongsan2mong.api
 
 data class PresetInfoData(
-    val id: Int,
-    val name: String,
-    val email: String,
-    val gender: String,
-    val age: Int
+    val presetName: String = "오피스텔 월세 60이하",
+    val PresetUrl: String = "",
+    val PresetInfo: String = ""
 )
