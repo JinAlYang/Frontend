@@ -3,27 +3,28 @@ package com.example.dongsan2mong.adapter
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
-import com.example.dongsan2mong.data.FreesetData
 import com.example.dongsan2mong.activity.MainActivity
+import com.example.dongsan2mong.data.PresetData
 import com.example.dongsan2mong.databinding.RowFreesetBinding
 import com.example.dongsan2mong.fragment.MapFragment
 
-class FreesetDataAdapter (val items:ArrayList<FreesetData>, val selected:ArrayList<Boolean>)
-    : RecyclerView.Adapter<FreesetDataAdapter.ViewHolder>() {
+class PresetDataAdapter(val items: ArrayList<PresetData>, val selected: ArrayList<Boolean>) :
+    RecyclerView.Adapter<PresetDataAdapter.ViewHolder>() {
     var onApplyClickListener: OnApplyClickListener? = null
+
     interface OnItemClickListener {
-        fun OnItemClick(data: FreesetData, binding: RowFreesetBinding, position: Int)
+        fun OnItemClick(data: PresetData, binding: RowFreesetBinding, position: Int)
     }
 
     interface OnApplyClickListener {
-        fun onApplyClick(data: FreesetData)
+        fun onApplyClick(data: PresetData)
     }
 
     var itemClickListener: OnItemClickListener? = null
 
-    inner class ViewHolder(val binding: RowFreesetBinding)
-        : RecyclerView.ViewHolder(binding.root) {
-        private val mainActivity: MainActivity? = binding.root.context as? MainActivity
+    inner class ViewHolder(val binding: RowFreesetBinding) : RecyclerView.ViewHolder(binding.root) {
+        private val mainActivity: MainActivity? = binding.root.context
+
         init {
             binding.freeset.setOnClickListener {
                 if (selected[adapterPosition] == false)
@@ -60,6 +61,7 @@ class FreesetDataAdapter (val items:ArrayList<FreesetData>, val selected:ArrayLi
         )
         return ViewHolder(view)
     }
+
     override fun getItemCount(): Int {
         return items.size
     }
@@ -84,7 +86,7 @@ class FreesetDataAdapter (val items:ArrayList<FreesetData>, val selected:ArrayLi
         }
     }
 
-    fun updateItemAtPosition(position: Int, data: FreesetData) {
+    fun updateItemAtPosition(position: Int, data: PresetData) {
         items[position] = data
         notifyItemChanged(position)
     }
