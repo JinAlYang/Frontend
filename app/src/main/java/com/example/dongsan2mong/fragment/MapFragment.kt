@@ -18,11 +18,15 @@ import com.example.dongsan2mong.activity.MainActivity
 import com.example.dongsan2mong.activity.SearchActivity
 import com.example.dongsan2mong.adapter.MapSelectedAreaAdapter
 import com.example.dongsan2mong.adapter.SeoulAdapter
+import com.example.dongsan2mong.api.PresetInfoData
+import com.example.dongsan2mong.api.RetrofitBuilder
 import com.example.dongsan2mong.databinding.FragmentMapBinding
 import com.google.android.material.slider.RangeSlider
-import com.google.android.material.slider.Slider
 import com.naver.maps.geometry.LatLng
 import com.naver.maps.map.*
+import retrofit2.Call
+import retrofit2.Callback
+import retrofit2.Response
 import java.util.*
 
 
@@ -31,7 +35,7 @@ class MapFragment : Fragment(), OnMapReadyCallback {
     lateinit var drawerOpenImageView: ImageView
     lateinit var drawerCloseImageView: ImageView
     lateinit var nMap: NaverMap
-    var optionClicked = Array<Int>(8, {0})
+    var optionClicked = Array<Int>(8, { 0 })
     var optionSelected = false
 
     // 지역 옵션 어댑터
@@ -43,8 +47,8 @@ class MapFragment : Fragment(), OnMapReadyCallback {
     lateinit var areaSelectedAdapter: MapSelectedAreaAdapter
     lateinit var seoulAdapter: SeoulAdapter
     lateinit var deeperAdapter: SeoulAdapter
-    lateinit var seoulArr : Array<String>
-    lateinit var deeperArr : Array<String>
+    lateinit var seoulArr: Array<String>
+    lateinit var deeperArr: Array<String>
     var selectedHashMap = HashMap<String, Pair<Int, Int>>()
 
     var isSelectedArea = arrayOf<BooleanArray>(
@@ -75,9 +79,9 @@ class MapFragment : Fragment(), OnMapReadyCallback {
         BooleanArray(6)
     )
 
-    var isSelectedSeoulArea = Array<Boolean>(25) {false}
+    var isSelectedSeoulArea = Array<Boolean>(25) { false }
 
-    lateinit var tempArr : Array<Boolean>
+    lateinit var tempArr: Array<Boolean>
 
     // 선택된 지역 카운트 변수
     var numOfSelectedArea: Int = 0
@@ -97,7 +101,7 @@ class MapFragment : Fragment(), OnMapReadyCallback {
     val roomNumSelected: ArrayList<String> = ArrayList()
 
     lateinit var roomNumAdapter: SeoulAdapter
-    lateinit var roomNumArr : Array<String>
+    lateinit var roomNumArr: Array<String>
     var isSelectedRoomNum = Array<Boolean>(7) { false }
 
     // 선택된 roomType
@@ -113,7 +117,7 @@ class MapFragment : Fragment(), OnMapReadyCallback {
     val convTypeSelected: ArrayList<String> = ArrayList()
 
     lateinit var convTypeAdapter: SeoulAdapter
-    lateinit var convTypeArr : Array<String>
+    lateinit var convTypeArr: Array<String>
     var isSelectedConvType = Array<Boolean>(7) { false }
 
     // 선택된 convType
@@ -129,7 +133,7 @@ class MapFragment : Fragment(), OnMapReadyCallback {
     val buildTypeSelected: ArrayList<String> = ArrayList()
 
     lateinit var buildTypeAdapter: SeoulAdapter
-    lateinit var buildTypeArr : Array<String>
+    lateinit var buildTypeArr: Array<String>
     var isSelectedBuildType = Array<Boolean>(7) { false }
 
     // 선택된 buildType
@@ -151,7 +155,7 @@ class MapFragment : Fragment(), OnMapReadyCallback {
     val floorNumSelected: ArrayList<String> = ArrayList()
 
     lateinit var floorNumAdapter: SeoulAdapter
-    lateinit var floorNumArr : Array<String>
+    lateinit var floorNumArr: Array<String>
     var isSelectedFloorNum = Array<Boolean>(7) { false }
 
     // 선택된 floorNum
@@ -167,14 +171,17 @@ class MapFragment : Fragment(), OnMapReadyCallback {
     val inclTypeSelected: ArrayList<String> = ArrayList()
 
     lateinit var inclTypeAdapter: SeoulAdapter
-    lateinit var inclTypeArr : Array<String>
+    lateinit var inclTypeArr: Array<String>
     var isSelectedInclType = Array<Boolean>(7) { false }
 
     // 선택된 inclType
     var numOfSelectedInclType: Int = 0
     var firstSelectedInclType: String = ""
 
-   override fun onCreate(savedInstanceState: Bundle?) {
+    // http 통신용 데이터
+    var presetInfo = PresetInfoData()
+
+    override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         val fm = childFragmentManager
         val initialMapOption = NaverMapOptions()
@@ -216,23 +223,36 @@ class MapFragment : Fragment(), OnMapReadyCallback {
     private fun init() {
         binding.apply {
             // recyclerView 연결
-            mapAreaRecyclerView.layoutManager = LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
-            seoulRecyclerView.layoutManager = LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
-            deeperRecyclerView.layoutManager = LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
+            mapAreaRecyclerView.layoutManager =
+                LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
+            seoulRecyclerView.layoutManager =
+                LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
+            deeperRecyclerView.layoutManager =
+                LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
 //            mapSaleTypeRecyclerView.layoutManager = LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
 //            saleTypeRecyclerView.layoutManager = LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
-            mapRoomNumRecyclerView.layoutManager = LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
-            roomNumRecyclerView.layoutManager = LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
-            mapConvTypeRecyclerView.layoutManager = LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
-            convTypeRecyclerView.layoutManager = LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
-            mapBuildTypeRecyclerView.layoutManager = LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
-            buildTypeRecyclerView.layoutManager = LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
+            mapRoomNumRecyclerView.layoutManager =
+                LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
+            roomNumRecyclerView.layoutManager =
+                LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
+            mapConvTypeRecyclerView.layoutManager =
+                LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
+            convTypeRecyclerView.layoutManager =
+                LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
+            mapBuildTypeRecyclerView.layoutManager =
+                LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
+            buildTypeRecyclerView.layoutManager =
+                LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
 //            mapSpaceTypeRecyclerView.layoutManager = LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
             // spaceTypeRecyclerView.layoutManager = LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
-            mapFloorNumRecyclerView.layoutManager = LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
-            floorNumRecyclerView.layoutManager = LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
-            mapInclTypeRecyclerView.layoutManager = LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
-            inclTypeRecyclerView.layoutManager = LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
+            mapFloorNumRecyclerView.layoutManager =
+                LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
+            floorNumRecyclerView.layoutManager =
+                LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
+            mapInclTypeRecyclerView.layoutManager =
+                LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
+            inclTypeRecyclerView.layoutManager =
+                LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
 
 
             roomNumSelectedAdapter = MapSelectedAreaAdapter(roomNumSelected)
@@ -265,7 +285,8 @@ class MapFragment : Fragment(), OnMapReadyCallback {
                         if (numOfSelectedRoomNum == 0)
                             firstSelectedRoomNum = roomNumArr[position]
                         numOfSelectedRoomNum++
-                        mapOption3.text = firstSelectedRoomNum + " +" + numOfSelectedRoomNum.toString()
+                        mapOption3.text =
+                            firstSelectedRoomNum + " +" + numOfSelectedRoomNum.toString()
                     }
                     roomNumAdapter.selectedPosition = position
                     roomNumAdapter.notifyDataSetChanged()
@@ -307,7 +328,8 @@ class MapFragment : Fragment(), OnMapReadyCallback {
                         if (numOfSelectedConvType == 0)
                             firstSelectedConvType = convTypeArr[position]
                         numOfSelectedConvType++
-                        mapOption4.text = firstSelectedConvType + " +" + numOfSelectedConvType.toString()
+                        mapOption4.text =
+                            firstSelectedConvType + " +" + numOfSelectedConvType.toString()
                     }
                     convTypeAdapter.selectedPosition = position
                     convTypeAdapter.notifyDataSetChanged()
@@ -345,7 +367,8 @@ class MapFragment : Fragment(), OnMapReadyCallback {
                         if (numOfSelectedBuildType == 0)
                             firstSelectedBuildType = buildTypeArr[position]
                         numOfSelectedBuildType++
-                        mapOption5.text = firstSelectedBuildType + " +" + numOfSelectedBuildType.toString()
+                        mapOption5.text =
+                            firstSelectedBuildType + " +" + numOfSelectedBuildType.toString()
                     }
                     buildTypeAdapter.selectedPosition = position
                     buildTypeAdapter.notifyDataSetChanged()
@@ -388,7 +411,8 @@ class MapFragment : Fragment(), OnMapReadyCallback {
                         if (numOfSelectedFloorNum == 0)
                             firstSelectedFloorNum = floorNumArr[position]
                         numOfSelectedFloorNum++
-                        mapOption7.text = firstSelectedFloorNum + " +" + numOfSelectedFloorNum.toString()
+                        mapOption7.text =
+                            firstSelectedFloorNum + " +" + numOfSelectedFloorNum.toString()
                     }
                     floorNumAdapter.selectedPosition = position
                     floorNumAdapter.notifyDataSetChanged()
@@ -426,7 +450,8 @@ class MapFragment : Fragment(), OnMapReadyCallback {
                         if (numOfSelectedInclType == 0)
                             firstSelectedInclType = inclTypeArr[position]
                         numOfSelectedInclType++
-                        mapOption8.text = firstSelectedInclType + " +" + numOfSelectedInclType.toString()
+                        mapOption8.text =
+                            firstSelectedInclType + " +" + numOfSelectedInclType.toString()
                     }
                     inclTypeAdapter.selectedPosition = position
                     inclTypeAdapter.notifyDataSetChanged()
@@ -460,8 +485,7 @@ class MapFragment : Fragment(), OnMapReadyCallback {
                     numOfSelectedArea--
                     if (numOfSelectedArea == 0) {
                         mapOption1.text = getString(R.string.map_option_1)
-                    }
-                    else
+                    } else
                         mapOption1.text = firstSelectedArea + " +" + numOfSelectedArea.toString()
 
                     areaSelectedAdapter.notifyDataSetChanged()
@@ -492,88 +516,110 @@ class MapFragment : Fragment(), OnMapReadyCallback {
             tempArr = isSelectedArea[0].toTypedArray()
             deeperAdapter = SeoulAdapter(deeperArr, tempArr)
 
-            var seoulPos : Int = 0
+            var seoulPos: Int = 0
             seoulAdapter.selectedPosition = seoulPos
             seoulAdapter.itemClickListener = object : SeoulAdapter.OnItemClickListener {
                 override fun OnItemClick(p1: Int) {
                     when (p1) {
-                        0 ->  {
-                            deeperArr = resources.getStringArray(R.array.spinner_region_seoul_gangnam)
+                        0 -> {
+                            deeperArr =
+                                resources.getStringArray(R.array.spinner_region_seoul_gangnam)
                         }
                         1 -> {
-                            deeperArr = resources.getStringArray(R.array.spinner_region_seoul_gangdong)
+                            deeperArr =
+                                resources.getStringArray(R.array.spinner_region_seoul_gangdong)
                         }
                         2 -> {
-                            deeperArr = resources.getStringArray(R.array.spinner_region_seoul_gangbuk)
+                            deeperArr =
+                                resources.getStringArray(R.array.spinner_region_seoul_gangbuk)
                         }
                         3 -> {
-                            deeperArr = resources.getStringArray(R.array.spinner_region_seoul_gangseo)
+                            deeperArr =
+                                resources.getStringArray(R.array.spinner_region_seoul_gangseo)
                         }
                         4 -> {
-                            deeperArr = resources.getStringArray(R.array.spinner_region_seoul_gwanak)
+                            deeperArr =
+                                resources.getStringArray(R.array.spinner_region_seoul_gwanak)
                         }
                         5 -> {
-                            deeperArr = resources.getStringArray(R.array.spinner_region_seoul_gwangjin)
+                            deeperArr =
+                                resources.getStringArray(R.array.spinner_region_seoul_gwangjin)
                         }
                         6 -> {
                             deeperArr = resources.getStringArray(R.array.spinner_region_seoul_guro)
                         }
                         7 -> {
-                            deeperArr = resources.getStringArray(R.array.spinner_region_seoul_geumcheon)
+                            deeperArr =
+                                resources.getStringArray(R.array.spinner_region_seoul_geumcheon)
                         }
                         8 -> {
                             deeperArr = resources.getStringArray(R.array.spinner_region_seoul_nowon)
                         }
                         9 -> {
-                            deeperArr = resources.getStringArray(R.array.spinner_region_seoul_dobong)
+                            deeperArr =
+                                resources.getStringArray(R.array.spinner_region_seoul_dobong)
                         }
                         10 -> {
-                            deeperArr = resources.getStringArray(R.array.spinner_region_seoul_dongdaemun)
+                            deeperArr =
+                                resources.getStringArray(R.array.spinner_region_seoul_dongdaemun)
                         }
                         11 -> {
-                            deeperArr = resources.getStringArray(R.array.spinner_region_seoul_dongjag)
+                            deeperArr =
+                                resources.getStringArray(R.array.spinner_region_seoul_dongjag)
                         }
                         12 -> {
                             deeperArr = resources.getStringArray(R.array.spinner_region_seoul_mapo)
                         }
                         13 -> {
-                            deeperArr = resources.getStringArray(R.array.spinner_region_seoul_seodaemun)
+                            deeperArr =
+                                resources.getStringArray(R.array.spinner_region_seoul_seodaemun)
                         }
                         14 -> {
-                            deeperArr = resources.getStringArray(R.array.spinner_region_seoul_seocho)
+                            deeperArr =
+                                resources.getStringArray(R.array.spinner_region_seoul_seocho)
                         }
                         15 -> {
-                            deeperArr = resources.getStringArray(R.array.spinner_region_seoul_seongdong)
+                            deeperArr =
+                                resources.getStringArray(R.array.spinner_region_seoul_seongdong)
                         }
                         16 -> {
-                            deeperArr = resources.getStringArray(R.array.spinner_region_seoul_seongbuk)
+                            deeperArr =
+                                resources.getStringArray(R.array.spinner_region_seoul_seongbuk)
                         }
                         17 -> {
-                            deeperArr = resources.getStringArray(R.array.spinner_region_seoul_songpa)
+                            deeperArr =
+                                resources.getStringArray(R.array.spinner_region_seoul_songpa)
                         }
                         18 -> {
-                            deeperArr = resources.getStringArray(R.array.spinner_region_seoul_yangcheon)
+                            deeperArr =
+                                resources.getStringArray(R.array.spinner_region_seoul_yangcheon)
                         }
                         19 -> {
-                            deeperArr = resources.getStringArray(R.array.spinner_region_seoul_yeongdeungpo)
+                            deeperArr =
+                                resources.getStringArray(R.array.spinner_region_seoul_yeongdeungpo)
                         }
                         20 -> {
-                            deeperArr = resources.getStringArray(R.array.spinner_region_seoul_yongsan)
+                            deeperArr =
+                                resources.getStringArray(R.array.spinner_region_seoul_yongsan)
                         }
                         21 -> {
-                            deeperArr = resources.getStringArray(R.array.spinner_region_seoul_eunpyeong)
+                            deeperArr =
+                                resources.getStringArray(R.array.spinner_region_seoul_eunpyeong)
                         }
                         22 -> {
-                            deeperArr = resources.getStringArray(R.array.spinner_region_seoul_jongno)
+                            deeperArr =
+                                resources.getStringArray(R.array.spinner_region_seoul_jongno)
                         }
                         23 -> {
                             deeperArr = resources.getStringArray(R.array.spinner_region_seoul_jung)
                         }
                         24 -> {
-                            deeperArr = resources.getStringArray(R.array.spinner_region_seoul_jungnanggu)
+                            deeperArr =
+                                resources.getStringArray(R.array.spinner_region_seoul_jungnanggu)
                         }
                         else -> {
-                            deeperArr = resources.getStringArray(R.array.spinner_region_seoul_gangnam)
+                            deeperArr =
+                                resources.getStringArray(R.array.spinner_region_seoul_gangnam)
                         }
                     }
                     seoulAdapter.selectedPosition = p1
@@ -734,7 +780,7 @@ class MapFragment : Fragment(), OnMapReadyCallback {
                     mapOption1Extend.setBackgroundResource(R.drawable.background_map_option_selected)
                     allOptionPageGone()
                     mapOption1Page.visibility = View.VISIBLE
-                    optionClicked[0] = 1;
+                    optionClicked[0] = 1
 //            deeperArr = resources.getStringArray(R.array)
 //            deeperAdapter = MapSelectedAreaAdapter()
                 } else {
@@ -743,7 +789,7 @@ class MapFragment : Fragment(), OnMapReadyCallback {
                     mapOption1Extend.setTextColor(Color.parseColor("#000000"))
                     mapOption1Extend.setBackgroundResource(R.drawable.background_map_option_expand)
                     mapOption1Page.visibility = View.GONE
-                    optionClicked[0] = 0;
+                    optionClicked[0] = 0
                 }
                 checkOptionSelected()
 
@@ -757,7 +803,7 @@ class MapFragment : Fragment(), OnMapReadyCallback {
                     mapOption2.setBackgroundResource(R.drawable.background_map_option_selected)
                     mapOption2Extend.setTextColor(R.color.main_blue)
                     mapOption2Extend.setBackgroundResource(R.drawable.background_map_option_selected)
-                    optionClicked[1] = 1;
+                    optionClicked[1] = 1
                     allOptionPageGone()
                     mapOption2Page.visibility = View.VISIBLE
                 } else {
@@ -765,7 +811,7 @@ class MapFragment : Fragment(), OnMapReadyCallback {
                     mapOption2.setBackgroundResource(R.drawable.background_map_option_expand)
                     mapOption2Extend.setTextColor(Color.parseColor("#000000"))
                     mapOption2Extend.setBackgroundResource(R.drawable.background_map_option_expand)
-                    optionClicked[1] = 0;
+                    optionClicked[1] = 0
                     mapOption2Page.visibility = View.GONE
                 }
                 checkOptionSelected()
@@ -779,14 +825,14 @@ class MapFragment : Fragment(), OnMapReadyCallback {
                     mapOption3Extend.setBackgroundResource(R.drawable.background_map_option_selected)
                     allOptionPageGone()
                     mapOption3Page.visibility = View.VISIBLE
-                    optionClicked[2] = 1;
+                    optionClicked[2] = 1
                 } else {
                     mapOption3.setTextColor(Color.parseColor("#000000"))
                     mapOption3.setBackgroundResource(R.drawable.background_map_option_expand)
                     mapOption3Extend.setTextColor(Color.parseColor("#000000"))
                     mapOption3Extend.setBackgroundResource(R.drawable.background_map_option_expand)
                     mapOption3Page.visibility = View.GONE
-                    optionClicked[2] = 0;
+                    optionClicked[2] = 0
                 }
                 checkOptionSelected()
             }
@@ -799,14 +845,14 @@ class MapFragment : Fragment(), OnMapReadyCallback {
                     mapOption4Extend.setBackgroundResource(R.drawable.background_map_option_selected)
                     allOptionPageGone()
                     mapOption4Page.visibility = View.VISIBLE
-                    optionClicked[3] = 1;
+                    optionClicked[3] = 1
                 } else {
                     mapOption4.setTextColor(Color.parseColor("#000000"))
                     mapOption4.setBackgroundResource(R.drawable.background_map_option_expand)
                     mapOption4Extend.setTextColor(Color.parseColor("#000000"))
                     mapOption4Extend.setBackgroundResource(R.drawable.background_map_option_expand)
                     mapOption4Page.visibility = View.GONE
-                    optionClicked[3] = 0;
+                    optionClicked[3] = 0
                 }
                 checkOptionSelected()
             }
@@ -819,14 +865,14 @@ class MapFragment : Fragment(), OnMapReadyCallback {
                     mapOption5Extend.setBackgroundResource(R.drawable.background_map_option_selected)
                     allOptionPageGone()
                     mapOption5Page.visibility = View.VISIBLE
-                    optionClicked[4] = 1;
+                    optionClicked[4] = 1
                 } else {
                     mapOption5.setTextColor(Color.parseColor("#000000"))
                     mapOption5.setBackgroundResource(R.drawable.background_map_option_expand)
                     mapOption5Extend.setTextColor(Color.parseColor("#000000"))
                     mapOption5Extend.setBackgroundResource(R.drawable.background_map_option_expand)
                     mapOption5Page.visibility = View.GONE
-                    optionClicked[4] = 0;
+                    optionClicked[4] = 0
                 }
                 checkOptionSelected()
             }
@@ -839,14 +885,14 @@ class MapFragment : Fragment(), OnMapReadyCallback {
                     mapOption6Extend.setBackgroundResource(R.drawable.background_map_option_selected)
                     allOptionPageGone()
                     mapOption6Page.visibility = View.VISIBLE
-                    optionClicked[5] = 1;
+                    optionClicked[5] = 1
                 } else {
                     mapOption6.setTextColor(Color.parseColor("#000000"))
                     mapOption6.setBackgroundResource(R.drawable.background_map_option_expand)
                     mapOption6Extend.setTextColor(Color.parseColor("#000000"))
                     mapOption6Extend.setBackgroundResource(R.drawable.background_map_option_expand)
                     mapOption6Page.visibility = View.GONE
-                    optionClicked[5] = 0;
+                    optionClicked[5] = 0
                 }
                 checkOptionSelected()
             }
@@ -859,14 +905,14 @@ class MapFragment : Fragment(), OnMapReadyCallback {
                     mapOption7Extend.setBackgroundResource(R.drawable.background_map_option_selected)
                     allOptionPageGone()
                     mapOption7Page.visibility = View.VISIBLE
-                    optionClicked[6] = 1;
+                    optionClicked[6] = 1
                 } else {
                     mapOption7.setTextColor(Color.parseColor("#000000"))
                     mapOption7.setBackgroundResource(R.drawable.background_map_option_expand)
                     mapOption7Extend.setTextColor(Color.parseColor("#000000"))
                     mapOption7Extend.setBackgroundResource(R.drawable.background_map_option_expand)
                     mapOption7Page.visibility = View.GONE
-                    optionClicked[6] = 0;
+                    optionClicked[6] = 0
                 }
                 checkOptionSelected()
             }
@@ -879,14 +925,14 @@ class MapFragment : Fragment(), OnMapReadyCallback {
                     mapOption8Extend.setBackgroundResource(R.drawable.background_map_option_selected)
                     allOptionPageGone()
                     mapOption8Page.visibility = View.VISIBLE
-                    optionClicked[7] = 1;
+                    optionClicked[7] = 1
                 } else {
                     mapOption8.setTextColor(Color.parseColor("#000000"))
                     mapOption8.setBackgroundResource(R.drawable.background_map_option_expand)
                     mapOption8Extend.setTextColor(Color.parseColor("#000000"))
                     mapOption8Extend.setBackgroundResource(R.drawable.background_map_option_expand)
                     mapOption8Page.visibility = View.GONE
-                    optionClicked[7] = 0;
+                    optionClicked[7] = 0
                 }
                 checkOptionSelected()
             }
@@ -897,13 +943,13 @@ class MapFragment : Fragment(), OnMapReadyCallback {
                     mapOption1.setBackgroundResource(R.drawable.background_map_option_selected)
                     mapOption1Extend.setTextColor(R.color.main_blue)
                     mapOption1Extend.setBackgroundResource(R.drawable.background_map_option_selected)
-                    optionClicked[0] = 1;
+                    optionClicked[0] = 1
                 } else {
                     mapOption1.setTextColor(Color.parseColor("#000000"))
                     mapOption1.setBackgroundResource(R.drawable.background_map_option_expand)
                     mapOption1Extend.setTextColor(Color.parseColor("#000000"))
                     mapOption1Extend.setBackgroundResource(R.drawable.background_map_option_expand)
-                    optionClicked[0] = 0;
+                    optionClicked[0] = 0
                 }
                 checkOptionSelected()
             }
@@ -914,13 +960,13 @@ class MapFragment : Fragment(), OnMapReadyCallback {
                     mapOption2.setBackgroundResource(R.drawable.background_map_option_selected)
                     mapOption2Extend.setTextColor(R.color.main_blue)
                     mapOption2Extend.setBackgroundResource(R.drawable.background_map_option_selected)
-                    optionClicked[1] = 1;
+                    optionClicked[1] = 1
                 } else {
                     mapOption2.setTextColor(Color.parseColor("#000000"))
                     mapOption2.setBackgroundResource(R.drawable.background_map_option_expand)
                     mapOption2Extend.setTextColor(Color.parseColor("#000000"))
                     mapOption2Extend.setBackgroundResource(R.drawable.background_map_option_expand)
-                    optionClicked[1] = 0;
+                    optionClicked[1] = 0
                 }
                 checkOptionSelected()
             }
@@ -931,13 +977,13 @@ class MapFragment : Fragment(), OnMapReadyCallback {
                     mapOption3.setBackgroundResource(R.drawable.background_map_option_selected)
                     mapOption3Extend.setTextColor(R.color.main_blue)
                     mapOption3Extend.setBackgroundResource(R.drawable.background_map_option_selected)
-                    optionClicked[2] = 1;
+                    optionClicked[2] = 1
                 } else {
                     mapOption3.setTextColor(Color.parseColor("#000000"))
                     mapOption3.setBackgroundResource(R.drawable.background_map_option_expand)
                     mapOption3Extend.setTextColor(Color.parseColor("#000000"))
                     mapOption3Extend.setBackgroundResource(R.drawable.background_map_option_expand)
-                    optionClicked[2] = 0;
+                    optionClicked[2] = 0
                 }
                 checkOptionSelected()
             }
@@ -946,11 +992,11 @@ class MapFragment : Fragment(), OnMapReadyCallback {
                 if (optionClicked[3] == 0) {
                     mapOption4Extend.setTextColor(R.color.main_blue)
                     mapOption4Extend.setBackgroundResource(R.drawable.background_map_option_selected)
-                    optionClicked[3] = 1;
+                    optionClicked[3] = 1
                 } else {
                     mapOption4Extend.setTextColor(Color.parseColor("#000000"))
                     mapOption4Extend.setBackgroundResource(R.drawable.background_map_option_expand)
-                    optionClicked[3] = 0;
+                    optionClicked[3] = 0
                 }
                 checkOptionSelected()
             }
@@ -961,13 +1007,13 @@ class MapFragment : Fragment(), OnMapReadyCallback {
                     mapOption5.setBackgroundResource(R.drawable.background_map_option_selected)
                     mapOption5Extend.setTextColor(R.color.main_blue)
                     mapOption5Extend.setBackgroundResource(R.drawable.background_map_option_selected)
-                    optionClicked[4] = 1;
+                    optionClicked[4] = 1
                 } else {
                     mapOption5.setTextColor(Color.parseColor("#000000"))
                     mapOption5.setBackgroundResource(R.drawable.background_map_option_expand)
                     mapOption5Extend.setTextColor(Color.parseColor("#000000"))
                     mapOption5Extend.setBackgroundResource(R.drawable.background_map_option_expand)
-                    optionClicked[4] = 0;
+                    optionClicked[4] = 0
                 }
                 checkOptionSelected()
             }
@@ -978,13 +1024,13 @@ class MapFragment : Fragment(), OnMapReadyCallback {
                     mapOption6.setBackgroundResource(R.drawable.background_map_option_selected)
                     mapOption6Extend.setTextColor(R.color.main_blue)
                     mapOption6Extend.setBackgroundResource(R.drawable.background_map_option_selected)
-                    optionClicked[5] = 1;
+                    optionClicked[5] = 1
                 } else {
                     mapOption6.setTextColor(Color.parseColor("#000000"))
                     mapOption6.setBackgroundResource(R.drawable.background_map_option_expand)
                     mapOption6Extend.setTextColor(Color.parseColor("#000000"))
                     mapOption6Extend.setBackgroundResource(R.drawable.background_map_option_expand)
-                    optionClicked[5] = 0;
+                    optionClicked[5] = 0
                 }
                 checkOptionSelected()
             }
@@ -993,11 +1039,11 @@ class MapFragment : Fragment(), OnMapReadyCallback {
                 if (optionClicked[6] == 0) {
                     mapOption7Extend.setTextColor(R.color.main_blue)
                     mapOption7Extend.setBackgroundResource(R.drawable.background_map_option_selected)
-                    optionClicked[6] = 1;
+                    optionClicked[6] = 1
                 } else {
                     mapOption7Extend.setTextColor(Color.parseColor("#000000"))
                     mapOption7Extend.setBackgroundResource(R.drawable.background_map_option_expand)
-                    optionClicked[6] = 0;
+                    optionClicked[6] = 0
                 }
                 checkOptionSelected()
             }
@@ -1006,11 +1052,11 @@ class MapFragment : Fragment(), OnMapReadyCallback {
                 if (optionClicked[7] == 0) {
                     mapOption8Extend.setTextColor(R.color.main_blue)
                     mapOption8Extend.setBackgroundResource(R.drawable.background_map_option_selected)
-                    optionClicked[7] = 1;
+                    optionClicked[7] = 1
                 } else {
                     mapOption8Extend.setTextColor(Color.parseColor("#000000"))
                     mapOption8Extend.setBackgroundResource(R.drawable.background_map_option_expand)
-                    optionClicked[7] = 0;
+                    optionClicked[7] = 0
                 }
                 checkOptionSelected()
             }
@@ -1024,19 +1070,19 @@ class MapFragment : Fragment(), OnMapReadyCallback {
             }
 
             saveOptionAsPreset.setOnClickListener {
-
+                savePresetHttp()
             }
         }
         initRangeSlider()
     }
 
-    private fun checkOptionSelected(){
+    private fun checkOptionSelected() {
         optionSelected = false
         binding.apply {
             for (idx in optionClicked) {
                 if (idx == 1) {
                     optionSelected = true
-                    break;
+                    break
                 }
             }
 
@@ -1193,6 +1239,7 @@ class MapFragment : Fragment(), OnMapReadyCallback {
             })
         }
     }
+
     @UiThread
     // 다음은 OnMapReadyCallback을 등록해 NaverMap 객체를 얻어오는 예제입니다.
     /*
@@ -1218,4 +1265,24 @@ class MapFragment : Fragment(), OnMapReadyCallback {
             mapOption8Page.visibility = View.GONE
         }
     }
+
+    private fun savePresetHttp() {
+        val addPreset = RetrofitBuilder.api.addPreset(presetInfo)
+        addPreset.enqueue(object : Callback<PresetInfoData> {
+            override fun onResponse(
+                call: Call<PresetInfoData>,
+                response: Response<PresetInfoData>
+            ) {
+                Toast.makeText(activity, "Call Success", Toast.LENGTH_LONG).show()
+                if (response.isSuccessful) {
+                }
+            }
+
+            override fun onFailure(call: Call<PresetInfoData>, t: Throwable) {
+                Toast.makeText(activity, "Call Failed", Toast.LENGTH_LONG).show()
+            }
+
+        })
+    }
+
 }

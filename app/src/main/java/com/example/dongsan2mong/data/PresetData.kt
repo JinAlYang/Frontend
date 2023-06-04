@@ -4,7 +4,7 @@ package com.example.dongsan2mong.data
 import android.os.Parcel
 import android.os.Parcelable
 
-data class FreesetData(
+data class PresetData(
     // 지역 : ㅁㅁ구 ㅇㅇ동
     val region: String = "지역",
 
@@ -59,12 +59,12 @@ data class FreesetData(
         return 0
     }
 
-    companion object CREATOR : Parcelable.Creator<FreesetData> {
-        override fun createFromParcel(parcel: Parcel): FreesetData {
-            return FreesetData(parcel)
+    companion object CREATOR : Parcelable.Creator<PresetData> {
+        override fun createFromParcel(parcel: Parcel): PresetData {
+            return PresetData(parcel)
         }
 
-        override fun newArray(size: Int): Array<FreesetData?> {
+        override fun newArray(size: Int): Array<PresetData?> {
             return arrayOfNulls(size)
         }
     }

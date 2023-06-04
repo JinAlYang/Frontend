@@ -8,28 +8,28 @@ import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.example.dongsan2mong.data.FreesetData
-import com.example.dongsan2mong.adapter.FreesetDataAdapter
 import com.example.dongsan2mong.activity.MainActivity
-import com.example.dongsan2mong.databinding.FragmentCallfreesetBinding
-import com.example.dongsan2mong.databinding.RowFreesetBinding
+import com.example.dongsan2mong.adapter.PresetDataAdapter
+import com.example.dongsan2mong.data.PresetData
+import com.example.dongsan2mong.databinding.FragmentCallpresetBinding
+import com.example.dongsan2mong.databinding.RowPresetBinding
 
-class CallfreesetFragment: Fragment() {
-    lateinit var binding: FragmentCallfreesetBinding
-    lateinit var adapter: FreesetDataAdapter
+class CallPresetFragment : Fragment() {
+    lateinit var binding: FragmentCallpresetBinding
+    lateinit var adapter: PresetDataAdapter
 
-    val data:ArrayList<FreesetData> = ArrayList()
-    val selected:ArrayList<Boolean> = ArrayList()
+    val data: ArrayList<PresetData> = ArrayList()
+    val selected: ArrayList<Boolean> = ArrayList()
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
         // Inflate the layout for this fragment
-        binding = FragmentCallfreesetBinding.inflate(inflater, container, false)
+        binding = FragmentCallpresetBinding.inflate(inflater, container, false)
         initRecyclerView()
-        adapter.onApplyClickListener = object : FreesetDataAdapter.OnApplyClickListener {
-            override fun onApplyClick(data: FreesetData) {
+        adapter.onApplyClickListener = object : PresetDataAdapter.OnApplyClickListener {
+            override fun onApplyClick(data: PresetData) {
                 val mapFragment = MapFragment()
                 val bundle = Bundle()
                 bundle.putParcelable("freesetData", data)
@@ -44,9 +44,9 @@ class CallfreesetFragment: Fragment() {
     }
 
     fun initData() {
-        data.add(FreesetData(freesetTitle = "어대역보증금3000이상"))
-        data.add(FreesetData(freesetTitle = "화양동,자양동오피스텔만"))
-        data.add(FreesetData(freesetTitle = "구의동3층이상투룸월세70이하"))
+        data.add(PresetData(freesetTitle = "어대역보증금3000이상"))
+        data.add(PresetData(freesetTitle = "화양동,자양동오피스텔만"))
+        data.add(PresetData(freesetTitle = "구의동3층이상투룸월세70이하"))
 
 
         for (i: Int in 0 until data.size) {
@@ -57,18 +57,21 @@ class CallfreesetFragment: Fragment() {
     }
 
     fun initRecyclerView() {
-        binding.recyclerViewFreeset.layoutManager = LinearLayoutManager(requireContext(),
-            LinearLayoutManager.VERTICAL, false)
-        adapter = FreesetDataAdapter(data, selected)
-        adapter.itemClickListener = object : FreesetDataAdapter.OnItemClickListener {
-            override fun OnItemClick(data: FreesetData, binding: RowFreesetBinding, position: Int) {
+        binding.recyclerViewFreeset.layoutManager = LinearLayoutManager(
+            requireContext(),
+            LinearLayoutManager.VERTICAL, false
+        )
+        adapter = PresetDataAdapter(data, selected)
+        adapter.itemClickListener = object : PresetDataAdapter.OnItemClickListener {
+            override fun OnItemClick(data: PresetData, binding: RowPresetBinding, position: Int) {
                 adapter.updateItemAtPosition(position, data)
             }
 
         }
         binding.recyclerViewFreeset.adapter = adapter
-        val simpleCallback = object: ItemTouchHelper.SimpleCallback(
-            ItemTouchHelper.UP or ItemTouchHelper.DOWN, ItemTouchHelper.RIGHT) {
+        val simpleCallback = object : ItemTouchHelper.SimpleCallback(
+            ItemTouchHelper.UP or ItemTouchHelper.DOWN, ItemTouchHelper.RIGHT
+        ) {
             override fun onMove(
                 recyclerView: RecyclerView,
                 viewHolder: RecyclerView.ViewHolder,
