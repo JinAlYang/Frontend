@@ -4,14 +4,30 @@ import android.os.Parcel
 import android.os.Parcelable
 
 data class HouseInfoData(
+    // 매물 매매유형 : 전세, 월세
     val type: String = "월세",
+
+    // 매물 가격 : 전세면 전세금만, 월세면 보증금 및 월세
     val price: String = "1000/60",
+
+    // 매물 평형
     val space: String = "21.56m^2",
+
+    // 매물 층수 : 반지하, 지상층(구체적으로 몇층인지도?), 옥탑
     val floor: String = "15층",
+
+    // 매물 지역 : ㅁㅁ구 ㅁㅁ동
     val area: String = "광진구 화양동",
+
+    // 매물 방 개수
     val roomNum: String = "오픈형 원룸",
+
+    // 매물 이미지
     val tempImg: Int = 0,
+
+    // 매물 위도 및 경도 정보
     val location: Array<Double> = arrayOf(0.0, 0.0)
+
 ) : Parcelable {
     constructor(parcel: Parcel) : this(
         parcel.readString() ?: "월세",
