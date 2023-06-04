@@ -79,10 +79,11 @@ class PresetDataAdapter(val items: ArrayList<PresetData>, val selected: ArrayLis
         holder.binding.freesetDelete.setOnClickListener {
             // 클릭한 아이템의 위치(position) 가져오기
             val clickedPosition = holder.adapterPosition
-
             // 해당 아이템 삭제
             items.removeAt(clickedPosition)
             notifyItemRemoved(clickedPosition)
+
+            // 여기서 Http 통신으로 프리셋 삭제도 해줄 필요
         }
     }
 

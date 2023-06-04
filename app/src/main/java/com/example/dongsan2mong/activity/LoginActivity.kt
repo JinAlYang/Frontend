@@ -40,7 +40,7 @@ class LoginActivity : AppCompatActivity() {
                 val i = Intent(this@LoginActivity, MainActivity::class.java)
                 startActivity(i)
                 finish()
-                http()
+                getLoginInfoHttp()
             }
 
             val loginIntent = Intent(this@LoginActivity, SignupActivity::class.java)
@@ -67,7 +67,7 @@ class LoginActivity : AppCompatActivity() {
         }
     }
 
-    private fun http() {
+    private fun getLoginInfoHttp() {
         val getMemberInfo = RetrofitBuilder.api.getMemberInfo(1)
         getMemberInfo.enqueue(object : Callback<MemberInfoData> {
             override fun onResponse(
@@ -77,6 +77,7 @@ class LoginActivity : AppCompatActivity() {
                 Toast.makeText(applicationContext, "Call Success", Toast.LENGTH_LONG).show()
                 if (response.isSuccessful) {
                     memberInfo = response.body() ?: MemberInfoData()
+                    // 받은 정보 메인 액티비티로 보내줄 필요
                 }
             }
 
