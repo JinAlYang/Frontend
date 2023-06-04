@@ -8,7 +8,7 @@ interface RetrofitService {
 
     //Member
     @GET("member/{memberId}")
-    fun getMemberInfo(@Path("memberId") number: Int): Call<memberInfo>
+    fun getMemberInfo(@Path("memberId") number: Int): Call<MemberInfoData>
 
     @POST("member")
     fun addMemberInfo()
@@ -22,25 +22,25 @@ interface RetrofitService {
 
     //WishList
     @GET("wishList/recentHome/{memberId}")
-    fun getRecentHomeList(@Path("memberId") number: Int): Call<ResponseData>
+    fun getRecentHomeList(@Path("memberId") number: Int): Call<WishListInfoData>
 
     @GET("wishList/zzimHome/{memberId}")
-    fun getZzimHomeList(@Path("memberId") number: Int): Call<ResponseData>
+    fun getZzimHomeList(@Path("memberId") number: Int): Call<WishListInfoData>
 
 
     //RealEstateDetail
     @GET("RealEstateDetail/{RealEstate_id}")
-    fun getRealEstateDetail(@Path("RealEstate_id") number: Int): Call<ResponseData>
+    fun getRealEstateDetail(@Path("RealEstate_id") number: Int): Call<RealEstateDetailData>
 
 
     //RealEstate
     @GET("RealEstate/{RealEstate_id}")
-    fun getRealEstate(@Path("RealEstate_id") number: Int): Call<ResponseData>
+    fun getRealEstate(@Path("RealEstate_id") number: Int): Call<RealEstateData>
 
 
     //SearchPreset
     @GET("preset/find/{member_id}")
-    fun getPresetList(@Path("member_id") number: Int): Call<ResponseData>
+    fun getPresetList(@Path("member_id") number: Int): Call<PresetInfoData>
 
     @GET("preset/find/{member_id}/{preset_id}")
     fun getPreset(
