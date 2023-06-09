@@ -20,5 +20,8 @@
     <color name="gray_unselected_option">#FF999999</color>
     <color name="red_brown">#FF740000</color>
 
+    <color name="transparent_main_blue">#BB5544CC</color>
+
+
 <!--    <color name="white_transparent">#EEFFFFFF</color>-->
 </resources>

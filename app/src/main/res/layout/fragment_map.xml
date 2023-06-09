@@ -37,12 +37,32 @@
         android:layout_height="0dp"
         android:layout_weight="1">
 
-        <fragment
-        android:id="@+id/mapView"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_marginTop="48dp"
-        android:name="com.naver.maps.map.MapFragment" />
+        <FrameLayout
+            android:id="@+id/mapViewFrame"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:focusableInTouchMode="true"
+            android:focusable="true"
+            >
+            <fragment
+                android:id="@+id/mapView"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginTop="48dp"
+                android:name="com.naver.maps.map.MapFragment" />
+
+        </FrameLayout>
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/mapGridView"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginTop="48dp"
+            android:overScrollMode="never"
+            android:contextClickable="false"
+            android:focusable="false"
+            />
+
 
         <LinearLayout
             android:id="@+id/mapOptionBarLayout"
