@@ -48,6 +48,8 @@ class MapFragment : Fragment(), OnMapReadyCallback {
     private var markerMaxCount: Int = 16
 
     var markerList: ArrayList<Marker> = ArrayList<Marker>(16)
+    var LBArr: ArrayList<LatLng> = ArrayList<LatLng>(16)
+    var RTArr: ArrayList<LatLng> = ArrayList<LatLng>(16)
 
 
 
@@ -1317,6 +1319,15 @@ class MapFragment : Fragment(), OnMapReadyCallback {
                     markerList[i].map = null
                 }
                 markerList.clear()
+
+                LBArr.clear()
+                RTArr.clear()
+                for (i in 0..3) {
+                    for (j in 0..3) {
+                        RTArr.add(projection.fromScreenLocation(PointF(width * (j + 1) / 4.0f, height * i / 4.0f)))
+                        LBArr.add(projection.fromScreenLocation(PointF(width * j / 4.0f, height * (i + 1) / 4.0f)))
+                    }
+                }
 
                 for (i in 0..3) {
                     for (j in 0..3) {
