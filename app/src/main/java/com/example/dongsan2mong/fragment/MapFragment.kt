@@ -1074,6 +1074,7 @@ class MapFragment : Fragment(), OnMapReadyCallback {
             }
 
             saveOptionAsPreset.setOnClickListener {
+                println("저장 버튼 클릭")
                 savePresetHttp()
             }
         }
@@ -1303,9 +1304,7 @@ class MapFragment : Fragment(), OnMapReadyCallback {
     }
 
     private fun savePresetHttp() {
-
-
-        val addPreset = RetrofitBuilder.api.addPreset(presetInfo)
+        val addPreset = RetrofitBuilder.api.addPreset(1, presetInfo)
         addPreset.enqueue(object : Callback<PresetInfoData> {
             override fun onResponse(
                 call: Call<PresetInfoData>,

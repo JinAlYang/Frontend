@@ -55,7 +55,7 @@ interface RetrofitService {
     ): Call<PresetInfoData>
 
     @POST("preset/alter/{member_id}")
-    fun addPreset(@Body params: PresetInfoData): Call<PresetInfoData>
+    fun addPreset(@Path("member_id") memId: Int,@Body params: PresetInfoData): Call<PresetInfoData>
 
     @DELETE("preset/alter/{member_id}/{preset_id}")
     fun deletePreset()
