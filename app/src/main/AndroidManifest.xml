@@ -14,6 +14,7 @@
         android:icon="@mipmap/ic_launcher"
         android:supportsRtl="true"
         android:theme="@style/Theme.DongSan2Mong"
+        android:name=".api.KakaoApplication"
         tools:targetApi="31">
         <activity
             android:name=".activity.SignupActivity"
@@ -38,6 +39,21 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+
+        <!-- 여기서 부터 밑에 까지 전체 추가해주세요 추가-->
+        <activity android:name="com.kakao.sdk.auth.AuthCodeHandlerActivity"
+            android:exported="true">
+            <intent-filter>
+                <action android:name="android.intent.action.VIEW" />
+                <category android:name="android.intent.category.DEFAULT" />
+                <category android:name="android.intent.category.BROWSABLE" />
+
+                <!-- Redirect URI: "kakao{NATIVE_APP_KEY}://oauth" -->
+                <data android:host="oauth"
+                    android:scheme="kakaoc70148f669794ab2955b93e869d224c4" />
+            </intent-filter>
+        </activity>
+
     </application>
 
 </manifest>
