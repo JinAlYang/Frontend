@@ -53,16 +53,29 @@
 
         </FrameLayout>
 
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/mapGridView"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_marginTop="48dp"
-            android:overScrollMode="never"
-            android:contextClickable="false"
-            android:focusable="false"
-            />
+<!--        <androidx.recyclerview.widget.RecyclerView-->
+<!--            android:id="@+id/mapGridView"-->
+<!--            android:layout_width="match_parent"-->
+<!--            android:layout_height="match_parent"-->
+<!--            android:layout_marginTop="48dp"-->
+<!--            android:overScrollMode="never"-->
+<!--            android:contextClickable="false"-->
+<!--            android:focusable="false"-->
+<!--            />-->
 
+        <TextView
+            android:id="@+id/gridviewText"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:padding="50dp"
+            android:textSize="18sp"
+            android:textColor="@color/white"
+            android:fontFamily="@font/elicedigitalbaeum"
+
+            android:background="@drawable/background_map_gridview_item"
+            android:text="14"
+            android:gravity="center"
+            />
 
         <LinearLayout
             android:id="@+id/mapOptionBarLayout"

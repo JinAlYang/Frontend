@@ -12,13 +12,11 @@ import android.view.ViewGroup
 import android.widget.*
 import androidx.annotation.UiThread
 import androidx.fragment.app.Fragment
-import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.dongsan2mong.*
 import com.example.dongsan2mong.R
 import com.example.dongsan2mong.activity.MainActivity
 import com.example.dongsan2mong.activity.SearchActivity
-import com.example.dongsan2mong.adapter.MapGridViewAdapter
 import com.example.dongsan2mong.adapter.MapSelectedAreaAdapter
 import com.example.dongsan2mong.adapter.SeoulAdapter
 import com.example.dongsan2mong.api.RetrofitBuilder
@@ -28,6 +26,9 @@ import com.example.dongsan2mong.databinding.FragmentMapBinding
 import com.google.android.material.slider.RangeSlider
 import com.naver.maps.geometry.LatLng
 import com.naver.maps.map.*
+import com.naver.maps.map.overlay.Marker
+import com.naver.maps.map.overlay.Overlay
+import com.naver.maps.map.overlay.OverlayImage
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -41,6 +42,15 @@ class MapFragment : Fragment(), OnMapReadyCallback {
     lateinit var nMap: NaverMap
     var optionClicked = Array<Int>(8, { 0 })
     var optionSelected = false
+
+    private lateinit var tv_markerNum: TextView
+    private var route123: Int = 0
+    private var markerMaxCount: Int = 16
+
+    var markerList: ArrayList<Marker> = ArrayList<Marker>(16)
+
+
+
 
     // 지역 옵션 어댑터
     // linearLayout id : mapOption1Page
@@ -1088,18 +1098,18 @@ class MapFragment : Fragment(), OnMapReadyCallback {
             }
         }
 
-        binding.apply {
-            var list = arrayListOf(1, 2, 3, 4, 5, 0, 7, 8, 9, 10, 11, 12, 13, 0, 15, 16)
-            var listManager = GridLayoutManager(context, 4)
-            var listAdapter = MapGridViewAdapter(list)
-
-            var recyclerList = mapGridView.apply {
-                setHasFixedSize(true)
-                layoutManager = listManager
-                adapter = listAdapter
-
-            }
-        }
+//        binding.apply {
+//            var list = arrayListOf(1, 2, 3, 4, 5, 0, 7, 8, 9, 10, 11, 12, 13, 0, 15, 16)
+//            var listManager = GridLayoutManager(context, 4)
+//            var listAdapter = MapGridViewAdapter(list)
+//
+//            var recyclerList = mapGridView.apply {
+//                setHasFixedSize(true)
+//                layoutManager = listManager
+//                adapter = listAdapter
+//
+//            }
+//        }
         initRangeSlider()
     }
 
@@ -1289,15 +1299,55 @@ class MapFragment : Fragment(), OnMapReadyCallback {
                 val height: Int = mapViewFrame.height - mapOptionBarLayout.height
                 val leftBottomCoord = projection.fromScreenLocation(PointF(0f, height.toFloat()))
                 val rightTopCoord = projection.fromScreenLocation(PointF(width.toFloat(), 0f))
-                Log.i("NaverMapMSG", "좌하단 : ${leftBottomCoord.latitude}, ${leftBottomCoord.longitude} ")
+                Log.i(
+                    "NaverMapMSG",
+                    "좌하단 : ${leftBottomCoord.latitude}, ${leftBottomCoord.longitude} "
+                )
                 Log.i("NaverMapMSG", "우상단 : ${rightTopCoord.latitude}, ${rightTopCoord.longitude} ")
                 LBLatitude = leftBottomCoord.latitude.toString()
                 LBLongitude = leftBottomCoord.longitude.toString()
                 RTLatitude = rightTopCoord.latitude.toString()
                 RTLongitude = rightTopCoord.longitude.toString()
                 getHouseInfoInMapHttp()
-            }
 
+
+                gridviewText.setVisibility(View.GONE)
+
+                for (i in markerList.indices) {
+                    markerList[i].map = null
+                }
+                markerList.clear()
+
+                for (i in 0..3) {
+                    for (j in 0..3) {
+                        gridviewText.text = (i * 4 + j).toString() //원형 마커에 숫자 대입 /int그대로넣으니 에러남
+                        val marker = Marker()
+                        val tempCoord = projection.fromScreenLocation(
+                            PointF(
+                                (width * (1.0f + 2 * j) / 8.0f),
+                                mapViewFrame.height * (1.0f + 2 * i) / 8.0f
+                            )
+                        )
+                        marker.position = LatLng(tempCoord.latitude, tempCoord.longitude)
+                        marker.width = 200
+                        marker.height = 200
+                        marker.icon = OverlayImage.fromView(gridviewText)
+//                        marker.setOnClickListener {object :
+//
+//                        }
+                        marker.onClickListener = Overlay.OnClickListener {
+                            Log.d("markerLog", "${marker.position}")
+                            true
+                        }
+                        markerList.add(marker)
+                    }
+                }
+
+
+                for (i in 0..15) {
+                    markerList[i].map = nMap
+                }
+            }
 
         }
     }
