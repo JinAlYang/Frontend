@@ -19,8 +19,9 @@ import com.example.dongsan2mong.activity.MainActivity
 import com.example.dongsan2mong.activity.SearchActivity
 import com.example.dongsan2mong.adapter.MapSelectedAreaAdapter
 import com.example.dongsan2mong.adapter.SeoulAdapter
-import com.example.dongsan2mong.api.PresetInfoData
 import com.example.dongsan2mong.api.RetrofitBuilder
+import com.example.dongsan2mong.data.BoundaryBoxData
+import com.example.dongsan2mong.data.PresetInfoData
 import com.example.dongsan2mong.databinding.FragmentMapBinding
 import com.google.android.material.slider.RangeSlider
 import com.naver.maps.geometry.LatLng
@@ -193,6 +194,12 @@ class MapFragment : Fragment(), OnMapReadyCallback {
 
     // http 통신용 데이터
     var presetInfo = PresetInfoData()
+    var HouseInMapInfo = BoundaryBoxData()
+
+    var LBLatitude: String = ""
+    var LBLongitude: String = ""
+    var RTLatitude: String = ""
+    var RTLongitude: String = ""
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -1084,7 +1091,10 @@ class MapFragment : Fragment(), OnMapReadyCallback {
             }
 
             saveOptionAsPreset.setOnClickListener {
-                savePresetHttp()
+                println("저장 버튼 클릭")
+                // savePresetHttp()
+                val mainActivity = requireActivity() as MainActivity
+                mainActivity.changeFragment(WishlistFragment())
             }
         }
 
@@ -1289,8 +1299,17 @@ class MapFragment : Fragment(), OnMapReadyCallback {
                 val height: Int = mapViewFrame.height - mapOptionBarLayout.height
                 val leftBottomCoord = projection.fromScreenLocation(PointF(0f, height.toFloat()))
                 val rightTopCoord = projection.fromScreenLocation(PointF(width.toFloat(), 0f))
-                Log.i("NaverMapMSG", "좌하단 : ${leftBottomCoord.latitude}, ${leftBottomCoord.longitude} ")
+                Log.i(
+                    "NaverMapMSG",
+                    "좌하단 : ${leftBottomCoord.latitude}, ${leftBottomCoord.longitude} "
+                )
                 Log.i("NaverMapMSG", "우상단 : ${rightTopCoord.latitude}, ${rightTopCoord.longitude} ")
+                LBLatitude = leftBottomCoord.latitude.toString()
+                LBLongitude = leftBottomCoord.longitude.toString()
+                RTLatitude = rightTopCoord.latitude.toString()
+                RTLongitude = rightTopCoord.longitude.toString()
+                getHouseInfoInMapHttp()
+
 
                 gridviewText.setVisibility(View.GONE)
 
@@ -1303,7 +1322,12 @@ class MapFragment : Fragment(), OnMapReadyCallback {
                     for (j in 0..3) {
                         gridviewText.text = (i * 4 + j).toString() //원형 마커에 숫자 대입 /int그대로넣으니 에러남
                         val marker = Marker()
-                        val tempCoord = projection.fromScreenLocation(PointF((width * (1.0f + 2 * j) / 8.0f), mapViewFrame.height * (1.0f + 2 * i) / 8.0f))
+                        val tempCoord = projection.fromScreenLocation(
+                            PointF(
+                                (width * (1.0f + 2 * j) / 8.0f),
+                                mapViewFrame.height * (1.0f + 2 * i) / 8.0f
+                            )
+                        )
                         marker.position = LatLng(tempCoord.latitude, tempCoord.longitude)
                         marker.width = 200
                         marker.height = 200
@@ -1319,10 +1343,12 @@ class MapFragment : Fragment(), OnMapReadyCallback {
                     }
                 }
 
+
                 for (i in 0..15) {
                     markerList[i].map = nMap
                 }
             }
+
         }
     }
 
@@ -1340,22 +1366,43 @@ class MapFragment : Fragment(), OnMapReadyCallback {
     }
 
     private fun savePresetHttp() {
-        val addPreset = RetrofitBuilder.api.addPreset(presetInfo)
+        val addPreset = RetrofitBuilder.api.addPreset(1, presetInfo)
         addPreset.enqueue(object : Callback<PresetInfoData> {
             override fun onResponse(
                 call: Call<PresetInfoData>,
                 response: Response<PresetInfoData>
             ) {
-                Toast.makeText(activity, "Call Success", Toast.LENGTH_LONG).show()
+                Toast.makeText(activity, "Post Success", Toast.LENGTH_LONG).show()
                 if (response.isSuccessful) {
                 }
             }
 
             override fun onFailure(call: Call<PresetInfoData>, t: Throwable) {
-                Toast.makeText(activity, "Call Failed", Toast.LENGTH_LONG).show()
+                Toast.makeText(activity, "Post Failed", Toast.LENGTH_LONG).show()
             }
 
         })
     }
 
+
+    private fun getHouseInfoInMapHttp() {
+        val getHouseInfoInMap = RetrofitBuilder.api.getRealEstateInMapWithNoOption(
+            LBLatitude, LBLongitude, RTLatitude, RTLongitude
+        )
+        getHouseInfoInMap.enqueue(object : Callback<BoundaryBoxData>{
+            override fun onResponse(
+                call: Call<BoundaryBoxData>,
+                response: Response<BoundaryBoxData>
+            ) {
+                Toast.makeText(activity, "GET Success", Toast.LENGTH_LONG).show()
+                if (response.isSuccessful) {
+                }
+            }
+
+            override fun onFailure(call: Call<BoundaryBoxData>, t: Throwable) {
+                Toast.makeText(activity, "GET Failed", Toast.LENGTH_LONG).show()
+            }
+
+        })
+    }
 }

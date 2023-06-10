@@ -18,7 +18,7 @@ class WishlistViewPagerAdapter(fragmentActivity: FragmentActivity) :
             0 -> return LatesthomeFragment()
             1 -> return DibshomeFragment()
             2 -> return CallPresetFragment()
-            else -> return LatesthomeFragment()
+            else -> return CallPresetFragment()
         }
     }
 }
