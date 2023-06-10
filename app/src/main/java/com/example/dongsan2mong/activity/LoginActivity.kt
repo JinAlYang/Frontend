@@ -4,15 +4,13 @@ import android.app.Activity
 import android.content.Intent
 import android.os.Bundle
 import android.util.Log
-import android.view.View
 import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
-import com.example.dongsan2mong.api.MemberInfoData
+import com.example.dongsan2mong.data.MemberInfoData
 import com.example.dongsan2mong.api.RetrofitBuilder
 import com.example.dongsan2mong.databinding.ActivityLoginBinding
 import com.kakao.sdk.auth.model.OAuthToken
-import com.kakao.sdk.common.model.AuthErrorCause
 import com.kakao.sdk.common.model.ClientError
 import com.kakao.sdk.common.model.ClientErrorCause
 import com.kakao.sdk.user.UserApiClient
@@ -44,7 +42,7 @@ class LoginActivity : AppCompatActivity() {
         binding.apply {
 
             loginNullBtn.setOnClickListener {
-                getLoginInfoHttp { memberInfo ->
+                getLoginInfoHttp { memberInfo->
                     val i = Intent(this@LoginActivity, MainActivity::class.java)
                     i.putExtra("memberInfo", memberInfo)
                     startActivity(i)

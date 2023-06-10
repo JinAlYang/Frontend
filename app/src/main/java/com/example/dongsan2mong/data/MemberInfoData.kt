@@ -1,4 +1,4 @@
-package com.example.dongsan2mong.api
+package com.example.dongsan2mong.data
 
 import java.io.Serializable
 

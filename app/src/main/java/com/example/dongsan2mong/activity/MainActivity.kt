@@ -11,12 +11,11 @@ import androidx.core.view.GravityCompat
 import androidx.drawerlayout.widget.DrawerLayout.LOCK_MODE_LOCKED_CLOSED
 import androidx.fragment.app.Fragment
 import com.example.dongsan2mong.R
-import com.example.dongsan2mong.api.MemberInfoData
+import com.example.dongsan2mong.data.MemberInfoData
 import com.example.dongsan2mong.fragment.RealestatecompareFragment
 import com.example.dongsan2mong.databinding.ActivityMainBinding
 import com.example.dongsan2mong.fragment.MapFragment
 import com.example.dongsan2mong.fragment.PlannerFragment
-import com.example.dongsan2mong.fragment.RealestatecompareFragment
 import com.example.dongsan2mong.fragment.WishlistFragment
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import java.security.MessageDigest

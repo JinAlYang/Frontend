@@ -1,7 +1,6 @@
 package com.example.dongsan2mong.fragment
 
 import android.annotation.SuppressLint
-import android.content.Context
 import android.content.Intent
 import android.graphics.Color
 import android.graphics.PointF
@@ -22,9 +21,8 @@ import com.example.dongsan2mong.activity.SearchActivity
 import com.example.dongsan2mong.adapter.MapGridViewAdapter
 import com.example.dongsan2mong.adapter.MapSelectedAreaAdapter
 import com.example.dongsan2mong.adapter.SeoulAdapter
-import com.example.dongsan2mong.api.PresetInfoData
 import com.example.dongsan2mong.api.RetrofitBuilder
-import com.example.dongsan2mong.data.BoundaryBoxData
+import com.example.dongsan2mong.data.PresetInfoData
 import com.example.dongsan2mong.databinding.FragmentMapBinding
 import com.google.android.material.slider.RangeSlider
 import com.naver.maps.geometry.LatLng
@@ -1305,19 +1303,21 @@ class MapFragment : Fragment(), OnMapReadyCallback {
     }
 
     private fun savePresetHttp() {
+
+
         val addPreset = RetrofitBuilder.api.addPreset(presetInfo)
         addPreset.enqueue(object : Callback<PresetInfoData> {
             override fun onResponse(
                 call: Call<PresetInfoData>,
                 response: Response<PresetInfoData>
             ) {
-                Toast.makeText(activity, "Call Success", Toast.LENGTH_LONG).show()
+                Toast.makeText(activity, "Post Success", Toast.LENGTH_LONG).show()
                 if (response.isSuccessful) {
                 }
             }
 
             override fun onFailure(call: Call<PresetInfoData>, t: Throwable) {
-                Toast.makeText(activity, "Call Failed", Toast.LENGTH_LONG).show()
+                Toast.makeText(activity, "Post Failed", Toast.LENGTH_LONG).show()
             }
 
         })

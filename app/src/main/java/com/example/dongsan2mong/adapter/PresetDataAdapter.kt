@@ -4,20 +4,20 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.example.dongsan2mong.activity.MainActivity
-import com.example.dongsan2mong.data.PresetData
+import com.example.dongsan2mong.data.PresetInfoData
 import com.example.dongsan2mong.databinding.RowPresetBinding
 import com.example.dongsan2mong.fragment.MapFragment
 
-class PresetDataAdapter(val items: ArrayList<PresetData>, val selected: ArrayList<Boolean>) :
+class PresetDataAdapter(val items: ArrayList<PresetInfoData>, val selected: ArrayList<Boolean>) :
     RecyclerView.Adapter<PresetDataAdapter.ViewHolder>() {
     var onApplyClickListener: OnApplyClickListener? = null
 
     interface OnItemClickListener {
-        fun OnItemClick(data: PresetData, binding: RowPresetBinding, position: Int)
+        fun OnItemClick(data: PresetInfoData, binding: RowPresetBinding, position: Int)
     }
 
     interface OnApplyClickListener {
-        fun onApplyClick(data: PresetData)
+        fun onApplyClick(data: PresetInfoData)
     }
 
     var itemClickListener: OnItemClickListener? = null
@@ -87,7 +87,7 @@ class PresetDataAdapter(val items: ArrayList<PresetData>, val selected: ArrayLis
         }
     }
 
-    fun updateItemAtPosition(position: Int, data: PresetData) {
+    fun updateItemAtPosition(position: Int, data: PresetInfoData) {
         items[position] = data
         notifyItemChanged(position)
     }

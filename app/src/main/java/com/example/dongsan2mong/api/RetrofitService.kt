@@ -1,5 +1,6 @@
 package com.example.dongsan2mong.api
 
+import com.example.dongsan2mong.data.*
 import retrofit2.Call
 import retrofit2.http.*
 
@@ -11,7 +12,7 @@ interface RetrofitService {
     fun getMemberInfo(@Path("memberId") number: Int): Call<MemberInfoData>
 
     @POST("member")
-    fun addMemberInfo()
+    fun addMemberInfo(@Body params: MemberInfoData) : Call<MemberInfoData>
 
     @PUT("member/{memberId}")
     fun modifyMemberInfo()
@@ -28,7 +29,10 @@ interface RetrofitService {
     fun getZzimHomeList(@Path("memberId") number: Int): Call<WishListInfoData>
 
     @POST("wishList/recentHome")
+    fun addRecentHome()
 
+    @POST("wishList/zzimHome/memberId")
+    fun addZzimHome()
 
     //RealEstateDetail
     @GET("RealEstateDetail/{RealEstate_id}")
@@ -59,12 +63,12 @@ interface RetrofitService {
 
     //Map
     @GET("realEstate/bbox")
-    fun getRealEstateInMap()
+    fun getRealEstateInMap(): Call<RealEstateData>
 
-    @GET("realEstate/bbox")
+    @GET("realEstate/bbox?location={LBLatitude}_{LBLongitude}_{RTLatitude}_{RTLongitude}&filter=null")
     fun getRealEstateInMapWithNoOption()
 
-    @GET("realEstate/bbox")
+    @GET("realEstate/bbox?location={LBLatitude}_{LBLongitude}_{RTLatitude}_{RTLongitude}&filter=null")
     fun getRealEstateInCluster()
 
 
