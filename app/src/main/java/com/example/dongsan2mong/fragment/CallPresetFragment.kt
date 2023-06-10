@@ -28,17 +28,6 @@ class CallPresetFragment : Fragment() {
         // Inflate the layout for this fragment
         binding = FragmentCallpresetBinding.inflate(inflater, container, false)
         initRecyclerView()
-        adapter.onApplyClickListener = object : PresetDataAdapter.OnApplyClickListener {
-            override fun onApplyClick(data: PresetInfoData) {
-                val mapFragment = MapFragment()
-                val bundle = Bundle()
-                bundle.putParcelable("freesetData", data)
-                mapFragment.arguments = bundle
-
-                val mainActivity = activity as? MainActivity
-                mainActivity?.changeFragment(MapFragment())
-            }
-        }
         initData()
         return binding.root
     }

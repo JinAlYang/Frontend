@@ -14,6 +14,7 @@ import com.example.dongsan2mong.R
 import com.example.dongsan2mong.data.MemberInfoData
 import com.example.dongsan2mong.fragment.RealestatecompareFragment
 import com.example.dongsan2mong.databinding.ActivityMainBinding
+import com.example.dongsan2mong.databinding.FragmentWishlistBinding
 import com.example.dongsan2mong.fragment.MapFragment
 import com.example.dongsan2mong.fragment.PlannerFragment
 import com.example.dongsan2mong.fragment.WishlistFragment
@@ -25,6 +26,8 @@ import java.security.NoSuchAlgorithmException
 class MainActivity : AppCompatActivity() {
     lateinit var binding: ActivityMainBinding
     lateinit var bnv: BottomNavigationView
+
+    lateinit var bindingWishList: FragmentWishlistBinding
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityMainBinding.inflate(layoutInflater)

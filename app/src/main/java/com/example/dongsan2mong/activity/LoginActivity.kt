@@ -117,8 +117,8 @@ class LoginActivity : AppCompatActivity() {
                 call: Call<MemberInfoData>,
                 response: Response<MemberInfoData>
             ) {
-                Toast.makeText(applicationContext, "Call Success", Toast.LENGTH_LONG).show()
                 if (response.isSuccessful) {
+                    Toast.makeText(applicationContext, "Call Success", Toast.LENGTH_LONG).show()
                     memberInfo = response.body() ?: MemberInfoData()
                     callback(memberInfo)
                     // 받은 정보 메인 액티비티로 보내줄 필요

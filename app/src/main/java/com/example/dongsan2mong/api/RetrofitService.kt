@@ -66,7 +66,12 @@ interface RetrofitService {
     fun getRealEstateInMap(): Call<RealEstateData>
 
     @GET("realEstate/bbox?location={LBLatitude}_{LBLongitude}_{RTLatitude}_{RTLongitude}&filter=null")
-    fun getRealEstateInMapWithNoOption()
+    fun getRealEstateInMapWithNoOption(
+        @Path("LBLatitude") LBLatitude: String,
+        @Path("LBLongitude") LBLongitude: String,
+        @Path("RTLatitude") RTLatitude: String,
+        @Path("RTLongitude") RTLongitude: String,
+    ): Call<BoundaryBoxData>
 
     @GET("realEstate/bbox?location={LBLatitude}_{LBLongitude}_{RTLatitude}_{RTLongitude}&filter=null")
     fun getRealEstateInCluster()
