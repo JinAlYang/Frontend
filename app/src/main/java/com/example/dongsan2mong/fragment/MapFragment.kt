@@ -1,25 +1,30 @@
 package com.example.dongsan2mong.fragment
 
 import android.annotation.SuppressLint
+import android.content.Context
 import android.content.Intent
 import android.graphics.Color
+import android.graphics.PointF
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.ImageView
-import android.widget.Toast
+import android.widget.*
 import androidx.annotation.UiThread
 import androidx.fragment.app.Fragment
+import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.dongsan2mong.*
 import com.example.dongsan2mong.R
 import com.example.dongsan2mong.activity.MainActivity
 import com.example.dongsan2mong.activity.SearchActivity
+import com.example.dongsan2mong.adapter.MapGridViewAdapter
 import com.example.dongsan2mong.adapter.MapSelectedAreaAdapter
 import com.example.dongsan2mong.adapter.SeoulAdapter
 import com.example.dongsan2mong.api.PresetInfoData
 import com.example.dongsan2mong.api.RetrofitBuilder
+import com.example.dongsan2mong.data.BoundaryBoxData
 import com.example.dongsan2mong.databinding.FragmentMapBinding
 import com.google.android.material.slider.RangeSlider
 import com.naver.maps.geometry.LatLng
@@ -187,9 +192,9 @@ class MapFragment : Fragment(), OnMapReadyCallback {
         val initialMapOption = NaverMapOptions()
             .camera(CameraPosition(LatLng(37.541618, 127.079374), 16.0))
             .mapType(NaverMap.MapType.Basic)
-        val mapFragment = fm.findFragmentById(R.id.mapView) as com.naver.maps.map.MapFragment?
+        val mapFragment = fm.findFragmentById(com.example.dongsan2mong.R.id.mapView) as com.naver.maps.map.MapFragment?
             ?: com.naver.maps.map.MapFragment.newInstance(initialMapOption).also {
-                fm.beginTransaction().add(R.id.mapView, it).commit()
+                fm.beginTransaction().add(com.example.dongsan2mong.R.id.mapView, it).commit()
             }
         mapFragment.getMapAsync(this@MapFragment)
     }
@@ -206,8 +211,8 @@ class MapFragment : Fragment(), OnMapReadyCallback {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        drawerOpenImageView = view.findViewById(R.id.sidemenuBtn)
-        drawerCloseImageView = activity?.findViewById(R.id.closeBtn) ?: return
+        drawerOpenImageView = view.findViewById(com.example.dongsan2mong.R.id.sidemenuBtn)
+        drawerCloseImageView = activity?.findViewById(com.example.dongsan2mong.R.id.closeBtn) ?: return
         drawerOpenImageView.setOnClickListener {
             val mainActivity = activity as? MainActivity
             mainActivity?.openDrawer()
@@ -218,6 +223,7 @@ class MapFragment : Fragment(), OnMapReadyCallback {
             mainActivity?.closeDrawer()
         }
     }
+
 
     @SuppressLint("ResourceAsColor")
     private fun init() {
@@ -271,7 +277,7 @@ class MapFragment : Fragment(), OnMapReadyCallback {
             }
             mapRoomNumRecyclerView.adapter = roomNumSelectedAdapter
 
-            roomNumArr = resources.getStringArray(R.array.roomNum)
+            roomNumArr = resources.getStringArray(com.example.dongsan2mong.R.array.roomNum)
             roomNumAdapter = SeoulAdapter(roomNumArr, isSelectedRoomNum)
             roomNumAdapter.selectedPosition = -1
             roomNumAdapter.itemClickListener = object : SeoulAdapter.OnItemClickListener {
@@ -314,7 +320,7 @@ class MapFragment : Fragment(), OnMapReadyCallback {
             }
             mapConvTypeRecyclerView.adapter = convTypeSelectedAdapter
 
-            convTypeArr = resources.getStringArray(R.array.convType)
+            convTypeArr = resources.getStringArray(com.example.dongsan2mong.R.array.convType)
             convTypeAdapter = SeoulAdapter(convTypeArr, isSelectedConvType)
             convTypeAdapter.selectedPosition = -1
             convTypeAdapter.itemClickListener = object : SeoulAdapter.OnItemClickListener {
@@ -353,7 +359,7 @@ class MapFragment : Fragment(), OnMapReadyCallback {
             }
             mapBuildTypeRecyclerView.adapter = buildTypeSelectedAdapter
 
-            buildTypeArr = resources.getStringArray(R.array.buildType)
+            buildTypeArr = resources.getStringArray(com.example.dongsan2mong.R.array.buildType)
             buildTypeAdapter = SeoulAdapter(buildTypeArr, isSelectedBuildType)
             buildTypeAdapter.selectedPosition = -1
             buildTypeAdapter.itemClickListener = object : SeoulAdapter.OnItemClickListener {
@@ -397,7 +403,7 @@ class MapFragment : Fragment(), OnMapReadyCallback {
             }
             mapFloorNumRecyclerView.adapter = floorNumSelectedAdapter
 
-            floorNumArr = resources.getStringArray(R.array.floorNum)
+            floorNumArr = resources.getStringArray(com.example.dongsan2mong.R.array.floorNum)
             floorNumAdapter = SeoulAdapter(floorNumArr, isSelectedFloorNum)
             floorNumAdapter.selectedPosition = -1
             floorNumAdapter.itemClickListener = object : SeoulAdapter.OnItemClickListener {
@@ -436,7 +442,7 @@ class MapFragment : Fragment(), OnMapReadyCallback {
             }
             mapInclTypeRecyclerView.adapter = inclTypeSelectedAdapter
 
-            inclTypeArr = resources.getStringArray(R.array.inclType)
+            inclTypeArr = resources.getStringArray(com.example.dongsan2mong.R.array.inclType)
             inclTypeAdapter = SeoulAdapter(inclTypeArr, isSelectedInclType)
             inclTypeAdapter.selectedPosition = -1
             inclTypeAdapter.itemClickListener = object : SeoulAdapter.OnItemClickListener {
@@ -484,7 +490,7 @@ class MapFragment : Fragment(), OnMapReadyCallback {
                     // 아이템 삭제 후 지역 옵션 텍스트뷰 텍스트 변환 작업
                     numOfSelectedArea--
                     if (numOfSelectedArea == 0) {
-                        mapOption1.text = getString(R.string.map_option_1)
+                        mapOption1.text = getString(com.example.dongsan2mong.R.string.map_option_1)
                     } else
                         mapOption1.text = firstSelectedArea + " +" + numOfSelectedArea.toString()
 
@@ -510,9 +516,9 @@ class MapFragment : Fragment(), OnMapReadyCallback {
                 startActivity(i)
             }
 
-            seoulArr = resources.getStringArray(R.array.spinner_region_seoul)
+            seoulArr = resources.getStringArray(com.example.dongsan2mong.R.array.spinner_region_seoul)
             seoulAdapter = SeoulAdapter(seoulArr, isSelectedSeoulArea)
-            deeperArr = resources.getStringArray(R.array.spinner_region_seoul_gangnam)
+            deeperArr = resources.getStringArray(com.example.dongsan2mong.R.array.spinner_region_seoul_gangnam)
             tempArr = isSelectedArea[0].toTypedArray()
             deeperAdapter = SeoulAdapter(deeperArr, tempArr)
 
@@ -523,103 +529,103 @@ class MapFragment : Fragment(), OnMapReadyCallback {
                     when (p1) {
                         0 -> {
                             deeperArr =
-                                resources.getStringArray(R.array.spinner_region_seoul_gangnam)
+                                resources.getStringArray(com.example.dongsan2mong.R.array.spinner_region_seoul_gangnam)
                         }
                         1 -> {
                             deeperArr =
-                                resources.getStringArray(R.array.spinner_region_seoul_gangdong)
+                                resources.getStringArray(com.example.dongsan2mong.R.array.spinner_region_seoul_gangdong)
                         }
                         2 -> {
                             deeperArr =
-                                resources.getStringArray(R.array.spinner_region_seoul_gangbuk)
+                                resources.getStringArray(com.example.dongsan2mong.R.array.spinner_region_seoul_gangbuk)
                         }
                         3 -> {
                             deeperArr =
-                                resources.getStringArray(R.array.spinner_region_seoul_gangseo)
+                                resources.getStringArray(com.example.dongsan2mong.R.array.spinner_region_seoul_gangseo)
                         }
                         4 -> {
                             deeperArr =
-                                resources.getStringArray(R.array.spinner_region_seoul_gwanak)
+                                resources.getStringArray(com.example.dongsan2mong.R.array.spinner_region_seoul_gwanak)
                         }
                         5 -> {
                             deeperArr =
-                                resources.getStringArray(R.array.spinner_region_seoul_gwangjin)
+                                resources.getStringArray(com.example.dongsan2mong.R.array.spinner_region_seoul_gwangjin)
                         }
                         6 -> {
-                            deeperArr = resources.getStringArray(R.array.spinner_region_seoul_guro)
+                            deeperArr = resources.getStringArray(com.example.dongsan2mong.R.array.spinner_region_seoul_guro)
                         }
                         7 -> {
                             deeperArr =
-                                resources.getStringArray(R.array.spinner_region_seoul_geumcheon)
+                                resources.getStringArray(com.example.dongsan2mong.R.array.spinner_region_seoul_geumcheon)
                         }
                         8 -> {
-                            deeperArr = resources.getStringArray(R.array.spinner_region_seoul_nowon)
+                            deeperArr = resources.getStringArray(com.example.dongsan2mong.R.array.spinner_region_seoul_nowon)
                         }
                         9 -> {
                             deeperArr =
-                                resources.getStringArray(R.array.spinner_region_seoul_dobong)
+                                resources.getStringArray(com.example.dongsan2mong.R.array.spinner_region_seoul_dobong)
                         }
                         10 -> {
                             deeperArr =
-                                resources.getStringArray(R.array.spinner_region_seoul_dongdaemun)
+                                resources.getStringArray(com.example.dongsan2mong.R.array.spinner_region_seoul_dongdaemun)
                         }
                         11 -> {
                             deeperArr =
-                                resources.getStringArray(R.array.spinner_region_seoul_dongjag)
+                                resources.getStringArray(com.example.dongsan2mong.R.array.spinner_region_seoul_dongjag)
                         }
                         12 -> {
-                            deeperArr = resources.getStringArray(R.array.spinner_region_seoul_mapo)
+                            deeperArr = resources.getStringArray(com.example.dongsan2mong.R.array.spinner_region_seoul_mapo)
                         }
                         13 -> {
                             deeperArr =
-                                resources.getStringArray(R.array.spinner_region_seoul_seodaemun)
+                                resources.getStringArray(com.example.dongsan2mong.R.array.spinner_region_seoul_seodaemun)
                         }
                         14 -> {
                             deeperArr =
-                                resources.getStringArray(R.array.spinner_region_seoul_seocho)
+                                resources.getStringArray(com.example.dongsan2mong.R.array.spinner_region_seoul_seocho)
                         }
                         15 -> {
                             deeperArr =
-                                resources.getStringArray(R.array.spinner_region_seoul_seongdong)
+                                resources.getStringArray(com.example.dongsan2mong.R.array.spinner_region_seoul_seongdong)
                         }
                         16 -> {
                             deeperArr =
-                                resources.getStringArray(R.array.spinner_region_seoul_seongbuk)
+                                resources.getStringArray(com.example.dongsan2mong.R.array.spinner_region_seoul_seongbuk)
                         }
                         17 -> {
                             deeperArr =
-                                resources.getStringArray(R.array.spinner_region_seoul_songpa)
+                                resources.getStringArray(com.example.dongsan2mong.R.array.spinner_region_seoul_songpa)
                         }
                         18 -> {
                             deeperArr =
-                                resources.getStringArray(R.array.spinner_region_seoul_yangcheon)
+                                resources.getStringArray(com.example.dongsan2mong.R.array.spinner_region_seoul_yangcheon)
                         }
                         19 -> {
                             deeperArr =
-                                resources.getStringArray(R.array.spinner_region_seoul_yeongdeungpo)
+                                resources.getStringArray(com.example.dongsan2mong.R.array.spinner_region_seoul_yeongdeungpo)
                         }
                         20 -> {
                             deeperArr =
-                                resources.getStringArray(R.array.spinner_region_seoul_yongsan)
+                                resources.getStringArray(com.example.dongsan2mong.R.array.spinner_region_seoul_yongsan)
                         }
                         21 -> {
                             deeperArr =
-                                resources.getStringArray(R.array.spinner_region_seoul_eunpyeong)
+                                resources.getStringArray(com.example.dongsan2mong.R.array.spinner_region_seoul_eunpyeong)
                         }
                         22 -> {
                             deeperArr =
-                                resources.getStringArray(R.array.spinner_region_seoul_jongno)
+                                resources.getStringArray(com.example.dongsan2mong.R.array.spinner_region_seoul_jongno)
                         }
                         23 -> {
-                            deeperArr = resources.getStringArray(R.array.spinner_region_seoul_jung)
+                            deeperArr = resources.getStringArray(com.example.dongsan2mong.R.array.spinner_region_seoul_jung)
                         }
                         24 -> {
                             deeperArr =
-                                resources.getStringArray(R.array.spinner_region_seoul_jungnanggu)
+                                resources.getStringArray(com.example.dongsan2mong.R.array.spinner_region_seoul_jungnanggu)
                         }
                         else -> {
                             deeperArr =
-                                resources.getStringArray(R.array.spinner_region_seoul_gangnam)
+                                resources.getStringArray(com.example.dongsan2mong.R.array.spinner_region_seoul_gangnam)
                         }
                     }
                     seoulAdapter.selectedPosition = p1
@@ -689,7 +695,7 @@ class MapFragment : Fragment(), OnMapReadyCallback {
             refreshAreaIcon.setOnClickListener {
                 areaSelected.clear()
                 numOfSelectedArea = 0 // 카운트 0으로 초기화
-                mapOption1.text = getString(R.string.map_option_1)
+                mapOption1.text = getString(com.example.dongsan2mong.R.string.map_option_1)
                 selectedHashMap.clear()
                 for (i in isSelectedArea.indices) {
                     isSelectedArea[i].fill(false)
@@ -717,7 +723,7 @@ class MapFragment : Fragment(), OnMapReadyCallback {
             refreshAreaIcon3.setOnClickListener {
                 roomNumSelected.clear()
                 numOfSelectedRoomNum = 0
-                mapOption2.text = getString(R.string.map_option_3)
+                mapOption2.text = getString(com.example.dongsan2mong.R.string.map_option_3)
                 isSelectedRoomNum.fill(false)
                 roomNumAdapter.selectedPosition = -1
                 roomNumAdapter.notifyDataSetChanged()
@@ -727,7 +733,7 @@ class MapFragment : Fragment(), OnMapReadyCallback {
             refreshAreaIcon4.setOnClickListener {
                 convTypeSelected.clear()
                 numOfSelectedConvType = 0
-                mapOption4.text = getString(R.string.map_option_4)
+                mapOption4.text = getString(com.example.dongsan2mong.R.string.map_option_4)
                 isSelectedConvType.fill(false)
                 convTypeAdapter.selectedPosition = -1
                 convTypeAdapter.notifyDataSetChanged()
@@ -737,7 +743,7 @@ class MapFragment : Fragment(), OnMapReadyCallback {
             refreshAreaIcon5.setOnClickListener {
                 buildTypeSelected.clear()
                 numOfSelectedBuildType = 0
-                mapOption5.text = getString(R.string.map_option_5)
+                mapOption5.text = getString(com.example.dongsan2mong.R.string.map_option_5)
                 isSelectedBuildType.fill(false)
                 buildTypeAdapter.selectedPosition = -1
                 buildTypeAdapter.notifyDataSetChanged()
@@ -755,7 +761,7 @@ class MapFragment : Fragment(), OnMapReadyCallback {
             refreshAreaIcon7.setOnClickListener {
                 floorNumSelected.clear()
                 numOfSelectedFloorNum = 0
-                mapOption7.text = getString(R.string.map_option_7)
+                mapOption7.text = getString(com.example.dongsan2mong.R.string.map_option_7)
                 isSelectedFloorNum.fill(false)
                 floorNumAdapter.selectedPosition = -1
                 floorNumAdapter.notifyDataSetChanged()
@@ -765,7 +771,7 @@ class MapFragment : Fragment(), OnMapReadyCallback {
             refreshAreaIcon8.setOnClickListener {
                 inclTypeSelected.clear()
                 numOfSelectedInclType = 0
-                mapOption8.text = getString(R.string.map_option_8)
+                mapOption8.text = getString(com.example.dongsan2mong.R.string.map_option_8)
                 isSelectedInclType.fill(false)
                 inclTypeAdapter.selectedPosition = -1
                 inclTypeAdapter.notifyDataSetChanged()
@@ -774,8 +780,8 @@ class MapFragment : Fragment(), OnMapReadyCallback {
 
             mapOption1.setOnClickListener {
                 if (optionClicked[0] == 0) {
-                    mapOption1.setTextColor(R.color.main_blue)
-                    mapOption1.setBackgroundResource(R.drawable.background_map_option_selected)
+                    mapOption1.setTextColor(com.example.dongsan2mong.R.color.main_blue)
+                    mapOption1.setBackgroundResource(com.example.dongsan2mong.R.drawable.background_map_option_selected)
                     mapOption1Extend.setTextColor(R.color.main_blue)
                     mapOption1Extend.setBackgroundResource(R.drawable.background_map_option_selected)
                     allOptionPageGone()
@@ -1073,6 +1079,19 @@ class MapFragment : Fragment(), OnMapReadyCallback {
                 savePresetHttp()
             }
         }
+
+        binding.apply {
+            var list = arrayListOf(1, 2, 3, 4, 5, 0, 7, 8, 9, 10, 11, 12, 13, 0, 15, 16)
+            var listManager = GridLayoutManager(context, 4)
+            var listAdapter = MapGridViewAdapter(list)
+
+            var recyclerList = mapGridView.apply {
+                setHasFixedSize(true)
+                layoutManager = listManager
+                adapter = listAdapter
+
+            }
+        }
         initRangeSlider()
     }
 
@@ -1251,6 +1270,25 @@ class MapFragment : Fragment(), OnMapReadyCallback {
         // ...
         println("onMapReady!!!")
         nMap = naverMap
+
+        binding.apply {
+
+            // 카메라 움직임이 멈출 때마다 좌하단 우상단 좌표
+            nMap.addOnCameraIdleListener {
+                Log.i("NaverMapMSG", "카메라 변경")
+                val projection = nMap.projection
+                val width: Int = mapViewFrame.width
+                val height: Int = mapViewFrame.height - mapOptionBarLayout.height
+                val leftBottomCoord = projection.fromScreenLocation(PointF(0f, height.toFloat()))
+                val rightTopCoord = projection.fromScreenLocation(PointF(width.toFloat(), 0f))
+                Log.i("NaverMapMSG", "좌하단 : ${leftBottomCoord.latitude}, ${leftBottomCoord.longitude} ")
+                Log.i("NaverMapMSG", "우상단 : ${rightTopCoord.latitude}, ${rightTopCoord.longitude} ")
+
+
+            }
+
+
+        }
     }
 
     fun allOptionPageGone() {
