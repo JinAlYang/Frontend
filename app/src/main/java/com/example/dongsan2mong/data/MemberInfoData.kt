@@ -1,4 +1,6 @@
-package com.example.dongsan2mong.api
+package com.example.dongsan2mong.data
+
+import java.io.Serializable
 
 data class MemberInfoData(
     val id: Int = 20010626,
@@ -9,4 +11,4 @@ data class MemberInfoData(
     val livingExpenses: Int = 500,
     val savingMoney: Int = 500,
     val loanInterest: Int = 5
-)
+) : Serializable

@@ -1,5 +1,6 @@
 package com.example.dongsan2mong.api
 
+import com.example.dongsan2mong.data.*
 import retrofit2.Call
 import retrofit2.http.*
 
@@ -11,7 +12,7 @@ interface RetrofitService {
     fun getMemberInfo(@Path("memberId") number: Int): Call<MemberInfoData>
 
     @POST("member")
-    fun addMemberInfo()
+    fun addMemberInfo(@Body params: MemberInfoData) : Call<MemberInfoData>
 
     @PUT("member/{memberId}")
     fun modifyMemberInfo()
@@ -28,7 +29,10 @@ interface RetrofitService {
     fun getZzimHomeList(@Path("memberId") number: Int): Call<WishListInfoData>
 
     @POST("wishList/recentHome")
+    fun addRecentHome()
 
+    @POST("wishList/zzimHome/memberId")
+    fun addZzimHome()
 
     //RealEstateDetail
     @GET("RealEstateDetail/{RealEstate_id}")
@@ -51,7 +55,7 @@ interface RetrofitService {
     ): Call<PresetInfoData>
 
     @POST("preset/alter/{member_id}")
-    fun addPreset(@Body params: PresetInfoData): Call<PresetInfoData>
+    fun addPreset(@Path("member_id") memId: Int,@Body params: PresetInfoData): Call<PresetInfoData>
 
     @DELETE("preset/alter/{member_id}/{preset_id}")
     fun deletePreset()
@@ -59,12 +63,17 @@ interface RetrofitService {
 
     //Map
     @GET("realEstate/bbox")
-    fun getRealEstateInMap()
+    fun getRealEstateInMap(): Call<RealEstateData>
 
-    @GET("realEstate/bbox")
-    fun getRealEstateInMapWithNoOption()
+    @GET("realEstate/bbox?location={LBLatitude}_{LBLongitude}_{RTLatitude}_{RTLongitude}&filter=null")
+    fun getRealEstateInMapWithNoOption(
+        @Path("LBLatitude") LBLatitude: String,
+        @Path("LBLongitude") LBLongitude: String,
+        @Path("RTLatitude") RTLatitude: String,
+        @Path("RTLongitude") RTLongitude: String,
+    ): Call<BoundaryBoxData>
 
-    @GET("realEstate/bbox")
+    @GET("realEstate/bbox?location={LBLatitude}_{LBLongitude}_{RTLatitude}_{RTLongitude}&filter=null")
     fun getRealEstateInCluster()
 
 

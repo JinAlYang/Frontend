@@ -1,7 +1,6 @@
 package com.example.dongsan2mong.fragment
 
 import android.annotation.SuppressLint
-import android.content.Context
 import android.content.Intent
 import android.graphics.Color
 import android.graphics.PointF
@@ -22,9 +21,9 @@ import com.example.dongsan2mong.activity.SearchActivity
 import com.example.dongsan2mong.adapter.MapGridViewAdapter
 import com.example.dongsan2mong.adapter.MapSelectedAreaAdapter
 import com.example.dongsan2mong.adapter.SeoulAdapter
-import com.example.dongsan2mong.api.PresetInfoData
 import com.example.dongsan2mong.api.RetrofitBuilder
 import com.example.dongsan2mong.data.BoundaryBoxData
+import com.example.dongsan2mong.data.PresetInfoData
 import com.example.dongsan2mong.databinding.FragmentMapBinding
 import com.google.android.material.slider.RangeSlider
 import com.naver.maps.geometry.LatLng
@@ -185,6 +184,12 @@ class MapFragment : Fragment(), OnMapReadyCallback {
 
     // http 통신용 데이터
     var presetInfo = PresetInfoData()
+    var HouseInMapInfo = BoundaryBoxData()
+
+    var LBLatitude: String = ""
+    var LBLongitude: String = ""
+    var RTLatitude: String = ""
+    var RTLongitude: String = ""
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -1076,7 +1081,10 @@ class MapFragment : Fragment(), OnMapReadyCallback {
             }
 
             saveOptionAsPreset.setOnClickListener {
-                savePresetHttp()
+                println("저장 버튼 클릭")
+                // savePresetHttp()
+                val mainActivity = requireActivity() as MainActivity
+                mainActivity.changeFragment(WishlistFragment())
             }
         }
 
@@ -1283,8 +1291,11 @@ class MapFragment : Fragment(), OnMapReadyCallback {
                 val rightTopCoord = projection.fromScreenLocation(PointF(width.toFloat(), 0f))
                 Log.i("NaverMapMSG", "좌하단 : ${leftBottomCoord.latitude}, ${leftBottomCoord.longitude} ")
                 Log.i("NaverMapMSG", "우상단 : ${rightTopCoord.latitude}, ${rightTopCoord.longitude} ")
-
-
+                LBLatitude = leftBottomCoord.latitude.toString()
+                LBLongitude = leftBottomCoord.longitude.toString()
+                RTLatitude = rightTopCoord.latitude.toString()
+                RTLongitude = rightTopCoord.longitude.toString()
+                getHouseInfoInMapHttp()
             }
 
 
@@ -1305,22 +1316,43 @@ class MapFragment : Fragment(), OnMapReadyCallback {
     }
 
     private fun savePresetHttp() {
-        val addPreset = RetrofitBuilder.api.addPreset(presetInfo)
+        val addPreset = RetrofitBuilder.api.addPreset(1, presetInfo)
         addPreset.enqueue(object : Callback<PresetInfoData> {
             override fun onResponse(
                 call: Call<PresetInfoData>,
                 response: Response<PresetInfoData>
             ) {
-                Toast.makeText(activity, "Call Success", Toast.LENGTH_LONG).show()
+                Toast.makeText(activity, "Post Success", Toast.LENGTH_LONG).show()
                 if (response.isSuccessful) {
                 }
             }
 
             override fun onFailure(call: Call<PresetInfoData>, t: Throwable) {
-                Toast.makeText(activity, "Call Failed", Toast.LENGTH_LONG).show()
+                Toast.makeText(activity, "Post Failed", Toast.LENGTH_LONG).show()
             }
 
         })
     }
 
+
+    private fun getHouseInfoInMapHttp() {
+        val getHouseInfoInMap = RetrofitBuilder.api.getRealEstateInMapWithNoOption(
+            LBLatitude, LBLongitude, RTLatitude, RTLongitude
+        )
+        getHouseInfoInMap.enqueue(object : Callback<BoundaryBoxData>{
+            override fun onResponse(
+                call: Call<BoundaryBoxData>,
+                response: Response<BoundaryBoxData>
+            ) {
+                Toast.makeText(activity, "GET Success", Toast.LENGTH_LONG).show()
+                if (response.isSuccessful) {
+                }
+            }
+
+            override fun onFailure(call: Call<BoundaryBoxData>, t: Throwable) {
+                Toast.makeText(activity, "GET Failed", Toast.LENGTH_LONG).show()
+            }
+
+        })
+    }
 }

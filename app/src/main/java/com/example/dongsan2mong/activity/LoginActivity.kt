@@ -4,15 +4,13 @@ import android.app.Activity
 import android.content.Intent
 import android.os.Bundle
 import android.util.Log
-import android.view.View
 import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
-import com.example.dongsan2mong.api.MemberInfoData
+import com.example.dongsan2mong.data.MemberInfoData
 import com.example.dongsan2mong.api.RetrofitBuilder
 import com.example.dongsan2mong.databinding.ActivityLoginBinding
 import com.kakao.sdk.auth.model.OAuthToken
-import com.kakao.sdk.common.model.AuthErrorCause
 import com.kakao.sdk.common.model.ClientError
 import com.kakao.sdk.common.model.ClientErrorCause
 import com.kakao.sdk.user.UserApiClient
@@ -44,10 +42,12 @@ class LoginActivity : AppCompatActivity() {
         binding.apply {
 
             loginNullBtn.setOnClickListener {
-                val i = Intent(this@LoginActivity, MainActivity::class.java)
-                startActivity(i)
-                finish()
-                getLoginInfoHttp(0)
+                getLoginInfoHttp { memberInfo->
+                    val i = Intent(this@LoginActivity, MainActivity::class.java)
+                    i.putExtra("memberInfo", memberInfo)
+                    startActivity(i)
+                    finish()
+                }
             }
 
             val loginIntent = Intent(this@LoginActivity, SignupActivity::class.java)
@@ -110,16 +110,17 @@ class LoginActivity : AppCompatActivity() {
         }
     }
 
-    private fun getLoginInfoHttp(memNum: Int) {
-        val getMemberInfo = RetrofitBuilder.api.getMemberInfo(memNum)
+    private fun getLoginInfoHttp(callback: (memberInfo: MemberInfoData) -> Unit) {
+        val getMemberInfo = RetrofitBuilder.api.getMemberInfo(1)
         getMemberInfo.enqueue(object : Callback<MemberInfoData> {
             override fun onResponse(
                 call: Call<MemberInfoData>,
                 response: Response<MemberInfoData>
             ) {
-                Toast.makeText(applicationContext, "Call Success", Toast.LENGTH_LONG).show()
                 if (response.isSuccessful) {
+                    Toast.makeText(applicationContext, "Call Success", Toast.LENGTH_LONG).show()
                     memberInfo = response.body() ?: MemberInfoData()
+                    callback(memberInfo)
                     // 받은 정보 메인 액티비티로 보내줄 필요
                 }
             }

@@ -79,16 +79,10 @@
 
         </LinearLayout>
 
-        <ImageView
-            android:id="@+id/text_choosedibshome"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:src="@drawable/text_choosedibshome"
-            android:visibility="visible" />
+
 
         <LinearLayout
-            android:id="@id/firstHome"
+            android:id="@id/secondHome"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:orientation="vertical"

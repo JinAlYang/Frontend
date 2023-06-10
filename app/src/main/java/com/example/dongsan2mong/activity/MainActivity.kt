@@ -11,10 +11,12 @@ import androidx.core.view.GravityCompat
 import androidx.drawerlayout.widget.DrawerLayout.LOCK_MODE_LOCKED_CLOSED
 import androidx.fragment.app.Fragment
 import com.example.dongsan2mong.R
+import com.example.dongsan2mong.data.MemberInfoData
+import com.example.dongsan2mong.fragment.RealestatecompareFragment
 import com.example.dongsan2mong.databinding.ActivityMainBinding
+import com.example.dongsan2mong.databinding.FragmentWishlistBinding
 import com.example.dongsan2mong.fragment.MapFragment
 import com.example.dongsan2mong.fragment.PlannerFragment
-import com.example.dongsan2mong.fragment.RealestatecompareFragment
 import com.example.dongsan2mong.fragment.WishlistFragment
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import java.security.MessageDigest
@@ -24,12 +26,19 @@ import java.security.NoSuchAlgorithmException
 class MainActivity : AppCompatActivity() {
     lateinit var binding: ActivityMainBinding
     lateinit var bnv: BottomNavigationView
+
+    lateinit var bindingWishList: FragmentWishlistBinding
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
         bnv = binding.bottomNav
 
+        val memberInfo = intent.getSerializableExtra("memberInfo") as? MemberInfoData
+        if (memberInfo != null) {
+            binding.userName.text = memberInfo.name
+            binding.userEmail.text = memberInfo.email
+        }
         Log.d("getKeyHash", "" + getKeyHash(this@MainActivity));
 
         init()
