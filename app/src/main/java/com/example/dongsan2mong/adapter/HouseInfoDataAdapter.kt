@@ -39,9 +39,36 @@ class HouseInfoDataAdapter(val items: ArrayList<HouseInfoData>, val selected: Ar
     // 찜목록에 들어갈 매물 정보 얻기 (리스트로) - searchActivity에서 사용한 adapter의 정보를
     // dibshome fragement에 어떻게 가져가지...
 
+    fun setAllHeart() {
+        for (i in items.indices) {
+
+        }
+    }
     fun changeDibshomeArr(arr: ArrayList<HouseInfoData>) {
+        if (dibshomeArr.size != 0) {
+            println(dibshomeArr[0]!!.price)
+        }
+
         dibshomeArr.clear()
         dibshomeArr.addAll(arr)
+        if (dibshomeArr.size != 0) {
+            println(dibshomeArr[0]!!.price)
+        }
+
+        notifyDataSetChanged()
+    }
+
+    fun changeArr(arr: ArrayList<HouseInfoData>) {
+        if (dibshomeArr.size != 0) {
+            println(dibshomeArr[0]!!.price)
+        }
+
+        items.clear()
+        items.addAll(arr)
+        if (dibshomeArr.size != 0) {
+            println(dibshomeArr[0]!!.price)
+        }
+
         notifyDataSetChanged()
     }
 
@@ -60,8 +87,9 @@ class HouseInfoDataAdapter(val items: ArrayList<HouseInfoData>, val selected: Ar
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
 
-        // dibshomeArr에 해당 매물이 있다면 찜 아이콘 채워지고, 아니면 stroke만
-        holder.binding.favorite.isSelected = dibshomeArr.contains(items[position])
+        if (dibshomeArr.contains(items[position])) {
+            holder.binding.favorite.setImageResource(R.drawable.icon_home_favorite_solid)
+        }
 
         holder.binding.typeAndPrice.text = items[position].type + " " +
                 items[position].price
@@ -71,6 +99,7 @@ class HouseInfoDataAdapter(val items: ArrayList<HouseInfoData>, val selected: Ar
         if (items[position].imgURL == "") {
             holder.binding.houseImg.setImageResource(R.drawable.img_house_1)
         } else {
+//            Picasso.get().load(items[position].imgURL).into(holder.binding.houseImg)
             holder.binding.houseImg.setImageResource(R.drawable.compare_house)
         }
 

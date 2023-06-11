@@ -20,8 +20,9 @@ class DibshomeFragment : Fragment() {
 
     lateinit var binding: FragmentDibshomeBinding
     lateinit var adapter: HouseInfoDataAdapter
+    var dibshomeArr: ArrayList<HouseInfoData>? = ArrayList()
 
-    val data: ArrayList<HouseInfoData> = ArrayList<HouseInfoData>()
+    var data: ArrayList<HouseInfoData> = ArrayList<HouseInfoData>()
     val selected: ArrayList<Boolean> = ArrayList()
 
     override fun onCreateView(
@@ -77,12 +78,11 @@ class DibshomeFragment : Fragment() {
         binding.recyclerViewDibshome.adapter = adapter
 
     }
-
     override fun onResume() {
         super.onResume()
         try {
             EventBus.getDefault().register(this)
-            EventBus.getDefault().post(DataEvent(7))
+            EventBus.getDefault().post(DataEvent(7, data!!))
         } catch (e: Exception) {
         }
     }
@@ -90,15 +90,36 @@ class DibshomeFragment : Fragment() {
     override fun onPause() {
         super.onPause()
         EventBus.getDefault().unregister(this)
-        EventBus.getDefault().post(DataEvent(9))
+        EventBus.getDefault().post(DataEvent(9, data!!))
     }
 
     @Subscribe(threadMode = ThreadMode.MAIN)
     fun printData(event: DataEvent) {
         if (event.int == 6) {
             Log.d("dataEvent", "wishlist to dibshome")
-        } else if (event.int == 8) {
+            data = event.dibsArr
+//            for (i in data) {
+//                println(i)
+//            }
+
+            adapter.changeArr(event.dibsArr)
+            adapter.changeDibshomeArr(event.dibsArr)
+            adapter.notifyDataSetChanged()
+            for (i in adapter.dibshomeArr) {
+                println("${i} ${i.area} , ${i.floor}, ${i.roomNum}, ${i.location}")
+            }
+            for (i in adapter.items) {
+                println("${i} ${i.area} , ${i.floor}, ${i.roomNum}, ${i.location}")
+            }
+
+        }
+        else if (event.int == 8) {
             Log.d("dataEvent", "latesthome to dibshome")
+            data = event.dibsArr
+//            for (i in data) {
+//                println(i)
+//            }
+            adapter.notifyDataSetChanged()
         }
     }
 }

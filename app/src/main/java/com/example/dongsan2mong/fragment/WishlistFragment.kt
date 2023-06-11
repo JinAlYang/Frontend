@@ -7,6 +7,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import com.example.dongsan2mong.adapter.WishlistViewPagerAdapter
+import com.example.dongsan2mong.data.HouseInfoData
 import com.example.dongsan2mong.databinding.FragmentWishlistBinding
 import com.example.dongsan2mong.event.DataEvent
 import com.google.android.material.tabs.TabLayoutMediator
@@ -17,6 +18,7 @@ import org.greenrobot.eventbus.ThreadMode
 class WishlistFragment : Fragment() {
     lateinit var binding: FragmentWishlistBinding
     val tabtextarr = arrayListOf("최근 본 집", "찜한 집", "검색 프리셋 불러오기")
+    var dibshomeArr: ArrayList<HouseInfoData>? = ArrayList()
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -38,7 +40,7 @@ class WishlistFragment : Fragment() {
     override fun onDetach() {
         super.onDetach()
         EventBus.getDefault().unregister(this)
-        EventBus.getDefault().post(DataEvent(3))
+        EventBus.getDefault().post(DataEvent(3, dibshomeArr!!))
     }
 
     override fun onStart() {
@@ -53,14 +55,18 @@ class WishlistFragment : Fragment() {
     fun printData(event: DataEvent) {
         if (event.int == 2) {
             Log.d("dataEvent", "mapFragment to wishlist")
+            println("size : ${event.dibsArr.size}")
+            dibshomeArr = event.dibsArr
+            println("size : ${dibshomeArr!!.size}")
+
         }
         else if (event.int == 5) {
             Log.d("dataEvent", "latesthome to wishlist")
-            EventBus.getDefault().post(DataEvent(4))
+            EventBus.getDefault().post(DataEvent(4, dibshomeArr!!))
         }
         else if (event.int == 7) {
             Log.d("dataEvent", "dibshome to wishlist")
-            EventBus.getDefault().post(DataEvent(6))
+            EventBus.getDefault().post(DataEvent(6, dibshomeArr!!))
         }
     }
 }
