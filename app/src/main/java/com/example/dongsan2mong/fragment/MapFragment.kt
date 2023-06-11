@@ -36,7 +36,6 @@ import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 import java.util.*
-import kotlin.collections.ArrayList
 
 
 class MapFragment : Fragment(), OnMapReadyCallback {
@@ -56,7 +55,8 @@ class MapFragment : Fragment(), OnMapReadyCallback {
     var RTArr: ArrayList<LatLng> = ArrayList<LatLng>(16)
     var countNum: ArrayList<Int> = ArrayList<Int>(16)
     var allEstate: ArrayList<RealEstateData> = ArrayList<RealEstateData>()
-    var seperatedEstate: ArrayList<ArrayList<RealEstateData>> = ArrayList<ArrayList<RealEstateData>>(16)
+    var seperatedEstate: ArrayList<ArrayList<RealEstateData>> =
+        ArrayList<ArrayList<RealEstateData>>(16)
     var dibshomeArr: ArrayList<HouseInfoData> = ArrayList()
 
 
@@ -113,15 +113,8 @@ class MapFragment : Fragment(), OnMapReadyCallback {
     var firstSelectedArea: String = ""
 
     // 매매유형 옵션 어댑터
-    // linearLayout id : mapOption2Page
-    // textView id : mapSaleTypeBtn1 .. 3
-    // refreshIcon id : refreshAreaIcon2
 
     // 방갯수 옵션 어댑터
-    // linearLayout id : mapOption3Page
-    // recyclerView (selected) id : mapRoomNumRecyclerView
-    // recyclerView id :
-    // refreshIcon id : refreshAreaIcon3
     lateinit var roomNumSelectedAdapter: MapSelectedAreaAdapter
     val roomNumSelected: ArrayList<String> = ArrayList()
 
@@ -134,10 +127,6 @@ class MapFragment : Fragment(), OnMapReadyCallback {
     var firstSelectedRoomNum: String = ""
 
     // 편의시설 옵션 어댑터
-    // linearLayout id : mapOption4Page
-    // recyclerView (selected) id : mapConvTypeRecyclerView
-    // recyclerView id : convTypeRecyclerView
-    // refreshIcon id : refreshAreaIcon4
     lateinit var convTypeSelectedAdapter: MapSelectedAreaAdapter
     val convTypeSelected: ArrayList<String> = ArrayList()
 
@@ -150,10 +139,6 @@ class MapFragment : Fragment(), OnMapReadyCallback {
     var firstSelectedConvType: String = ""
 
     // 건물유형 옵션 어댑터
-    // linearLayout id : mapOption5Page
-    // recyclerView (selected) id : mapBuildTypeRecyclerView
-    // recyclerView id : buildTypeRecyclerView
-    // refreshIcon id : refreshAreaIcon5
     lateinit var buildTypeSelectedAdapter: MapSelectedAreaAdapter
     val buildTypeSelected: ArrayList<String> = ArrayList()
 
@@ -166,16 +151,8 @@ class MapFragment : Fragment(), OnMapReadyCallback {
     var firstSelectedBuildType: String = ""
 
     // 평형 옵션 어댑터
-    // linearLayout id : mapOption6Page
-    // recyclerView (selected) id : mapSpaceTypeRecyclerView
-    // recyclerView id :
-    // refreshIcon id : refreshAreaIcon6
 
     // 층 수 옵션 어댑터
-    // linearLayout id : mapOption7Page
-    // recyclerView (selected) id : mapFloorNumRecyclerView
-    // recyclerView id : floorNumRecyclerView
-    // refreshIcon id : refreshAreaIcon7
     lateinit var floorNumSelectedAdapter: MapSelectedAreaAdapter
     val floorNumSelected: ArrayList<String> = ArrayList()
 
@@ -188,10 +165,6 @@ class MapFragment : Fragment(), OnMapReadyCallback {
     var firstSelectedFloorNum: String = ""
 
     // 옵션 옵션 어댑터 (inclusive)
-    // linearLayout id : mapOption8Page
-    // recyclerView (selected) id : mapInclTypeRecyclerView
-    // recyclerView id : inclTypeRecyclerView
-    // refreshIcon id : refreshAreaIcon8
     lateinit var inclTypeSelectedAdapter: MapSelectedAreaAdapter
     val inclTypeSelected: ArrayList<String> = ArrayList()
 
@@ -205,7 +178,7 @@ class MapFragment : Fragment(), OnMapReadyCallback {
 
     // http 통신용 데이터
     var presetInfo = PresetInfoData()
-    var RealEstateInfoInMap = RealEstateData()
+    var RealEstateInfoInMap = ArrayList<RealEstateData>()
 
     var LBLatitude: String = ""
     var LBLongitude: String = ""
@@ -1331,10 +1304,11 @@ class MapFragment : Fragment(), OnMapReadyCallback {
                 LBLongitude = leftBottomCoord.longitude.toString()
                 RTLatitude = rightTopCoord.latitude.toString()
                 RTLongitude = rightTopCoord.longitude.toString()
-                getHouseInfoInMapHttp { RealEstateInfoInMap ->
 
+                getHouseInfoInMapHttp { realEstateList ->
+                    // realEstateList를 사용하여 원하는 작업 수행
+                    // 예: 마커 생성, 리스트 업데이트 등
                 }
-
 
                 gridviewText.visibility = View.GONE
 
@@ -1347,8 +1321,22 @@ class MapFragment : Fragment(), OnMapReadyCallback {
                 RTArr.clear()
                 for (i in 0..3) {
                     for (j in 0..3) {
-                        RTArr.add(projection.fromScreenLocation(PointF(width * (j + 1) / 4.0f, height * i / 4.0f)))
-                        LBArr.add(projection.fromScreenLocation(PointF(width * j / 4.0f, height * (i + 1) / 4.0f)))
+                        RTArr.add(
+                            projection.fromScreenLocation(
+                                PointF(
+                                    width * (j + 1) / 4.0f,
+                                    height * i / 4.0f
+                                )
+                            )
+                        )
+                        LBArr.add(
+                            projection.fromScreenLocation(
+                                PointF(
+                                    width * j / 4.0f,
+                                    height * (i + 1) / 4.0f
+                                )
+                            )
+                        )
                     }
                 }
 
@@ -1366,56 +1354,41 @@ class MapFragment : Fragment(), OnMapReadyCallback {
                     if (i.longitude.toLong() <= RTArr[0].longitude) {
                         if (i.latitude.toLong() <= LBArr[0].latitude) {
                             seperatedEstate[0].add(i)
-                        }
-                        else if (i.latitude.toLong() <= LBArr[1].latitude) {
+                        } else if (i.latitude.toLong() <= LBArr[1].latitude) {
                             seperatedEstate[1].add(i)
-                        }
-                        else if (i.latitude.toLong() <= LBArr[2].latitude) {
+                        } else if (i.latitude.toLong() <= LBArr[2].latitude) {
                             seperatedEstate[2].add(i)
-                        }
-                        else {
+                        } else {
                             seperatedEstate[3].add(i)
                         }
-                    }
-                    else if (i.longitude.toLong() <= RTArr[4].longitude) {
+                    } else if (i.longitude.toLong() <= RTArr[4].longitude) {
                         if (i.latitude.toLong() <= LBArr[0].latitude) {
                             seperatedEstate[4].add(i)
-                        }
-                        else if (i.latitude.toLong() <= LBArr[1].latitude) {
+                        } else if (i.latitude.toLong() <= LBArr[1].latitude) {
                             seperatedEstate[5].add(i)
-                        }
-                        else if (i.latitude.toLong() <= LBArr[2].latitude) {
+                        } else if (i.latitude.toLong() <= LBArr[2].latitude) {
                             seperatedEstate[6].add(i)
-                        }
-                        else {
+                        } else {
                             seperatedEstate[7].add(i)
                         }
-                    }
-                    else if (i.longitude.toLong() <= RTArr[8].longitude) {
+                    } else if (i.longitude.toLong() <= RTArr[8].longitude) {
                         if (i.latitude.toLong() <= LBArr[0].latitude) {
                             seperatedEstate[8].add(i)
-                        }
-                        else if (i.latitude.toLong() <= LBArr[1].latitude) {
+                        } else if (i.latitude.toLong() <= LBArr[1].latitude) {
                             seperatedEstate[9].add(i)
-                        }
-                        else if (i.latitude.toLong() <= LBArr[2].latitude) {
+                        } else if (i.latitude.toLong() <= LBArr[2].latitude) {
                             seperatedEstate[10].add(i)
-                        }
-                        else {
+                        } else {
                             seperatedEstate[11].add(i)
                         }
-                    }
-                    else {
+                    } else {
                         if (i.latitude.toLong() <= LBArr[0].latitude) {
                             seperatedEstate[12].add(i)
-                        }
-                        else if (i.latitude.toLong() <= LBArr[1].latitude) {
+                        } else if (i.latitude.toLong() <= LBArr[1].latitude) {
                             seperatedEstate[13].add(i)
-                        }
-                        else if (i.latitude.toLong() <= LBArr[2].latitude) {
+                        } else if (i.latitude.toLong() <= LBArr[2].latitude) {
                             seperatedEstate[14].add(i)
-                        }
-                        else {
+                        } else {
                             seperatedEstate[15].add(i)
                         }
                     }
@@ -1495,24 +1468,33 @@ class MapFragment : Fragment(), OnMapReadyCallback {
     }
 
 
-    private fun getHouseInfoInMapHttp(callback: (RealEstateInfo: RealEstateData) -> Unit) {
+    private fun getHouseInfoInMapHttp(callback: (RealEstateList: ArrayList<RealEstateData>) -> Unit) {
         val location = LBLatitude + "_" + LBLongitude + "_" + RTLatitude + "_" + RTLongitude
         val getHouseInfoInMap = RetrofitBuilder.api.getRealEstateInMapWithNoOption(
             location, null
         )
-        getHouseInfoInMap.enqueue(object : Callback<RealEstateData> {
+        getHouseInfoInMap.enqueue(object : Callback<ArrayList<RealEstateData>> {
             override fun onResponse(
-                call: Call<RealEstateData>,
-                response: Response<RealEstateData>
+                call: Call<ArrayList<RealEstateData>>,
+                response: Response<ArrayList<RealEstateData>>
             ) {
                 Toast.makeText(activity, "GET Success", Toast.LENGTH_LONG).show()
                 if (response.isSuccessful) {
-                    RealEstateInfoInMap = response.body() ?: RealEstateData()
-                    callback(RealEstateInfoInMap)
+                    val realEstateList = response.body()
+                    if (realEstateList != null) {
+                        RealEstateInfoInMap.clear() // 기존 데이터를 비우고
+                        RealEstateInfoInMap.addAll(realEstateList) // 새로운 데이터 추가
+                        callback(RealEstateInfoInMap)
+                    }
+                    // RealEstateInfoInMap 리스트의 모든 요소의 id 출력
+                    for (realEstate in RealEstateInfoInMap) {
+                        println("매물 ID : " + realEstate.id)
+                    }
+
                 }
             }
 
-            override fun onFailure(call: Call<RealEstateData>, t: Throwable) {
+            override fun onFailure(call: Call<ArrayList<RealEstateData>>, t: Throwable) {
                 Toast.makeText(activity, "GET Failed", Toast.LENGTH_LONG).show()
             }
 
@@ -1522,8 +1504,8 @@ class MapFragment : Fragment(), OnMapReadyCallback {
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
 
-        if(resultCode == RESULT_OK){
-            when(requestCode){
+        if (resultCode == RESULT_OK) {
+            when (requestCode) {
                 99 -> {
                     dibshomeArr = data?.extras?.get("returnDibshomeArr") as ArrayList<HouseInfoData>
                 }
