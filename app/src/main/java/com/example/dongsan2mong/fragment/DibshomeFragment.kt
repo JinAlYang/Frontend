@@ -1,6 +1,5 @@
 package com.example.dongsan2mong.fragment
 
-import android.content.Context
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
@@ -12,12 +11,12 @@ import com.example.dongsan2mong.adapter.HouseInfoDataAdapter
 import com.example.dongsan2mong.data.HouseInfoData
 import com.example.dongsan2mong.databinding.FragmentDibshomeBinding
 import com.example.dongsan2mong.databinding.RowHouseinfoBinding
-import com.example.dongsan2mong.event.*
+import com.example.dongsan2mong.event.DataEvent
 import org.greenrobot.eventbus.EventBus
 import org.greenrobot.eventbus.Subscribe
 import org.greenrobot.eventbus.ThreadMode
 
-class DibshomeFragment: Fragment() {
+class DibshomeFragment : Fragment() {
 
     lateinit var binding: FragmentDibshomeBinding
     lateinit var adapter: HouseInfoDataAdapter
@@ -39,19 +38,26 @@ class DibshomeFragment: Fragment() {
     }
 
     fun initData() {
-        data.add(HouseInfoData())
         data.add(
             HouseInfoData(
                 type = "월세",
-                price = "500/74",
-                space = "33.06m^2",
-                floor = "1층",
-                area = "광진구 구의동",
+                price = "2000/40",
+                space = "33.05m^2",
+                area = "서울특별시 광진구 중곡동 23",
                 roomNum = "투룸",
-                imgURL = ""
+                imgURL = "https://dabang-prod-profile-image.s3.amazonaws.com/b20ec5e52785d80bff716f0e5cd97350"
             )
         )
-
+        data.add(
+            HouseInfoData(
+                type = "월세",
+                price = "500/25",
+                space = "19.83m^2",
+                area = "서울특별시 광진구 중곡동 23",
+                roomNum = "원룸",
+                imgURL = "https://dabang-prod-profile-image.s3.amazonaws.com/b20ec5e52785d80bff716f0e5cd97350"
+            )
+        )
     }
 
     fun initRecyclerView() {

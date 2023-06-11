@@ -8,12 +8,12 @@
         android:layout_width="match_parent"
         android:layout_height="64dp"
         android:layout_gravity="center"
+        android:fontFamily="@font/elicedigitalbaeum"
         android:gravity="center"
         android:text="매물 비교"
         android:textAlignment="center"
         android:textColor="#000000"
-        android:textSize="18sp"
-        android:fontFamily="@font/elicedigitalbaeum">
+        android:textSize="18sp">
 
     </TextView>
 
@@ -29,21 +29,16 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginLeft="64dp"
+            android:fontFamily="@font/elicedigitalbaeum"
             android:text="첫번째 집"
             android:textColor="#000000"
-            android:textSize="18sp"
-            android:fontFamily="@font/elicedigitalbaeum" />
+            android:textSize="18sp" />
 
         <View
             android:layout_width="0dp"
             android:layout_height="0dp"
             android:layout_weight="1" />
 
-        <ImageView
-            android:id="@+id/compareStartBtn"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:src="@drawable/icon_compare_ready" />
 
         <View
             android:layout_width="0dp"
@@ -54,62 +49,94 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginRight="64dp"
+            android:fontFamily="@font/elicedigitalbaeum"
             android:text="두번째 집"
             android:textColor="#000000"
-            android:textSize="18sp"
-            android:fontFamily="@font/elicedigitalbaeum" />
+            android:textSize="18sp" />
     </LinearLayout>
 
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/compareChoiceRecyclerView"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent" />
 
     <LinearLayout
         android:id="@+id/compareResultView"
-        android:visibility="gone"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:gravity="center"
-        android:orientation="horizontal">
+        android:orientation="horizontal"
+        android:visibility="visible">
 
         <LinearLayout
             android:id="@+id/firstHome"
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
             android:layout_height="match_parent"
+            android:layout_weight="1"
             android:orientation="vertical"
-            android:visibility="gone">
-
-            <View
-                android:layout_width="205dp"
-                android:layout_height="0dp" />
+            android:visibility="visible">
 
             <ImageView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_width="96dp"
+                android:layout_height="96dp"
                 android:layout_gravity="center"
                 android:src="@drawable/compare_house" />
 
-            <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/recyclerView_firstHome"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_gravity="center" />
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_margin="30dp"
+                android:fontFamily="@font/elicedigitalbaeum"
+                android:gravity="center"
+                android:text="2000"
+                android:textAlignment="center"
+                android:textColor="#000000"
+                android:textSize="30sp" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_margin="30dp"
+                android:fontFamily="@font/elicedigitalbaeum"
+                android:gravity="center"
+                android:text="40"
+                android:textAlignment="center"
+                android:textColor="#000000"
+                android:textSize="30sp" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_margin="25dp"
+                android:fontFamily="@font/elicedigitalbaeum"
+                android:gravity="center"
+                android:text="33.05m^2"
+                android:textAlignment="center"
+                android:textColor="@color/main_blue"
+                android:textSize="28sp" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_margin="30dp"
+                android:fontFamily="@font/elicedigitalbaeum"
+                android:gravity="center"
+                android:text="투룸"
+                android:textAlignment="center"
+                android:textColor="@color/main_blue"
+                android:textSize="30sp" />
 
         </LinearLayout>
 
 
-
         <LinearLayout
             android:id="@+id/secondHome"
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
             android:layout_height="match_parent"
+            android:layout_weight="1"
             android:orientation="vertical"
-            android:visibility="gone">
+            android:visibility="visible">
 
-            <View
-                android:layout_width="205dp"
-                android:layout_height="0dp" />
 
             <ImageView
                 android:layout_width="wrap_content"
@@ -117,11 +144,53 @@
                 android:layout_gravity="center"
                 android:src="@drawable/compare_house" />
 
-            <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/recyclerView_secondHome"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_gravity="center" />
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_margin="30dp"
+                android:fontFamily="@font/elicedigitalbaeum"
+                android:gravity="center"
+                android:text="500"
+                android:textAlignment="center"
+                android:textColor="@color/main_blue"
+                android:textSize="30sp" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_margin="30dp"
+                android:fontFamily="@font/elicedigitalbaeum"
+                android:gravity="center"
+                android:text="25"
+                android:textAlignment="center"
+                android:textColor="@color/main_blue"
+                android:textSize="30sp" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_margin="25dp"
+                android:fontFamily="@font/elicedigitalbaeum"
+                android:gravity="center"
+                android:text="19.83m^2"
+                android:textAlignment="center"
+                android:textColor="#000000"
+                android:textSize="28sp" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_margin="30dp"
+                android:fontFamily="@font/elicedigitalbaeum"
+                android:gravity="center"
+                android:text="원룸"
+                android:textAlignment="center"
+                android:textColor="#000000"
+                android:textSize="30sp" />
 
         </LinearLayout>
 
