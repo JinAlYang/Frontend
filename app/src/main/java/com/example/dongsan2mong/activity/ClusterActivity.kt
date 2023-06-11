@@ -3,13 +3,16 @@ package com.example.dongsan2mong.activity
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import androidx.core.content.ContentProviderCompat.requireContext
+import android.util.Log
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.example.dongsan2mong.R
 import com.example.dongsan2mong.adapter.HouseInfoDataAdapter
 import com.example.dongsan2mong.data.HouseInfoData
 import com.example.dongsan2mong.databinding.ActivityClusterBinding
 import com.example.dongsan2mong.databinding.RowHouseinfoBinding
+import com.example.dongsan2mong.event.DataEvent
+import org.greenrobot.eventbus.EventBus
+import org.greenrobot.eventbus.Subscribe
+import org.greenrobot.eventbus.ThreadMode
 
 class ClusterActivity : AppCompatActivity() {
 
@@ -40,8 +43,6 @@ class ClusterActivity : AppCompatActivity() {
         binding.recyclerViewCluster.layoutManager = LinearLayoutManager(this,
             LinearLayoutManager.VERTICAL, false)
 
-//        data = intent.getParcelableArrayExtra("clusterArr") as ArrayList<HouseInfoData>
-
         val parcelableArray = intent.getParcelableArrayExtra("clusterArr")
         data = if (parcelableArray is Array<*>) {
             parcelableArray.filterIsInstance<HouseInfoData>() as ArrayList<HouseInfoData>
@@ -50,8 +51,6 @@ class ClusterActivity : AppCompatActivity() {
         }
 
         adapter = HouseInfoDataAdapter(data!!, selected)
-
-//        dibshomeArr = intent.extras?.get("k") as ArrayList<HouseInfoData>
 
         val parcelableArray2 = intent.getParcelableArrayExtra("dibshomeArr")
         dibshomeArr = if (parcelableArray2 is Array<*>) {
@@ -79,5 +78,27 @@ class ClusterActivity : AppCompatActivity() {
         }
         binding.recyclerViewCluster.adapter = adapter
 
+    }
+
+    override fun onStart() {
+        super.onStart()
+        try {
+            EventBus.getDefault().register(this)
+        } catch (e: Exception) {
+        }
+    }
+
+    override fun onStop() {
+        super.onStop()
+        EventBus.getDefault().unregister(this)
+        EventBus.getDefault().post(DataEvent(1))
+
+    }
+
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    fun printData(event: DataEvent) {
+        if (event.int == 0) {
+            Log.d("dataEvent", "mapFragment to ClusterActivity")
+        }
     }
 }

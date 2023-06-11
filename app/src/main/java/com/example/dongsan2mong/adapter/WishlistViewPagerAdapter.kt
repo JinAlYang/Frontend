@@ -9,6 +9,7 @@ import com.example.dongsan2mong.fragment.LatesthomeFragment
 
 class WishlistViewPagerAdapter(fragmentActivity: FragmentActivity) :
     FragmentStateAdapter(fragmentActivity) {
+
     override fun getItemCount(): Int {
         return 3
     }
