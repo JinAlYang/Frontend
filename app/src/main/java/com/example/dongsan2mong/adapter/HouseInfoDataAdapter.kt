@@ -16,6 +16,8 @@ class HouseInfoDataAdapter (val items:ArrayList<HouseInfoData>, val selected:Arr
     }
 
     var itemClickListener: OnItemClickListener? = null
+    // 찜목록에 들어갈 매물들
+    var dibshomeArr: ArrayList<HouseInfoData> = ArrayList<HouseInfoData>()
 
     inner class ViewHolder(val binding: RowHouseinfoBinding)
         : RecyclerView.ViewHolder(binding.root) {
@@ -31,6 +33,19 @@ class HouseInfoDataAdapter (val items:ArrayList<HouseInfoData>, val selected:Arr
         }
     }
 
+    // 찜목록에 들어갈 매물 정보 얻기 (리스트로) - searchActivity에서 사용한 adapter의 정보를
+    // dibshome fragement에 어떻게 가져가지...
+
+    fun changeDibshomeArr(arr: ArrayList<HouseInfoData>) {
+        dibshomeArr.clear()
+        dibshomeArr.addAll(arr)
+        notifyDataSetChanged()
+    }
+    fun findDibshomeArr(): ArrayList<HouseInfoData> {
+        return dibshomeArr
+    }
+
+
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         val view = RowHouseinfoBinding.inflate(
             LayoutInflater.from(parent.context),
@@ -40,6 +55,10 @@ class HouseInfoDataAdapter (val items:ArrayList<HouseInfoData>, val selected:Arr
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
+
+        // dibshomeArr에 해당 매물이 있다면 찜 아이콘 채워지고, 아니면 stroke만
+        holder.binding.favorite.isSelected = dibshomeArr.contains(items[position])
+
         holder.binding.typeAndPrice.text = items[position].type + " " +
                 items[position].price
         holder.binding.spaceAndFloor.text = items[position].space + " " +
@@ -50,6 +69,22 @@ class HouseInfoDataAdapter (val items:ArrayList<HouseInfoData>, val selected:Arr
             holder.binding.houseImg.setImageResource(R.drawable.img_house_1)
         } else {
             holder.binding.houseImg.setImageResource(R.drawable.img_house_2)
+        }
+
+        holder.binding.apply {
+            favorite.setOnClickListener {
+                if (favorite.isSelected) {
+                    favorite.isSelected = false
+                    dibshomeArr.remove(items[position])
+                    notifyDataSetChanged()
+
+                }
+                else {
+                    favorite.isSelected = true
+                    dibshomeArr.add(items[position])
+                    notifyDataSetChanged()
+                }
+            }
         }
     }
 
