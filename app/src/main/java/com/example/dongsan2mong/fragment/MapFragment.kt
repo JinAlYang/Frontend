@@ -1,6 +1,7 @@
 package com.example.dongsan2mong.fragment
 
 import android.annotation.SuppressLint
+import android.app.Activity.RESULT_OK
 import android.content.Intent
 import android.graphics.Color
 import android.graphics.PointF
@@ -15,11 +16,13 @@ import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.dongsan2mong.*
 import com.example.dongsan2mong.R
+import com.example.dongsan2mong.activity.ClusterActivity
 import com.example.dongsan2mong.activity.MainActivity
 import com.example.dongsan2mong.activity.SearchActivity
 import com.example.dongsan2mong.adapter.MapSelectedAreaAdapter
 import com.example.dongsan2mong.adapter.SeoulAdapter
 import com.example.dongsan2mong.api.RetrofitBuilder
+import com.example.dongsan2mong.data.HouseInfoData
 import com.example.dongsan2mong.data.PresetInfoData
 import com.example.dongsan2mong.data.RealEstateData
 import com.example.dongsan2mong.databinding.FragmentMapBinding
@@ -54,6 +57,7 @@ class MapFragment : Fragment(), OnMapReadyCallback {
     var countNum: ArrayList<Int> = ArrayList<Int>(16)
     var allEstate: ArrayList<RealEstateData> = ArrayList<RealEstateData>()
     var seperatedEstate: ArrayList<ArrayList<RealEstateData>> = ArrayList<ArrayList<RealEstateData>>(16)
+    var dibshomeArr: ArrayList<HouseInfoData> = ArrayList()
 
 
 //    var estateArr: ArrayList<RealEstateData> = ArrayList<RealEstateData>()
@@ -1438,6 +1442,11 @@ class MapFragment : Fragment(), OnMapReadyCallback {
 //                        }
                         marker.onClickListener = Overlay.OnClickListener {
                             Log.d("markerLog", "${marker.position}")
+                            val clusterIntent = Intent(context, ClusterActivity::class.java)
+                            clusterIntent.putExtra("clusterArr", seperatedEstate[i * 4 + j])
+                            clusterIntent.putExtra("dibshomeArr", dibshomeArr)
+                            startActivity(clusterIntent)
+
                             true
                         }
                         markerList.add(marker)
@@ -1508,5 +1517,17 @@ class MapFragment : Fragment(), OnMapReadyCallback {
             }
 
         })
+    }
+
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+
+        if(resultCode == RESULT_OK){
+            when(requestCode){
+                99 -> {
+                    dibshomeArr = data?.extras?.get("returnDibshomeArr") as ArrayList<HouseInfoData>
+                }
+            }
+        }
     }
 }
