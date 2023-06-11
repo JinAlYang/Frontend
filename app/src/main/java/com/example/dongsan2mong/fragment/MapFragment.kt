@@ -1526,21 +1526,25 @@ class MapFragment : Fragment(), OnMapReadyCallback {
     override fun onDetach() {
         super.onDetach()
         EventBus.getDefault().unregister(this)
+        EventBus.getDefault().post(DataEvent(2, dibshomeArr))
     }
 
     override fun onStop() {
         super.onStop()
-        EventBus.getDefault().post(DataEvent(2))
-        EventBus.getDefault().post(DataEvent(0))
+
+        EventBus.getDefault().post(DataEvent(0, dibshomeArr))
     }
+
 
     @Subscribe(threadMode = ThreadMode.MAIN)
     fun printData(event: DataEvent) {
         if (event.int == 1) {
             Log.d("dataEvent", "ClusterActivity to mapFragment")
+            dibshomeArr = event.dibsArr
         }
         else if (event.int == 3) {
             Log.d("dataEvent", "wishlist to mapFragment")
+            dibshomeArr = event.dibsArr
         }
     }
 }

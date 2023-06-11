@@ -21,8 +21,9 @@ class DibshomeFragment: Fragment() {
 
     lateinit var binding: FragmentDibshomeBinding
     lateinit var adapter: HouseInfoDataAdapter
+    var dibshomeArr: ArrayList<HouseInfoData>? = ArrayList()
 
-    val data: ArrayList<HouseInfoData> = ArrayList<HouseInfoData>()
+    var data: ArrayList<HouseInfoData> = ArrayList<HouseInfoData>()
     val selected: ArrayList<Boolean> = ArrayList()
 
     override fun onCreateView(
@@ -38,6 +39,18 @@ class DibshomeFragment: Fragment() {
     }
 
     fun initData() {
+        data.add(HouseInfoData())
+        data.add(
+            HouseInfoData(
+                type = "월세",
+                price = "500/74",
+                space = "33.06m^2",
+                floor = "1층",
+                area = "광진구 구의동",
+                roomNum = "투룸",
+                imgURL = ""
+            )
+        )
 
     }
 
@@ -63,7 +76,7 @@ class DibshomeFragment: Fragment() {
         super.onResume()
         try {
             EventBus.getDefault().register(this)
-            EventBus.getDefault().post(DataEvent(7))
+            EventBus.getDefault().post(DataEvent(7, data!!))
         } catch (e: Exception) {
         }
     }
@@ -71,16 +84,36 @@ class DibshomeFragment: Fragment() {
     override fun onPause() {
         super.onPause()
         EventBus.getDefault().unregister(this)
-        EventBus.getDefault().post(DataEvent(9))
+        EventBus.getDefault().post(DataEvent(9, data!!))
     }
 
     @Subscribe(threadMode = ThreadMode.MAIN)
     fun printData(event: DataEvent) {
         if (event.int == 6) {
             Log.d("dataEvent", "wishlist to dibshome")
+            data = event.dibsArr
+//            for (i in data) {
+//                println(i)
+//            }
+
+            adapter.changeArr(event.dibsArr)
+            adapter.changeDibshomeArr(event.dibsArr)
+            adapter.notifyDataSetChanged()
+            for (i in adapter.dibshomeArr) {
+                println("${i} ${i.area} , ${i.floor}, ${i.roomNum}, ${i.location}")
+            }
+            for (i in adapter.items) {
+                println("${i} ${i.area} , ${i.floor}, ${i.roomNum}, ${i.location}")
+            }
+
         }
         else if (event.int == 8) {
             Log.d("dataEvent", "latesthome to dibshome")
+            data = event.dibsArr
+//            for (i in data) {
+//                println(i)
+//            }
+            adapter.notifyDataSetChanged()
         }
     }
 }
