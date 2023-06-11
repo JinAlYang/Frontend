@@ -55,8 +55,7 @@ class MapFragment : Fragment(), OnMapReadyCallback {
     var RTArr: ArrayList<LatLng> = ArrayList<LatLng>(16)
     var countNum: ArrayList<Int> = ArrayList<Int>(16)
     var allEstate: ArrayList<RealEstateData> = ArrayList<RealEstateData>()
-    var seperatedEstate: ArrayList<ArrayList<RealEstateData>> =
-        ArrayList<ArrayList<RealEstateData>>(16)
+    var seperatedEstate: ArrayList<ArrayList<RealEstateData>> = ArrayList<ArrayList<RealEstateData>>(16)
     var dibshomeArr: ArrayList<HouseInfoData> = ArrayList()
 
 
@@ -1310,6 +1309,7 @@ class MapFragment : Fragment(), OnMapReadyCallback {
                     // 예: 마커 생성, 리스트 업데이트 등
                 }
 
+
                 gridviewText.visibility = View.GONE
 
                 for (i in markerList.indices) {
@@ -1321,22 +1321,8 @@ class MapFragment : Fragment(), OnMapReadyCallback {
                 RTArr.clear()
                 for (i in 0..3) {
                     for (j in 0..3) {
-                        RTArr.add(
-                            projection.fromScreenLocation(
-                                PointF(
-                                    width * (j + 1) / 4.0f,
-                                    height * i / 4.0f
-                                )
-                            )
-                        )
-                        LBArr.add(
-                            projection.fromScreenLocation(
-                                PointF(
-                                    width * j / 4.0f,
-                                    height * (i + 1) / 4.0f
-                                )
-                            )
-                        )
+                        RTArr.add(projection.fromScreenLocation(PointF(width * (j + 1) / 4.0f, height * i / 4.0f)))
+                        LBArr.add(projection.fromScreenLocation(PointF(width * j / 4.0f, height * (i + 1) / 4.0f)))
                     }
                 }
 
@@ -1354,41 +1340,56 @@ class MapFragment : Fragment(), OnMapReadyCallback {
                     if (i.longitude.toLong() <= RTArr[0].longitude) {
                         if (i.latitude.toLong() <= LBArr[0].latitude) {
                             seperatedEstate[0].add(i)
-                        } else if (i.latitude.toLong() <= LBArr[1].latitude) {
+                        }
+                        else if (i.latitude.toLong() <= LBArr[1].latitude) {
                             seperatedEstate[1].add(i)
-                        } else if (i.latitude.toLong() <= LBArr[2].latitude) {
+                        }
+                        else if (i.latitude.toLong() <= LBArr[2].latitude) {
                             seperatedEstate[2].add(i)
-                        } else {
+                        }
+                        else {
                             seperatedEstate[3].add(i)
                         }
-                    } else if (i.longitude.toLong() <= RTArr[4].longitude) {
+                    }
+                    else if (i.longitude.toLong() <= RTArr[4].longitude) {
                         if (i.latitude.toLong() <= LBArr[0].latitude) {
                             seperatedEstate[4].add(i)
-                        } else if (i.latitude.toLong() <= LBArr[1].latitude) {
+                        }
+                        else if (i.latitude.toLong() <= LBArr[1].latitude) {
                             seperatedEstate[5].add(i)
-                        } else if (i.latitude.toLong() <= LBArr[2].latitude) {
+                        }
+                        else if (i.latitude.toLong() <= LBArr[2].latitude) {
                             seperatedEstate[6].add(i)
-                        } else {
+                        }
+                        else {
                             seperatedEstate[7].add(i)
                         }
-                    } else if (i.longitude.toLong() <= RTArr[8].longitude) {
+                    }
+                    else if (i.longitude.toLong() <= RTArr[8].longitude) {
                         if (i.latitude.toLong() <= LBArr[0].latitude) {
                             seperatedEstate[8].add(i)
-                        } else if (i.latitude.toLong() <= LBArr[1].latitude) {
+                        }
+                        else if (i.latitude.toLong() <= LBArr[1].latitude) {
                             seperatedEstate[9].add(i)
-                        } else if (i.latitude.toLong() <= LBArr[2].latitude) {
+                        }
+                        else if (i.latitude.toLong() <= LBArr[2].latitude) {
                             seperatedEstate[10].add(i)
-                        } else {
+                        }
+                        else {
                             seperatedEstate[11].add(i)
                         }
-                    } else {
+                    }
+                    else {
                         if (i.latitude.toLong() <= LBArr[0].latitude) {
                             seperatedEstate[12].add(i)
-                        } else if (i.latitude.toLong() <= LBArr[1].latitude) {
+                        }
+                        else if (i.latitude.toLong() <= LBArr[1].latitude) {
                             seperatedEstate[13].add(i)
-                        } else if (i.latitude.toLong() <= LBArr[2].latitude) {
+                        }
+                        else if (i.latitude.toLong() <= LBArr[2].latitude) {
                             seperatedEstate[14].add(i)
-                        } else {
+                        }
+                        else {
                             seperatedEstate[15].add(i)
                         }
                     }
@@ -1418,7 +1419,7 @@ class MapFragment : Fragment(), OnMapReadyCallback {
                             val clusterIntent = Intent(context, ClusterActivity::class.java)
                             clusterIntent.putExtra("clusterArr", seperatedEstate[i * 4 + j])
                             clusterIntent.putExtra("dibshomeArr", dibshomeArr)
-                            startActivity(clusterIntent)
+                            startActivityForResult(clusterIntent, 99)
 
                             true
                         }
@@ -1503,10 +1504,10 @@ class MapFragment : Fragment(), OnMapReadyCallback {
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
-
-        if (resultCode == RESULT_OK) {
-            when (requestCode) {
+        if(resultCode == RESULT_OK){
+            when(requestCode){
                 99 -> {
+                    Log.d("onActivityResult", "true")
                     dibshomeArr = data?.extras?.get("returnDibshomeArr") as ArrayList<HouseInfoData>
                 }
             }
