@@ -110,7 +110,8 @@ class ClusterActivity : AppCompatActivity() {
     override fun onStop() {
         super.onStop()
         EventBus.getDefault().unregister(this)
-        EventBus.getDefault().post(DataEvent(1))
+        dibshomeArr = adapter.dibshomeArr
+        EventBus.getDefault().post(DataEvent(1, dibshomeArr!!))
 
     }
 
@@ -118,6 +119,10 @@ class ClusterActivity : AppCompatActivity() {
     fun printData(event: DataEvent) {
         if (event.int == 0) {
             Log.d("dataEvent", "mapFragment to ClusterActivity")
+            dibshomeArr = event.dibsArr
+            adapter.changeDibshomeArr(dibshomeArr!!)
+            adapter.notifyDataSetChanged()
+
         }
     }
 }

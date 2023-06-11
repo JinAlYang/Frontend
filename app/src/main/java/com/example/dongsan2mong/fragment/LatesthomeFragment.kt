@@ -21,6 +21,7 @@ import org.greenrobot.eventbus.ThreadMode
 class LatesthomeFragment : Fragment() {
     lateinit var binding: FragmentLatesthomeBinding
     lateinit var adapter: HouseInfoDataAdapter
+    var dibshomeArr: ArrayList<HouseInfoData>? = ArrayList()
 
     val data: ArrayList<HouseInfoData> = ArrayList()
     val selected: ArrayList<Boolean> = ArrayList()
@@ -72,7 +73,7 @@ class LatesthomeFragment : Fragment() {
         super.onResume()
         try {
             EventBus.getDefault().register(this)
-            EventBus.getDefault().post(DataEvent(5))
+            EventBus.getDefault().post(DataEvent(5, dibshomeArr!!))
         } catch (e: Exception) {
         }
     }
@@ -80,16 +81,18 @@ class LatesthomeFragment : Fragment() {
     override fun onPause() {
         super.onPause()
         EventBus.getDefault().unregister(this)
-        EventBus.getDefault().post(DataEvent(8))
+        EventBus.getDefault().post(DataEvent(8, dibshomeArr!!))
     }
 
     @Subscribe(threadMode = ThreadMode.MAIN)
     fun printData(event: DataEvent) {
         if (event.int == 4) {
             Log.d("dataEvent", "wishlist to latesthome")
+            dibshomeArr = event.dibsArr
         }
         else if (event.int == 9) {
             Log.d("dataEvent", "dibshome to latesthome")
+            dibshomeArr = event.dibsArr
         }
     }
 }

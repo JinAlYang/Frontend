@@ -1,5 +1,8 @@
 package com.example.dongsan2mong.event
 
+import android.util.Log
+import com.example.dongsan2mong.data.HouseInfoData
+
 class DataEvent {
     /*
     int
@@ -17,10 +20,15 @@ class DataEvent {
      */
 
     var int: Int? = 0
-    var str: String? = null
-
+    var dibsArr: ArrayList<HouseInfoData> = ArrayList()
 
     constructor(int: Int) {
         this.int = int
+    }
+
+    constructor(int: Int, arr: ArrayList<HouseInfoData>) {
+        this.int = int
+        this.dibsArr = arr
+        Log.e("dataEvent", "dibs Arr size : ${this.dibsArr.size}")
     }
 }

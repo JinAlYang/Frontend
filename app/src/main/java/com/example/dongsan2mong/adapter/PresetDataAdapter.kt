@@ -83,7 +83,7 @@ class PresetDataAdapter(val items: ArrayList<PresetInfoData>, val selected: Arra
             println(currentItem.freesetTitle)
             val context = holder.itemView.context
             if (context is MainActivity) {
-                context.changeFragment(MapFragment.newInstance(currentItem))
+                context.changeFragment(MapFragment())
             }
         }
 
