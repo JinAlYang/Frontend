@@ -1,9 +1,7 @@
 package com.example.dongsan2mong.adapter
 
-import android.content.Intent
 import android.view.LayoutInflater
 import android.view.ViewGroup
-import androidx.core.content.ContextCompat.startActivity
 import androidx.recyclerview.widget.RecyclerView
 import com.example.dongsan2mong.activity.MainActivity
 import com.example.dongsan2mong.data.PresetInfoData
@@ -15,12 +13,13 @@ class PresetDataAdapter(val items: ArrayList<PresetInfoData>, val selected: Arra
     var onApplyClickListener: OnApplyClickListener? = null
 
     interface OnItemClickListener {
-        fun OnItemClick(data: PresetInfoData, binding: RowPresetBinding, position: Int)
+        fun onItemClick(data: PresetInfoData, binding: RowPresetBinding, position: Int)
     }
 
     interface OnApplyClickListener {
         fun onApplyClick(data: PresetInfoData)
     }
+
 
     var itemClickListener: OnItemClickListener? = null
 
@@ -29,19 +28,24 @@ class PresetDataAdapter(val items: ArrayList<PresetInfoData>, val selected: Arra
 
         init {
             binding.freeset.setOnClickListener {
-                if (selected[adapterPosition] == false)
+                if (!selected[adapterPosition])
                     selected[adapterPosition] = true
-                else if (selected[adapterPosition] == true)
+                else if (selected[adapterPosition])
                     selected[adapterPosition] = false
-                itemClickListener?.OnItemClick(items[adapterPosition], binding, adapterPosition)
+                itemClickListener?.onItemClick(items[adapterPosition], binding, adapterPosition)
             }
 
             binding.freesetApply.setOnClickListener {
                 val clickedPosition = adapterPosition
                 val clickedData = items[clickedPosition]
-                println("적용 버튼 클릭")
-                // mainActivity?.changeFragment(MapFragment())
+                onApplyClickListener?.onApplyClick(clickedData)
+
+                val context = itemView.context
+                if (context is MainActivity) {
+                    context.changeFragment(MapFragment())
+                }
             }
+
         }
     }
 
@@ -70,16 +74,16 @@ class PresetDataAdapter(val items: ArrayList<PresetInfoData>, val selected: Arra
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-        holder.binding.freesetTitle.text = items[position].freesetTitle
+        val currentItem = items[position]
+        val currentBinding = holder.binding
+        holder.binding.freesetTitle.text = currentItem.freesetTitle
 
-        holder.binding.freesetApply.setOnClickListener {
-            val currentItem = items[position]
-            val currentBinding = holder.binding
-            itemClickListener?.OnItemClick(currentItem, currentBinding, position)
-            // 클릭 이벤트 처리 코드 작성
+        currentBinding.freesetApply.setOnClickListener {
+            onApplyClickListener?.onApplyClick(currentItem)
+            println(currentItem.freesetTitle)
             val context = holder.itemView.context
             if (context is MainActivity) {
-                context.changeFragment(MapFragment())
+                context.changeFragment(MapFragment.newInstance(currentItem))
             }
         }
 
@@ -90,10 +94,7 @@ class PresetDataAdapter(val items: ArrayList<PresetInfoData>, val selected: Arra
             // 해당 아이템 삭제
             items.removeAt(clickedPosition)
             notifyItemRemoved(clickedPosition)
-
-            // 여기서 Http 통신으로 프리셋 삭제도 해줄 필요
         }
-
     }
 
     fun updateItemAtPosition(position: Int, data: PresetInfoData) {

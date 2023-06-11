@@ -8,6 +8,7 @@ import com.example.dongsan2mong.R
 import com.example.dongsan2mong.activity.MainActivity
 import com.example.dongsan2mong.data.HouseInfoData
 import com.example.dongsan2mong.databinding.RowHouseinfoBinding
+import com.squareup.picasso.Picasso
 
 class HouseInfoDataAdapter(val items: ArrayList<HouseInfoData>, val selected: ArrayList<Boolean>) :
     RecyclerView.Adapter<HouseInfoDataAdapter.ViewHolder>() {
@@ -65,26 +66,30 @@ class HouseInfoDataAdapter(val items: ArrayList<HouseInfoData>, val selected: Ar
 
         holder.binding.typeAndPrice.text = items[position].type + " " +
                 items[position].price
-        holder.binding.spaceAndFloor.text = items[position].space + " " +
-                items[position].floor
+        holder.binding.spaceAndFloor.text = items[position].space
         holder.binding.area.text = items[position].area
         holder.binding.roomNum.text = items[position].roomNum
-        if (items[position].tempImg == 0) {
+        if (items[position].imgURL == "") {
             holder.binding.houseImg.setImageResource(R.drawable.img_house_1)
         } else {
-            holder.binding.houseImg.setImageResource(R.drawable.img_house_2)
+            Picasso.get().load(items[position].imgURL).into(holder.binding.houseImg)
         }
 
         holder.binding.apply {
             favorite.setOnClickListener {
-                Log.d("onActivityResult", "seleceted? : ${favorite.isSelected}, position : $position")
-                if (favorite.isSelected) {
+                Log.d(
+                    "onActivityResult",
+                    "seleceted? : ${favorite.isSelected}, position : $position"
+                )
+                if (favorite.isSelected == true) {
                     favorite.isSelected = false
+                    favorite.setImageResource(R.drawable.icon_house_favorite_empty)
                     dibshomeArr.remove(items[position])
                     notifyDataSetChanged()
 
                 } else {
                     favorite.isSelected = true
+                    favorite.setImageResource(R.drawable.icon_home_favorite_solid)
                     dibshomeArr.add(items[position])
                     notifyDataSetChanged()
                 }

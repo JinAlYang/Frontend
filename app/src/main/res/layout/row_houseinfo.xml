@@ -9,10 +9,10 @@
         android:id="@+id/houseImg"
         android:layout_width="96dp"
         android:layout_height="96dp"
-        android:layout_margin="17dp"/>
+        android:layout_margin="17dp" />
 
     <LinearLayout
-        android:layout_width="wrap_content"
+        android:layout_width="210dp"
         android:layout_height="wrap_content"
         android:orientation="vertical">
 
@@ -22,39 +22,48 @@
             android:layout_height="24dp"
             android:layout_marginTop="17dp"
             android:layout_marginBottom="4dp"
+            android:fontFamily="@font/elicedigitalbaeum"
             android:text="전세 5500"
             android:textColor="@color/black_unselected_option"
-            android:textSize="16sp"
-            android:fontFamily="@font/elicedigitalbaeum"/>
+            android:textSize="16sp" />
+
         <TextView
             android:id="@+id/spaceAndFloor"
             android:layout_width="wrap_content"
             android:layout_height="20dp"
             android:layout_marginBottom="4dp"
+            android:fontFamily="@font/elicedigitalbaeum"
             android:text="23.14m^2 · 반지하"
             android:textColor="@color/black_unselected_option"
-            android:textSize="16sp"
-            android:fontFamily="@font/elicedigitalbaeum"/>
+            android:textSize="16sp" />
+
         <TextView
             android:id="@+id/area"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="20dp"
             android:layout_marginBottom="4dp"
+            android:ellipsize="marquee"
+            android:focusable="true"
+            android:focusableInTouchMode="true"
+            android:fontFamily="@font/elicedigitalbaeum"
+            android:marqueeRepeatLimit="marquee_forever"
+            android:singleLine="true"
             android:text="광진구 화양동"
             android:textColor="@color/black_unselected_option"
-            android:textSize="16sp"
-            android:fontFamily="@font/elicedigitalbaeum"/>
+            android:textSize="16sp" />
+
         <TextView
             android:id="@+id/roomNum"
             android:layout_width="wrap_content"
             android:layout_height="20dp"
-            android:text="오픈형 원룸"
             android:layout_marginBottom="17dp"
+            android:fontFamily="@font/elicedigitalbaeum"
+            android:text="오픈형 원룸"
             android:textColor="@color/black_unselected_option"
-            android:textSize="16sp"
-            android:fontFamily="@font/elicedigitalbaeum"/>
+            android:textSize="16sp" />
 
     </LinearLayout>
+
     <View
         android:layout_width="0dp"
         android:layout_height="1dp"
@@ -65,9 +74,8 @@
         android:id="@+id/favorite"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginRight="15dp"
-        android:src="@drawable/icon_house_favorite_selector"
         android:layout_gravity="center_vertical"
-        />
+        android:layout_marginRight="15dp"
+        android:src="@drawable/icon_house_favorite_selector" />
 
 </LinearLayout>

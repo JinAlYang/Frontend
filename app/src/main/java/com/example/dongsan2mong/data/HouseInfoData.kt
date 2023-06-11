@@ -23,7 +23,7 @@ data class HouseInfoData(
     val roomNum: String = "오픈형 원룸",
 
     // 매물 이미지
-    val tempImg: Int = 0,
+    val imgURL: String = "",
 
     // 매물 위도 및 경도 정보
     val location: Array<Double> = arrayOf(0.0, 0.0)

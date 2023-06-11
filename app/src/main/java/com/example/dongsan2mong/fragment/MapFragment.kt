@@ -32,6 +32,9 @@ import com.naver.maps.map.*
 import com.naver.maps.map.overlay.Marker
 import com.naver.maps.map.overlay.Overlay
 import com.naver.maps.map.overlay.OverlayImage
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -55,18 +58,10 @@ class MapFragment : Fragment(), OnMapReadyCallback {
     var RTArr: ArrayList<LatLng> = ArrayList<LatLng>(16)
     var countNum: ArrayList<Int> = ArrayList<Int>(16)
     var allEstate: ArrayList<RealEstateData> = ArrayList<RealEstateData>()
-    var seperatedEstate: ArrayList<ArrayList<RealEstateData>> = ArrayList<ArrayList<RealEstateData>>(16)
+    var seperatedEstate: ArrayList<ArrayList<RealEstateData>> =
+        ArrayList<ArrayList<RealEstateData>>(16)
     var dibshomeArr: ArrayList<HouseInfoData> = ArrayList()
 
-
-//    var estateArr: ArrayList<RealEstateData> = ArrayList<RealEstateData>()
-
-
-    // 지역 옵션 어댑터
-    // linearLayout id : mapOption1Page
-    // recyclerView (selected) id : mapAreaRecyclerView
-    // recyclerView id : seoulRecyclerView, deeperRecyclerView
-    // refreshIcon id : refreshAreaIcon1
     val areaSelected: ArrayList<String> = ArrayList()
     lateinit var areaSelectedAdapter: MapSelectedAreaAdapter
     lateinit var seoulAdapter: SeoulAdapter
@@ -177,7 +172,7 @@ class MapFragment : Fragment(), OnMapReadyCallback {
 
     // http 통신용 데이터
     var presetInfo = PresetInfoData()
-    var RealEstateInfoInMap = ArrayList<RealEstateData>()
+    // var RealEstateInfoInMap = ArrayList<RealEstateData>()
 
     var LBLatitude: String = ""
     var LBLongitude: String = ""
@@ -188,7 +183,7 @@ class MapFragment : Fragment(), OnMapReadyCallback {
         super.onCreate(savedInstanceState)
         val fm = childFragmentManager
         val initialMapOption = NaverMapOptions()
-            .camera(CameraPosition(LatLng(37.541618, 127.079374), 16.0))
+            .camera(CameraPosition(LatLng(37.563, 127.08), 15.0))
             .mapType(NaverMap.MapType.Basic)
         val mapFragment =
             fm.findFragmentById(R.id.mapView) as com.naver.maps.map.MapFragment?
@@ -1288,7 +1283,7 @@ class MapFragment : Fragment(), OnMapReadyCallback {
 
             // 카메라 움직임이 멈출 때마다 좌하단 우상단 좌표
             nMap.addOnCameraIdleListener {
-                Log.i("NaverMapMSG", "카메라 변경")
+                // Log.i("NaverMapMSG", "카메라 변경")
                 val projection = nMap.projection
                 val width: Int = mapViewFrame.width
                 val height: Int = mapViewFrame.height - mapOptionBarLayout.height
@@ -1304,9 +1299,101 @@ class MapFragment : Fragment(), OnMapReadyCallback {
                 RTLatitude = rightTopCoord.latitude.toString()
                 RTLongitude = rightTopCoord.longitude.toString()
 
-                getHouseInfoInMapHttp { realEstateList ->
-                    // realEstateList를 사용하여 원하는 작업 수행
-                    // 예: 마커 생성, 리스트 업데이트 등
+                CoroutineScope(Dispatchers.Main).launch {
+                    getHouseInfoInMapHttp { realEstateList ->
+                        // realEstateList를 사용하여 원하는 작업 수행
+                        // 예: 마커 생성, 리스트 업데이트 등
+                        allEstate.clear() // 기존 데이터를 비우고
+                        allEstate.addAll(realEstateList) // 새로운 데이터 추가
+
+                        // 여기서 새로 받은 매물들분류해서 넣을거임
+                        for (i in allEstate) {
+                            if (i.latitude.toDouble() >= LBArr[0].latitude) {
+                                if (i.longitude.toDouble() <= RTArr[0].longitude) {
+                                    seperatedEstate[0].add(i)
+                                } else if (i.longitude.toDouble() <= RTArr[1].longitude) {
+                                    seperatedEstate[1].add(i)
+                                } else if (i.longitude.toDouble() <= RTArr[2].longitude) {
+                                    seperatedEstate[2].add(i)
+                                } else {
+                                    seperatedEstate[3].add(i)
+                                }
+                            } else if (i.latitude.toDouble() >= LBArr[4].latitude) {
+                                if (i.longitude.toDouble() <= RTArr[0].longitude) {
+                                    seperatedEstate[4].add(i)
+                                } else if (i.longitude.toDouble() <= RTArr[1].longitude) {
+                                    seperatedEstate[5].add(i)
+                                } else if (i.longitude.toDouble() <= RTArr[2].longitude) {
+                                    seperatedEstate[6].add(i)
+                                } else {
+                                    seperatedEstate[7].add(i)
+                                }
+                            } else if (i.latitude.toDouble() >= LBArr[8].latitude) {
+                                if (i.longitude.toDouble() <= RTArr[0].longitude) {
+                                    seperatedEstate[8].add(i)
+                                } else if (i.longitude.toDouble() <= RTArr[1].longitude) {
+                                    seperatedEstate[9].add(i)
+                                } else if (i.longitude.toDouble() <= RTArr[2].longitude) {
+                                    seperatedEstate[10].add(i)
+                                } else {
+                                    seperatedEstate[11].add(i)
+                                }
+                            } else {
+                                if (i.latitude.toDouble() <= RTArr[0].latitude) {
+                                    seperatedEstate[12].add(i)
+                                } else if (i.latitude.toDouble() <= RTArr[1].latitude) {
+                                    seperatedEstate[13].add(i)
+                                } else if (i.latitude.toDouble() <= RTArr[2].latitude) {
+                                    seperatedEstate[14].add(i)
+                                } else {
+                                    seperatedEstate[15].add(i)
+                                }
+                            }
+                        }
+
+                        for (i in 0..3) {
+                            for (j in 0..3) {
+                                if (seperatedEstate[i * 4 + j].size == 0)
+                                    continue
+                                //gridviewText.text = (i * 4 + j).toString() // 원형 마커에 숫자 대입
+                                // int그대로넣으니 에러남
+                                gridviewText.text = seperatedEstate[i * 4 + j].size.toString()
+                                val marker = Marker()
+                                val tempCoord = projection.fromScreenLocation(
+                                    PointF(
+                                        (width * (1.0f + 2 * j) / 8.0f),
+                                        mapViewFrame.height * (1.0f + 2 * i) / 8.0f
+                                    )
+                                )
+                                marker.position = LatLng(tempCoord.latitude, tempCoord.longitude)
+                                marker.width = 200
+                                marker.height = 200
+                                marker.icon = OverlayImage.fromView(gridviewText)
+                                marker.onClickListener = Overlay.OnClickListener {
+                                    Log.d("markerLog", "${marker.position}")
+                                    val clusterIntent = Intent(context, ClusterActivity::class.java)
+                                    clusterIntent.putExtra(
+                                        "clusterArr",
+                                        seperatedEstate[i * 4 + j]
+                                    )
+                                    clusterIntent.putExtra(
+                                        "dibshomeArr",
+                                        dibshomeArr
+                                    )
+                                    startActivityForResult(clusterIntent, 99)
+
+                                    true
+                                }
+                                markerList.add(marker)
+                                marker.map = nMap
+                            }
+                        }
+
+                        for (i in 0..15) {
+                            // markerList[i].map = nMap
+                        }
+
+                    }
                 }
 
 
@@ -1321,118 +1408,31 @@ class MapFragment : Fragment(), OnMapReadyCallback {
                 RTArr.clear()
                 for (i in 0..3) {
                     for (j in 0..3) {
-                        RTArr.add(projection.fromScreenLocation(PointF(width * (j + 1) / 4.0f, height * i / 4.0f)))
-                        LBArr.add(projection.fromScreenLocation(PointF(width * j / 4.0f, height * (i + 1) / 4.0f)))
+                        RTArr.add(
+                            projection.fromScreenLocation(
+                                PointF(
+                                    width * (j + 1) / 4.0f,
+                                    height * i / 4.0f
+                                )
+                            )
+                        )
+                        LBArr.add(
+                            projection.fromScreenLocation(
+                                PointF(
+                                    width * j / 4.0f,
+                                    height * (i + 1) / 4.0f
+                                )
+                            )
+                        )
+                        // println(RTArr[0])
+                        // println(LBArr[0])
                     }
                 }
-
-                allEstate.clear()
-
-                // 여기서 전체 화면 좌하단 우상단으로부터 받아온 모든 매물 데이터 allEstate에 저장해줘
-
                 // 여기서 기존 분류한 매물들 초기화하고,
                 for (i in seperatedEstate.indices) {
                     seperatedEstate[i].clear()
                 }
-
-                // 여기서 새로 받은 매물들분류해서 넣을거임
-                for (i in allEstate) {
-                    if (i.longitude.toLong() <= RTArr[0].longitude) {
-                        if (i.latitude.toLong() <= LBArr[0].latitude) {
-                            seperatedEstate[0].add(i)
-                        }
-                        else if (i.latitude.toLong() <= LBArr[1].latitude) {
-                            seperatedEstate[1].add(i)
-                        }
-                        else if (i.latitude.toLong() <= LBArr[2].latitude) {
-                            seperatedEstate[2].add(i)
-                        }
-                        else {
-                            seperatedEstate[3].add(i)
-                        }
-                    }
-                    else if (i.longitude.toLong() <= RTArr[4].longitude) {
-                        if (i.latitude.toLong() <= LBArr[0].latitude) {
-                            seperatedEstate[4].add(i)
-                        }
-                        else if (i.latitude.toLong() <= LBArr[1].latitude) {
-                            seperatedEstate[5].add(i)
-                        }
-                        else if (i.latitude.toLong() <= LBArr[2].latitude) {
-                            seperatedEstate[6].add(i)
-                        }
-                        else {
-                            seperatedEstate[7].add(i)
-                        }
-                    }
-                    else if (i.longitude.toLong() <= RTArr[8].longitude) {
-                        if (i.latitude.toLong() <= LBArr[0].latitude) {
-                            seperatedEstate[8].add(i)
-                        }
-                        else if (i.latitude.toLong() <= LBArr[1].latitude) {
-                            seperatedEstate[9].add(i)
-                        }
-                        else if (i.latitude.toLong() <= LBArr[2].latitude) {
-                            seperatedEstate[10].add(i)
-                        }
-                        else {
-                            seperatedEstate[11].add(i)
-                        }
-                    }
-                    else {
-                        if (i.latitude.toLong() <= LBArr[0].latitude) {
-                            seperatedEstate[12].add(i)
-                        }
-                        else if (i.latitude.toLong() <= LBArr[1].latitude) {
-                            seperatedEstate[13].add(i)
-                        }
-                        else if (i.latitude.toLong() <= LBArr[2].latitude) {
-                            seperatedEstate[14].add(i)
-                        }
-                        else {
-                            seperatedEstate[15].add(i)
-                        }
-                    }
-                }
-
-
-                for (i in 0..3) {
-                    for (j in 0..3) {
-//                        gridviewText.text = (i * 4 + j).toString() //원형 마커에 숫자 대입 /int그대로넣으니 에러남
-                        gridviewText.text = seperatedEstate[i * 4 + j].size.toString()
-                        val marker = Marker()
-                        val tempCoord = projection.fromScreenLocation(
-                            PointF(
-                                (width * (1.0f + 2 * j) / 8.0f),
-                                mapViewFrame.height * (1.0f + 2 * i) / 8.0f
-                            )
-                        )
-                        marker.position = LatLng(tempCoord.latitude, tempCoord.longitude)
-                        marker.width = 200
-                        marker.height = 200
-                        marker.icon = OverlayImage.fromView(gridviewText)
-//                        marker.setOnClickListener {object :
-//
-//                        }
-                        marker.onClickListener = Overlay.OnClickListener {
-                            Log.d("markerLog", "${marker.position}")
-                            val clusterIntent = Intent(context, ClusterActivity::class.java)
-                            clusterIntent.putExtra("clusterArr", seperatedEstate[i * 4 + j])
-                            clusterIntent.putExtra("dibshomeArr", dibshomeArr)
-                            startActivityForResult(clusterIntent, 99)
-
-                            true
-                        }
-                        markerList.add(marker)
-                    }
-                }
-
-
-                for (i in 0..15) {
-                    markerList[i].map = nMap
-                }
             }
-
         }
     }
 
@@ -1469,29 +1469,23 @@ class MapFragment : Fragment(), OnMapReadyCallback {
     }
 
 
-    private fun getHouseInfoInMapHttp(callback: (RealEstateList: ArrayList<RealEstateData>) -> Unit) {
+    private suspend fun getHouseInfoInMapHttp(callback: (RealEstateList: ArrayList<RealEstateData>) -> Unit) {
         val location = LBLatitude + "_" + LBLongitude + "_" + RTLatitude + "_" + RTLongitude
         val getHouseInfoInMap = RetrofitBuilder.api.getRealEstateInMapWithNoOption(
-            location, null
+            location, "null"
         )
         getHouseInfoInMap.enqueue(object : Callback<ArrayList<RealEstateData>> {
             override fun onResponse(
                 call: Call<ArrayList<RealEstateData>>,
                 response: Response<ArrayList<RealEstateData>>
             ) {
-                Toast.makeText(activity, "GET Success", Toast.LENGTH_LONG).show()
                 if (response.isSuccessful) {
+                    Toast.makeText(activity, "GET Success", Toast.LENGTH_LONG).show()
                     val realEstateList = response.body()
                     if (realEstateList != null) {
-                        RealEstateInfoInMap.clear() // 기존 데이터를 비우고
-                        RealEstateInfoInMap.addAll(realEstateList) // 새로운 데이터 추가
-                        callback(RealEstateInfoInMap)
+                        // Log.d("realEstateList", realEstateList.toString())
+                        callback(realEstateList)
                     }
-                    // RealEstateInfoInMap 리스트의 모든 요소의 id 출력
-                    for (realEstate in RealEstateInfoInMap) {
-                        println("매물 ID : " + realEstate.id)
-                    }
-
                 }
             }
 
@@ -1504,13 +1498,25 @@ class MapFragment : Fragment(), OnMapReadyCallback {
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
-        if(resultCode == RESULT_OK){
-            when(requestCode){
+        if (resultCode == RESULT_OK) {
+            when (requestCode) {
                 99 -> {
                     Log.d("onActivityResult", "true")
                     dibshomeArr = data?.extras?.get("returnDibshomeArr") as ArrayList<HouseInfoData>
                 }
             }
+        }
+    }
+
+    companion object {
+        private const val ARG_PRESET_DATA = "ARG_PRESET_DATA"
+
+        fun newInstance(presetData: PresetInfoData): MapFragment {
+            val fragment = MapFragment()
+            val args = Bundle()
+            args.putParcelable(ARG_PRESET_DATA, presetData)
+            fragment.arguments = args
+            return fragment
         }
     }
 }
