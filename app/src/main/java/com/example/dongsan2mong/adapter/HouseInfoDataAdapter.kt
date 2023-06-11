@@ -8,7 +8,6 @@ import com.example.dongsan2mong.R
 import com.example.dongsan2mong.activity.MainActivity
 import com.example.dongsan2mong.data.HouseInfoData
 import com.example.dongsan2mong.databinding.RowHouseinfoBinding
-import com.squareup.picasso.Picasso
 
 class HouseInfoDataAdapter(val items: ArrayList<HouseInfoData>, val selected: ArrayList<Boolean>) :
     RecyclerView.Adapter<HouseInfoDataAdapter.ViewHolder>() {
@@ -72,7 +71,7 @@ class HouseInfoDataAdapter(val items: ArrayList<HouseInfoData>, val selected: Ar
         if (items[position].imgURL == "") {
             holder.binding.houseImg.setImageResource(R.drawable.img_house_1)
         } else {
-            Picasso.get().load(items[position].imgURL).into(holder.binding.houseImg)
+            holder.binding.houseImg.setImageResource(R.drawable.compare_house)
         }
 
         holder.binding.apply {
@@ -81,7 +80,7 @@ class HouseInfoDataAdapter(val items: ArrayList<HouseInfoData>, val selected: Ar
                     "onActivityResult",
                     "seleceted? : ${favorite.isSelected}, position : $position"
                 )
-                if (favorite.isSelected == true) {
+                if (favorite.isSelected) {
                     favorite.isSelected = false
                     favorite.setImageResource(R.drawable.icon_house_favorite_empty)
                     dibshomeArr.remove(items[position])

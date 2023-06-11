@@ -1,6 +1,5 @@
 package com.example.dongsan2mong.fragment
 
-import android.content.Context
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
@@ -12,7 +11,7 @@ import com.example.dongsan2mong.adapter.HouseInfoDataAdapter
 import com.example.dongsan2mong.data.HouseInfoData
 import com.example.dongsan2mong.databinding.FragmentLatesthomeBinding
 import com.example.dongsan2mong.databinding.RowHouseinfoBinding
-import com.example.dongsan2mong.event.*
+import com.example.dongsan2mong.event.DataEvent
 import org.greenrobot.eventbus.EventBus
 import org.greenrobot.eventbus.Subscribe
 import org.greenrobot.eventbus.ThreadMode
@@ -35,18 +34,6 @@ class LatesthomeFragment : Fragment() {
     }
 
     fun initData() {
-        data.add(HouseInfoData())
-        data.add(
-            HouseInfoData(
-                type = "월세",
-                price = "500/74",
-                space = "33.06m^2",
-                floor = "1층",
-                area = "광진구 구의동",
-                roomNum = "투룸",
-                imgURL = ""
-            )
-        )
     }
 
     fun initRecyclerView() {
@@ -87,8 +74,7 @@ class LatesthomeFragment : Fragment() {
     fun printData(event: DataEvent) {
         if (event.int == 4) {
             Log.d("dataEvent", "wishlist to latesthome")
-        }
-        else if (event.int == 9) {
+        } else if (event.int == 9) {
             Log.d("dataEvent", "dibshome to latesthome")
         }
     }

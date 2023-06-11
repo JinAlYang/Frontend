@@ -34,7 +34,7 @@ class CallPresetFragment : Fragment(), PresetDataAdapter.OnApplyClickListener {
 
     override fun onApplyClick(data: PresetInfoData) {
         // 이곳에서 data를 처리하거나 MainActivity의 MapFragment로 전달하는 로직을 추가하세요.
-        val mapFragment = MapFragment.newInstance(data)
+        val mapFragment = MapFragment()
         val mainActivity = requireActivity() as MainActivity
         mainActivity.changeFragment(mapFragment)
     }

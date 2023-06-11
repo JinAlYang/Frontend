@@ -1,9 +1,9 @@
 package com.example.dongsan2mong.activity
 
 import android.content.Intent
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
+import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.dongsan2mong.adapter.HouseInfoDataAdapter
 import com.example.dongsan2mong.data.HouseInfoData
@@ -49,7 +49,7 @@ class ClusterActivity : AppCompatActivity() {
                 type = "월세",
                 price = realEstateData.deposit.toString().removeSuffix("0000") + "/" +
                         realEstateData.monthlyPayment.toString().removeSuffix("0000"),
-                space = realEstateData.roomSize.toString() + "^2",
+                space = realEstateData.roomSize.toString() + "m^2",
                 area = realEstateData.areaNumberAddress,
                 roomNum = realEstateData.spaceType,
                 imgURL = realEstateData.imgUrl
