@@ -38,15 +38,16 @@ class DibshomeFragment: Fragment() {
     }
 
     fun initData() {
-//        adapter.setDibshomeArr()
 
     }
 
     fun initRecyclerView() {
-        binding.recyclerViewDibshome.layoutManager = LinearLayoutManager(requireContext(),
-            LinearLayoutManager.VERTICAL, false)
+        binding.recyclerViewDibshome.layoutManager = LinearLayoutManager(
+            requireContext(),
+            LinearLayoutManager.VERTICAL, false
+        )
         adapter = HouseInfoDataAdapter(data, selected)
-        adapter.itemClickListener = object: HouseInfoDataAdapter.OnItemClickListener {
+        adapter.itemClickListener = object : HouseInfoDataAdapter.OnItemClickListener {
             override fun OnItemClick(
                 data: HouseInfoData,
                 binding: RowHouseinfoBinding,
@@ -58,63 +59,28 @@ class DibshomeFragment: Fragment() {
         binding.recyclerViewDibshome.adapter = adapter
 
     }
-
-    /*
-    fun initData() {
-        data.add(HouseInfoData())
-        data.add(
-            HouseInfoData(
-            type = "월세",
-            price = "500/74",
-            space = "33.06m^2",
-            floor = "1층",
-            area = "광진구 구의동",
-            roomNum = "투룸",
-            tempImg = 1
-        )
-        )
-    }
-
-
-     */
-
-    override fun onAttach(context: Context) {
-        super.onAttach(context)
+    override fun onResume() {
+        super.onResume()
         try {
             EventBus.getDefault().register(this)
+            EventBus.getDefault().post(DataEvent(7))
         } catch (e: Exception) {
         }
     }
-//    override fun onStart() {
-//        super.onStart()
-//
-//    }
 
-    override fun onDetach() {
-        super.onDetach()
-        super.onStop()
+    override fun onPause() {
+        super.onPause()
         EventBus.getDefault().unregister(this)
-
-
-    }
-    override fun onStop() {
-        super.onStop()
-        EventBus.getDefault().post(DibsEvent("from dibs..."))
+        EventBus.getDefault().post(DataEvent(9))
     }
 
     @Subscribe(threadMode = ThreadMode.MAIN)
-    fun printLatesthome(event: LatesthomeEvent) {
-        event.str = "from late? dibs"
-
-        Log.d("dataEvent", "DibsHomeFragment : ${event.str}")
-//        Toast.makeText(this@DataEvent, "${event.helloEventBus}", Toast.LENGTH_SHORT).show()
-    }
-
-    @Subscribe(threadMode = ThreadMode.MAIN)
-    fun printMap(event: MapEvent) {
-        event.str = "from map? dibs"
-
-        Log.d("dataEvent", "DibsHomeFragment : ${event.str}")
-//        Toast.makeText(this@DataEvent, "${event.helloEventBus}", Toast.LENGTH_SHORT).show()
+    fun printData(event: DataEvent) {
+        if (event.int == 6) {
+            Log.d("dataEvent", "wishlist to dibshome")
+        }
+        else if (event.int == 8) {
+            Log.d("dataEvent", "latesthome to dibshome")
+        }
     }
 }

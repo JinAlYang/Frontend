@@ -7,6 +7,7 @@ import android.content.Intent
 import android.graphics.Color
 import android.graphics.PointF
 import android.os.Bundle
+import android.provider.ContactsContract.Data
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
@@ -220,7 +221,6 @@ class MapFragment : Fragment(), OnMapReadyCallback {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        Log.e("dataEvent", "Map : onCreate()")
 
         val fm = childFragmentManager
         val initialMapOption = NaverMapOptions()
@@ -239,7 +239,6 @@ class MapFragment : Fragment(), OnMapReadyCallback {
         savedInstanceState: Bundle?
     ): View? {
         // Inflate the layout for this fragment
-        Log.e("dataEvent", "Map : onCreateView()")
         binding = FragmentMapBinding.inflate(inflater, container, false)
         init()
         return binding.root
@@ -247,7 +246,6 @@ class MapFragment : Fragment(), OnMapReadyCallback {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        Log.e("dataEvent", "Map : onViewCreated()")
         drawerOpenImageView = view.findViewById(R.id.sidemenuBtn)
         drawerCloseImageView =
             activity?.findViewById(R.id.closeBtn) ?: return
@@ -1546,43 +1544,29 @@ class MapFragment : Fragment(), OnMapReadyCallback {
     override fun onAttach(context: Context) {
         super.onAttach(context)
         try {
-            Log.e("dataEvent", "Map : onAttach()")
             EventBus.getDefault().register(this)
         } catch (e: Exception) {
         }
     }
-//    override fun onStart() {
-//        super.onStart()
-//        try {
-//            EventBus.getDefault().register(this)
-//        } catch (e: Exception) {
-//        }
-//    }
 
     override fun onDetach() {
         super.onDetach()
-        Log.e("dataEvent", "Map : onDetach()")
         EventBus.getDefault().unregister(this)
-
     }
+
     override fun onStop() {
         super.onStop()
-        Log.e("dataEvent", "Map : onStop()")
-        EventBus.getDefault().post(MapEvent("from mapfragment..."))
-
+        EventBus.getDefault().post(DataEvent(2))
+        EventBus.getDefault().post(DataEvent(0))
     }
 
     @Subscribe(threadMode = ThreadMode.MAIN)
-    fun printDibs(event: DibsEvent) {
-        event.str = "from dibs? map"
-        Log.d("dataEvent", "MapFragment : ${event.str}")
-//        Toast.makeText(this@DataEvent, "${event.helloEventBus}", Toast.LENGTH_SHORT).show()
-    }
-
-    @Subscribe(threadMode = ThreadMode.MAIN)
-    fun printLatesthome(event: LatesthomeEvent) {
-        event.str = "from latest? map"
-        Log.d("dataEvent", "MapFragment : ${event.str}")
-//        Toast.makeText(this@DataEvent, "${event.helloEventBus}", Toast.LENGTH_SHORT).show()
+    fun printData(event: DataEvent) {
+        if (event.int == 1) {
+            Log.d("dataEvent", "ClusterActivity to mapFragment")
+        }
+        else if (event.int == 3) {
+            Log.d("dataEvent", "wishlist to mapFragment")
+        }
     }
 }

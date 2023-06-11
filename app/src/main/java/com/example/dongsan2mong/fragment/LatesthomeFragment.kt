@@ -29,7 +29,6 @@ class LatesthomeFragment: Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         binding = FragmentLatesthomeBinding.inflate(inflater, container, false)
-        Log.e("dataEvent", "Latesthome : onCreateView()")
         initRecyclerView()
         initData()
         return binding.root
@@ -67,47 +66,28 @@ class LatesthomeFragment: Fragment() {
 
     }
 
-    override fun onAttach(context: Context) {
-        super.onAttach(context)
+    override fun onResume() {
+        super.onResume()
         try {
-            Log.e("dataEvent", "Latesthome : onAttach()")
             EventBus.getDefault().register(this)
+            EventBus.getDefault().post(DataEvent(5))
         } catch (e: Exception) {
         }
     }
-//    override fun onStart() {
-//        super.onStart()
-//        try {
-//            EventBus.getDefault().register(this)
-//        } catch (e: Exception) {
-//        }
-//    }
 
-    override fun onDetach() {
-        super.onDetach()
-        Log.e("dataEvent", "Latesthome : onDetach()")
+    override fun onPause() {
+        super.onPause()
         EventBus.getDefault().unregister(this)
-    }
-    override fun onStop() {
-        super.onStop()
-        Log.e("dataEvent", "Latesthome : onStop()")
-        EventBus.getDefault().post(LatesthomeEvent("from latest..."))
-
+        EventBus.getDefault().post(DataEvent(8))
     }
 
     @Subscribe(threadMode = ThreadMode.MAIN)
-    fun printDibs(event: DibsEvent) {
-        event.str = "from dibs? late"
-
-        Log.d("dataEvent", "LatesthomeFragment : ${event.str}")
-//        Toast.makeText(this@DataEvent, "${event.helloEventBus}", Toast.LENGTH_SHORT).show()
-    }
-
-    @Subscribe(threadMode = ThreadMode.MAIN)
-    fun printMap(event: MapEvent) {
-        event.str = "from map? late"
-
-        Log.d("dataEvent", "LatesthomeFragment : ${event.str}")
-//        Toast.makeText(this@DataEvent, "${event.helloEventBus}", Toast.LENGTH_SHORT).show()
+    fun printData(event: DataEvent) {
+        if (event.int == 4) {
+            Log.d("dataEvent", "wishlist to latesthome")
+        }
+        else if (event.int == 9) {
+            Log.d("dataEvent", "dibshome to latesthome")
+        }
     }
 }

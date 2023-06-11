@@ -9,6 +9,7 @@ import com.example.dongsan2mong.adapter.HouseInfoDataAdapter
 import com.example.dongsan2mong.data.HouseInfoData
 import com.example.dongsan2mong.databinding.ActivityClusterBinding
 import com.example.dongsan2mong.databinding.RowHouseinfoBinding
+import com.example.dongsan2mong.event.DataEvent
 import org.greenrobot.eventbus.EventBus
 import org.greenrobot.eventbus.Subscribe
 import org.greenrobot.eventbus.ThreadMode
@@ -42,8 +43,6 @@ class ClusterActivity : AppCompatActivity() {
         binding.recyclerViewCluster.layoutManager = LinearLayoutManager(this,
             LinearLayoutManager.VERTICAL, false)
 
-//        data = intent.getParcelableArrayExtra("clusterArr") as ArrayList<HouseInfoData>
-
         val parcelableArray = intent.getParcelableArrayExtra("clusterArr")
         data = if (parcelableArray is Array<*>) {
             parcelableArray.filterIsInstance<HouseInfoData>() as ArrayList<HouseInfoData>
@@ -52,8 +51,6 @@ class ClusterActivity : AppCompatActivity() {
         }
 
         adapter = HouseInfoDataAdapter(data!!, selected)
-
-//        dibshomeArr = intent.extras?.get("k") as ArrayList<HouseInfoData>
 
         val parcelableArray2 = intent.getParcelableArrayExtra("dibshomeArr")
         dibshomeArr = if (parcelableArray2 is Array<*>) {
@@ -73,8 +70,6 @@ class ClusterActivity : AppCompatActivity() {
             }
         }
         binding.clusterBackBtn.setOnClickListener {
-//            EventBus.getDefault().post(DataEvent("ClusterActivity"))
-
             val returnIntent = Intent()
             // 이전 버튼 눌러서 돌아가면 이전 activity에 dibshomearr 전송
             returnIntent.putExtra("returnDibshomeArr", adapter.findDibshomeArr())
@@ -96,13 +91,14 @@ class ClusterActivity : AppCompatActivity() {
     override fun onStop() {
         super.onStop()
         EventBus.getDefault().unregister(this)
-//        EventBus.getDefault().post(DataEvent("from ClusterActivity"))
+        EventBus.getDefault().post(DataEvent(1))
 
     }
 
-//    @Subscribe(threadMode = ThreadMode.MAIN)
-//    fun printId(event: DataEvent) {
-//        Log.d("dataEvent", "ClusterActivity : ${event.helloEventBus}")
-////        Toast.makeText(this@DataEvent, "${event.helloEventBus}", Toast.LENGTH_SHORT).show()
-//    }
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    fun printData(event: DataEvent) {
+        if (event.int == 0) {
+            Log.d("dataEvent", "mapFragment to ClusterActivity")
+        }
+    }
 }
