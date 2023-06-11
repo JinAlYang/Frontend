@@ -69,7 +69,7 @@ interface RetrofitService {
     fun getRealEstateInMapWithNoOption(
         @Query("location") location: String,
         @Query("filter") filter: String?
-    ): Call<RealEstateData>
+    ): Call<ArrayList<RealEstateData>>
 
     @GET("realEstate/bbox?location={LBLatitude}_{LBLongitude}_{RTLatitude}_{RTLongitude}&filter=null")
     fun getRealEstateInCluster()

@@ -7,6 +7,7 @@ import android.util.Log
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.dongsan2mong.adapter.HouseInfoDataAdapter
 import com.example.dongsan2mong.data.HouseInfoData
+import com.example.dongsan2mong.data.RealEstateData
 import com.example.dongsan2mong.databinding.ActivityClusterBinding
 import com.example.dongsan2mong.databinding.RowHouseinfoBinding
 import com.example.dongsan2mong.event.DataEvent
@@ -23,16 +24,38 @@ class ClusterActivity : AppCompatActivity() {
     val selected: ArrayList<Boolean> = ArrayList()
     var dibshomeArr: ArrayList<HouseInfoData>? = ArrayList()
 
+    var clusterArr: ArrayList<RealEstateData>? = ArrayList<RealEstateData>()
+    var houseInfoArr: ArrayList<HouseInfoData>? = ArrayList<HouseInfoData>()
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityClusterBinding.inflate(layoutInflater)
         setContentView(binding.root)
+
+        clusterArr =
+            intent.getParcelableArrayListExtra<RealEstateData>("clusterArr")
+        dibshomeArr =
+            intent.getParcelableArrayListExtra<HouseInfoData>("dibshomeArr")
         /*
         clusterIntent.putExtra("clusterArr", seperatedEstate[i * 4 + j])
          */
-
+        moveDataToHouseInfoData()
         initRecyclerView()
         init()
+    }
+
+    fun moveDataToHouseInfoData() {
+        clusterArr?.forEach { realEstateData ->
+            val houseInfo = HouseInfoData(
+                type = "월세",
+                price = realEstateData.deposit.toString().removeSuffix("0000") + "/" +
+                        realEstateData.monthlyPayment.toString().removeSuffix("0000"),
+                space = realEstateData.roomSize.toString() + "^2",
+                area = realEstateData.areaNumberAddress,
+                roomNum = realEstateData.spaceType,
+                imgURL = realEstateData.imgUrl
+            )
+            houseInfoArr?.add(houseInfo)
+        }
     }
 
     fun init() {
@@ -40,17 +63,13 @@ class ClusterActivity : AppCompatActivity() {
     }
 
     fun initRecyclerView() {
-        binding.recyclerViewCluster.layoutManager = LinearLayoutManager(this,
-            LinearLayoutManager.VERTICAL, false)
+        binding.recyclerViewCluster.layoutManager = LinearLayoutManager(
+            this,
+            LinearLayoutManager.VERTICAL, false
+        )
+        adapter = HouseInfoDataAdapter(houseInfoArr!!, selected)
 
-        val parcelableArray = intent.getParcelableArrayExtra("clusterArr")
-        data = if (parcelableArray is Array<*>) {
-            parcelableArray.filterIsInstance<HouseInfoData>() as ArrayList<HouseInfoData>
-        } else {
-            ArrayList<HouseInfoData>()
-        }
-
-        adapter = HouseInfoDataAdapter(data!!, selected)
+        // dibshomeArr = intent.extras?.get("k") as ArrayList<HouseInfoData>
 
         val parcelableArray2 = intent.getParcelableArrayExtra("dibshomeArr")
         dibshomeArr = if (parcelableArray2 is Array<*>) {
@@ -60,7 +79,7 @@ class ClusterActivity : AppCompatActivity() {
         }
 
         adapter.changeDibshomeArr(dibshomeArr!!)
-        adapter.itemClickListener = object: HouseInfoDataAdapter.OnItemClickListener {
+        adapter.itemClickListener = object : HouseInfoDataAdapter.OnItemClickListener {
             override fun OnItemClick(
                 data: HouseInfoData,
                 binding: RowHouseinfoBinding,

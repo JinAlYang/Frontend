@@ -18,7 +18,7 @@ import org.greenrobot.eventbus.Subscribe
 import org.greenrobot.eventbus.ThreadMode
 
 
-class LatesthomeFragment: Fragment() {
+class LatesthomeFragment : Fragment() {
     lateinit var binding: FragmentLatesthomeBinding
     lateinit var adapter: HouseInfoDataAdapter
 
@@ -38,22 +38,24 @@ class LatesthomeFragment: Fragment() {
         data.add(HouseInfoData())
         data.add(
             HouseInfoData(
-            type = "월세",
-            price = "500/74",
-            space = "33.06m^2",
-            floor = "1층",
-            area = "광진구 구의동",
-            roomNum = "투룸",
-            tempImg = 1
-        )
+                type = "월세",
+                price = "500/74",
+                space = "33.06m^2",
+                floor = "1층",
+                area = "광진구 구의동",
+                roomNum = "투룸",
+                imgURL = ""
+            )
         )
     }
 
     fun initRecyclerView() {
-        binding.recyclerViewLatestHome.layoutManager = LinearLayoutManager(requireContext(),
-        LinearLayoutManager.VERTICAL, false)
+        binding.recyclerViewLatestHome.layoutManager = LinearLayoutManager(
+            requireContext(),
+            LinearLayoutManager.VERTICAL, false
+        )
         adapter = HouseInfoDataAdapter(data, selected)
-        adapter.itemClickListener = object: HouseInfoDataAdapter.OnItemClickListener {
+        adapter.itemClickListener = object : HouseInfoDataAdapter.OnItemClickListener {
             override fun OnItemClick(
                 data: HouseInfoData,
                 binding: RowHouseinfoBinding,

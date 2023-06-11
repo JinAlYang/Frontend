@@ -14,7 +14,7 @@ import com.example.dongsan2mong.data.PresetInfoData
 import com.example.dongsan2mong.databinding.FragmentCallpresetBinding
 import com.example.dongsan2mong.databinding.RowPresetBinding
 
-class CallPresetFragment : Fragment() {
+class CallPresetFragment : Fragment(), PresetDataAdapter.OnApplyClickListener {
     lateinit var binding: FragmentCallpresetBinding
     lateinit var adapter: PresetDataAdapter
 
@@ -32,12 +32,15 @@ class CallPresetFragment : Fragment() {
         return binding.root
     }
 
+    override fun onApplyClick(data: PresetInfoData) {
+        // 이곳에서 data를 처리하거나 MainActivity의 MapFragment로 전달하는 로직을 추가하세요.
+        val mapFragment = MapFragment.newInstance(data)
+        val mainActivity = requireActivity() as MainActivity
+        mainActivity.changeFragment(mapFragment)
+    }
+
     fun initData() {
-        data.add(PresetInfoData(freesetTitle = "어대역보증금3000이상"))
-        data.add(PresetInfoData(freesetTitle = "화양동,자양동오피스텔만"))
-        data.add(PresetInfoData(freesetTitle = "구의동3층이상투룸월세70이하"))
-
-
+        data.add(PresetInfoData(freesetTitle = "중곡동, 보증금2억이하, 월세70이하"))
         for (i: Int in 0 until data.size) {
             selected.add(false)
         }
@@ -52,7 +55,11 @@ class CallPresetFragment : Fragment() {
         )
         adapter = PresetDataAdapter(data, selected)
         adapter.itemClickListener = object : PresetDataAdapter.OnItemClickListener {
-            override fun OnItemClick(data: PresetInfoData, binding: RowPresetBinding, position: Int) {
+            override fun onItemClick(
+                data: PresetInfoData,
+                binding: RowPresetBinding,
+                position: Int
+            ) {
                 adapter.updateItemAtPosition(position, data)
             }
 
