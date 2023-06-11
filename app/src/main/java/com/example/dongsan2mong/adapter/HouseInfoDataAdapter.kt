@@ -3,25 +3,27 @@ package com.example.dongsan2mong.adapter
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
-import com.example.dongsan2mong.data.HouseInfoData
 import com.example.dongsan2mong.R
 import com.example.dongsan2mong.activity.MainActivity
+import com.example.dongsan2mong.data.HouseInfoData
 import com.example.dongsan2mong.databinding.RowHouseinfoBinding
 
-class HouseInfoDataAdapter (val items:ArrayList<HouseInfoData>, val selected:ArrayList<Boolean>)
-    : RecyclerView.Adapter<HouseInfoDataAdapter.ViewHolder>() {
+class HouseInfoDataAdapter(val items: ArrayList<HouseInfoData>, val selected: ArrayList<Boolean>) :
+    RecyclerView.Adapter<HouseInfoDataAdapter.ViewHolder>() {
 
     interface OnItemClickListener {
         fun OnItemClick(data: HouseInfoData, binding: RowHouseinfoBinding, position: Int)
     }
 
     var itemClickListener: OnItemClickListener? = null
+
     // 찜목록에 들어갈 매물들
     var dibshomeArr: ArrayList<HouseInfoData> = ArrayList<HouseInfoData>()
 
-    inner class ViewHolder(val binding: RowHouseinfoBinding)
-        : RecyclerView.ViewHolder(binding.root) {
+    inner class ViewHolder(val binding: RowHouseinfoBinding) :
+        RecyclerView.ViewHolder(binding.root) {
         private val mainActivity: MainActivity? = binding.root.context as? MainActivity
+
         init {
             binding.houseInfo.setOnClickListener {
                 if (selected[adapterPosition] == false)
@@ -41,6 +43,7 @@ class HouseInfoDataAdapter (val items:ArrayList<HouseInfoData>, val selected:Arr
         dibshomeArr.addAll(arr)
         notifyDataSetChanged()
     }
+
     fun findDibshomeArr(): ArrayList<HouseInfoData> {
         return dibshomeArr
     }
@@ -78,8 +81,7 @@ class HouseInfoDataAdapter (val items:ArrayList<HouseInfoData>, val selected:Arr
                     dibshomeArr.remove(items[position])
                     notifyDataSetChanged()
 
-                }
-                else {
+                } else {
                     favorite.isSelected = true
                     dibshomeArr.add(items[position])
                     notifyDataSetChanged()
