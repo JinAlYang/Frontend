@@ -31,53 +31,44 @@
     </string-array>
 
     <string-array name="roomNum">
-        <item>방갯수1</item>
-        <item>방갯수2</item>
-        <item>방갯수3</item>
-        <item>방갯수4</item>
-        <item>방갯수5</item>
-        <item>방갯수6</item>
-        <item>방갯수7</item>
+        <item>오픈형</item>
+        <item>분리형</item>
+        <item>복층형</item>
+        <item>방2</item>
+        <item>방3</item>
+        <item>방4</item>
+        <item>최대</item>
     </string-array>
 
     <string-array name="convType">
-        <item>편의시설1</item>
-        <item>편의시설2</item>
-        <item>편의시설3</item>
-        <item>편의시설4</item>
-        <item>편의시설5</item>
-        <item>편의시설6</item>
-        <item>편의시설7</item>
+        <item>엘리베이터</item>
+        <item>편의점</item>
+        <item>세탁소</item>
+        <item>대형마트</item>
+        <item>버스정류장</item>
     </string-array>
 
     <string-array name="buildType">
-        <item>건물유형1</item>
-        <item>건물유형2</item>
-        <item>건물유형3</item>
-        <item>건물유형4</item>
-        <item>건물유형5</item>
-        <item>건물유형6</item>
-        <item>건물유형7</item>
+        <item>아파트</item>
+        <item>빌라</item>
+        <item>오피스텔</item>
+        <item>상가</item>
     </string-array>
 
     <string-array name="floorNum">
-        <item>층수1</item>
-        <item>층수2</item>
-        <item>층수3</item>
-        <item>층수4</item>
-        <item>층수5</item>
-        <item>층수6</item>
-        <item>층수7</item>
+        <item>지상층</item>
+        <item>반지하</item>
+        <item>옥탑</item>
     </string-array>
 
     <string-array name="inclType">
-        <item>옵션1</item>
-        <item>옵션2</item>
-        <item>옵션3</item>
-        <item>옵션4</item>
-        <item>옵션5</item>
-        <item>옵션6</item>
-        <item>옵션7</item>
+        <item>싱크대</item>
+        <item>에어컨</item>
+        <item>신발장</item>
+        <item>세탁기</item>
+        <item>냉장고</item>
+        <item>옷장</item>
+        <item>책상</item>
     </string-array>
 
     <string-array name="saleType1">

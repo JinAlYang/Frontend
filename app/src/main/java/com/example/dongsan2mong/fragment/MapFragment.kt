@@ -132,7 +132,7 @@ class MapFragment : Fragment(), OnMapReadyCallback {
 
     lateinit var convTypeAdapter: SeoulAdapter
     lateinit var convTypeArr: Array<String>
-    var isSelectedConvType = Array<Boolean>(7) { false }
+    var isSelectedConvType = Array<Boolean>(5) { false }
 
     // 선택된 convType
     var numOfSelectedConvType: Int = 0
@@ -148,7 +148,7 @@ class MapFragment : Fragment(), OnMapReadyCallback {
 
     lateinit var buildTypeAdapter: SeoulAdapter
     lateinit var buildTypeArr: Array<String>
-    var isSelectedBuildType = Array<Boolean>(7) { false }
+    var isSelectedBuildType = Array<Boolean>(4) { false }
 
     // 선택된 buildType
     var numOfSelectedBuildType: Int = 0
@@ -170,7 +170,7 @@ class MapFragment : Fragment(), OnMapReadyCallback {
 
     lateinit var floorNumAdapter: SeoulAdapter
     lateinit var floorNumArr: Array<String>
-    var isSelectedFloorNum = Array<Boolean>(7) { false }
+    var isSelectedFloorNum = Array<Boolean>(3) { false }
 
     // 선택된 floorNum
     var numOfSelectedFloorNum: Int = 0
