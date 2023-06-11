@@ -1,14 +1,19 @@
 package com.example.dongsan2mong.activity
 
 import android.content.Intent
-import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
+import android.os.Bundle
+import android.util.Log
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.dongsan2mong.adapter.HouseInfoDataAdapter
 import com.example.dongsan2mong.data.HouseInfoData
 import com.example.dongsan2mong.data.RealEstateData
 import com.example.dongsan2mong.databinding.ActivityClusterBinding
 import com.example.dongsan2mong.databinding.RowHouseinfoBinding
+import com.example.dongsan2mong.event.DataEvent
+import org.greenrobot.eventbus.EventBus
+import org.greenrobot.eventbus.Subscribe
+import org.greenrobot.eventbus.ThreadMode
 
 class ClusterActivity : AppCompatActivity() {
 
@@ -92,5 +97,27 @@ class ClusterActivity : AppCompatActivity() {
         }
         binding.recyclerViewCluster.adapter = adapter
 
+    }
+
+    override fun onStart() {
+        super.onStart()
+        try {
+            EventBus.getDefault().register(this)
+        } catch (e: Exception) {
+        }
+    }
+
+    override fun onStop() {
+        super.onStop()
+        EventBus.getDefault().unregister(this)
+        EventBus.getDefault().post(DataEvent(1))
+
+    }
+
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    fun printData(event: DataEvent) {
+        if (event.int == 0) {
+            Log.d("dataEvent", "mapFragment to ClusterActivity")
+        }
     }
 }

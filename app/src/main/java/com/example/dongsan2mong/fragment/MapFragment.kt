@@ -2,10 +2,12 @@ package com.example.dongsan2mong.fragment
 
 import android.annotation.SuppressLint
 import android.app.Activity.RESULT_OK
+import android.content.Context
 import android.content.Intent
 import android.graphics.Color
 import android.graphics.PointF
 import android.os.Bundle
+import android.provider.ContactsContract.Data
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
@@ -26,6 +28,7 @@ import com.example.dongsan2mong.data.HouseInfoData
 import com.example.dongsan2mong.data.PresetInfoData
 import com.example.dongsan2mong.data.RealEstateData
 import com.example.dongsan2mong.databinding.FragmentMapBinding
+import com.example.dongsan2mong.event.*
 import com.google.android.material.slider.RangeSlider
 import com.naver.maps.geometry.LatLng
 import com.naver.maps.map.*
@@ -35,6 +38,9 @@ import com.naver.maps.map.overlay.OverlayImage
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
+import org.greenrobot.eventbus.EventBus
+import org.greenrobot.eventbus.Subscribe
+import org.greenrobot.eventbus.ThreadMode
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -181,6 +187,7 @@ class MapFragment : Fragment(), OnMapReadyCallback {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
         val fm = childFragmentManager
         val initialMapOption = NaverMapOptions()
             .camera(CameraPosition(LatLng(37.563, 127.08), 15.0))
@@ -1508,15 +1515,32 @@ class MapFragment : Fragment(), OnMapReadyCallback {
         }
     }
 
-    companion object {
-        private const val ARG_PRESET_DATA = "ARG_PRESET_DATA"
+    override fun onAttach(context: Context) {
+        super.onAttach(context)
+        try {
+            EventBus.getDefault().register(this)
+        } catch (e: Exception) {
+        }
+    }
 
-        fun newInstance(presetData: PresetInfoData): MapFragment {
-            val fragment = MapFragment()
-            val args = Bundle()
-            args.putParcelable(ARG_PRESET_DATA, presetData)
-            fragment.arguments = args
-            return fragment
+    override fun onDetach() {
+        super.onDetach()
+        EventBus.getDefault().unregister(this)
+    }
+
+    override fun onStop() {
+        super.onStop()
+        EventBus.getDefault().post(DataEvent(2))
+        EventBus.getDefault().post(DataEvent(0))
+    }
+
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    fun printData(event: DataEvent) {
+        if (event.int == 1) {
+            Log.d("dataEvent", "ClusterActivity to mapFragment")
+        }
+        else if (event.int == 3) {
+            Log.d("dataEvent", "wishlist to mapFragment")
         }
     }
 }
