@@ -33,6 +33,7 @@ import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 import java.util.*
+import kotlin.collections.ArrayList
 
 
 class MapFragment : Fragment(), OnMapReadyCallback {
@@ -48,6 +49,14 @@ class MapFragment : Fragment(), OnMapReadyCallback {
     private var markerMaxCount: Int = 16
 
     var markerList: ArrayList<Marker> = ArrayList<Marker>(16)
+    var LBArr: ArrayList<LatLng> = ArrayList<LatLng>(16)
+    var RTArr: ArrayList<LatLng> = ArrayList<LatLng>(16)
+    var countNum: ArrayList<Int> = ArrayList<Int>(16)
+    var allEstate: ArrayList<RealEstateData> = ArrayList<RealEstateData>()
+    var seperatedEstate: ArrayList<ArrayList<RealEstateData>> = ArrayList<ArrayList<RealEstateData>>(16)
+
+
+//    var estateArr: ArrayList<RealEstateData> = ArrayList<RealEstateData>()
 
 
     // 지역 옵션 어댑터
@@ -130,7 +139,7 @@ class MapFragment : Fragment(), OnMapReadyCallback {
 
     lateinit var convTypeAdapter: SeoulAdapter
     lateinit var convTypeArr: Array<String>
-    var isSelectedConvType = Array<Boolean>(7) { false }
+    var isSelectedConvType = Array<Boolean>(5) { false }
 
     // 선택된 convType
     var numOfSelectedConvType: Int = 0
@@ -146,7 +155,7 @@ class MapFragment : Fragment(), OnMapReadyCallback {
 
     lateinit var buildTypeAdapter: SeoulAdapter
     lateinit var buildTypeArr: Array<String>
-    var isSelectedBuildType = Array<Boolean>(7) { false }
+    var isSelectedBuildType = Array<Boolean>(4) { false }
 
     // 선택된 buildType
     var numOfSelectedBuildType: Int = 0
@@ -168,7 +177,7 @@ class MapFragment : Fragment(), OnMapReadyCallback {
 
     lateinit var floorNumAdapter: SeoulAdapter
     lateinit var floorNumArr: Array<String>
-    var isSelectedFloorNum = Array<Boolean>(7) { false }
+    var isSelectedFloorNum = Array<Boolean>(3) { false }
 
     // 선택된 floorNum
     var numOfSelectedFloorNum: Int = 0
@@ -1293,6 +1302,10 @@ class MapFragment : Fragment(), OnMapReadyCallback {
     override fun onMapReady(naverMap: NaverMap) {
         // ...
         println("onMapReady!!!")
+        seperatedEstate.clear()
+        for (i in 0..15) {
+            seperatedEstate.add(ArrayList<RealEstateData>())
+        }
         nMap = naverMap
 
         binding.apply {
@@ -1326,9 +1339,89 @@ class MapFragment : Fragment(), OnMapReadyCallback {
                 }
                 markerList.clear()
 
+                LBArr.clear()
+                RTArr.clear()
                 for (i in 0..3) {
                     for (j in 0..3) {
-                        gridviewText.text = (i * 4 + j).toString() //원형 마커에 숫자 대입 /int그대로넣으니 에러남
+                        RTArr.add(projection.fromScreenLocation(PointF(width * (j + 1) / 4.0f, height * i / 4.0f)))
+                        LBArr.add(projection.fromScreenLocation(PointF(width * j / 4.0f, height * (i + 1) / 4.0f)))
+                    }
+                }
+
+                allEstate.clear()
+
+                // 여기서 전체 화면 좌하단 우상단으로부터 받아온 모든 매물 데이터 allEstate에 저장해줘
+
+                // 여기서 기존 분류한 매물들 초기화하고,
+                for (i in seperatedEstate.indices) {
+                    seperatedEstate[i].clear()
+                }
+
+                // 여기서 새로 받은 매물들분류해서 넣을거임
+                for (i in allEstate) {
+                    if (i.longitude.toLong() <= RTArr[0].longitude) {
+                        if (i.latitude.toLong() <= LBArr[0].latitude) {
+                            seperatedEstate[0].add(i)
+                        }
+                        else if (i.latitude.toLong() <= LBArr[1].latitude) {
+                            seperatedEstate[1].add(i)
+                        }
+                        else if (i.latitude.toLong() <= LBArr[2].latitude) {
+                            seperatedEstate[2].add(i)
+                        }
+                        else {
+                            seperatedEstate[3].add(i)
+                        }
+                    }
+                    else if (i.longitude.toLong() <= RTArr[4].longitude) {
+                        if (i.latitude.toLong() <= LBArr[0].latitude) {
+                            seperatedEstate[4].add(i)
+                        }
+                        else if (i.latitude.toLong() <= LBArr[1].latitude) {
+                            seperatedEstate[5].add(i)
+                        }
+                        else if (i.latitude.toLong() <= LBArr[2].latitude) {
+                            seperatedEstate[6].add(i)
+                        }
+                        else {
+                            seperatedEstate[7].add(i)
+                        }
+                    }
+                    else if (i.longitude.toLong() <= RTArr[8].longitude) {
+                        if (i.latitude.toLong() <= LBArr[0].latitude) {
+                            seperatedEstate[8].add(i)
+                        }
+                        else if (i.latitude.toLong() <= LBArr[1].latitude) {
+                            seperatedEstate[9].add(i)
+                        }
+                        else if (i.latitude.toLong() <= LBArr[2].latitude) {
+                            seperatedEstate[10].add(i)
+                        }
+                        else {
+                            seperatedEstate[11].add(i)
+                        }
+                    }
+                    else {
+                        if (i.latitude.toLong() <= LBArr[0].latitude) {
+                            seperatedEstate[12].add(i)
+                        }
+                        else if (i.latitude.toLong() <= LBArr[1].latitude) {
+                            seperatedEstate[13].add(i)
+                        }
+                        else if (i.latitude.toLong() <= LBArr[2].latitude) {
+                            seperatedEstate[14].add(i)
+                        }
+                        else {
+                            seperatedEstate[15].add(i)
+                        }
+                    }
+                }
+
+
+                for (i in 0..3) {
+                    for (j in 0..3) {
+//                        gridviewText.text = (i * 4 + j).toString() //원형 마커에 숫자 대입 /int그대로넣으니 에러남
+                        gridviewText.text = seperatedEstate[i * 4 + j].size.toString()
                         val marker = Marker()
                         val tempCoord = projection.fromScreenLocation(
                             PointF(

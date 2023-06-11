@@ -5,6 +5,7 @@ import android.os.Bundle
 import android.widget.ArrayAdapter
 import androidx.appcompat.app.AppCompatActivity
 import com.example.dongsan2mong.R
+import com.example.dongsan2mong.data.MemberInfoData
 import com.example.dongsan2mong.databinding.ActivitySignupBinding
 
 class SignupActivity : AppCompatActivity() {
@@ -28,15 +29,24 @@ class SignupActivity : AppCompatActivity() {
     }
 
     private fun initSignUp() {
+        val memberInfo = intent.getSerializableExtra("memberInfo") as? MemberInfoData
+        if (memberInfo != null) {
+            binding.loginName.text = memberInfo.name
+            binding.loginEmail.text = memberInfo.email
+        }
+
         val isKakao = intent.getBooleanExtra("isKakao", true)
         if (!isKakao) {
             binding.loginWhereIcon.setImageResource(R.drawable.icon_login_naver)
         }
         binding.signupCheck.setOnClickListener {
             val i = Intent(this@SignupActivity, MainActivity::class.java)
+            i.putExtra("memberInfo", memberInfo)
             startActivity(i)
             finish()
         }
+
+
 
         setupSpinnerYear()
 
