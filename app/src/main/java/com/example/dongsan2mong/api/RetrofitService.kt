@@ -12,7 +12,7 @@ interface RetrofitService {
     fun getMemberInfo(@Path("memberId") number: Int): Call<MemberInfoData>
 
     @POST("member")
-    fun addMemberInfo(@Body params: MemberInfoData) : Call<MemberInfoData>
+    fun addMemberInfo(@Body params: MemberInfoData): Call<MemberInfoData>
 
     @PUT("member/{memberId}")
     fun modifyMemberInfo()
@@ -55,7 +55,7 @@ interface RetrofitService {
     ): Call<PresetInfoData>
 
     @POST("preset/alter/{member_id}")
-    fun addPreset(@Path("member_id") memId: Int,@Body params: PresetInfoData): Call<PresetInfoData>
+    fun addPreset(@Path("member_id") memId: Int, @Body params: PresetInfoData): Call<PresetInfoData>
 
     @DELETE("preset/alter/{member_id}/{preset_id}")
     fun deletePreset()
@@ -65,13 +65,11 @@ interface RetrofitService {
     @GET("realEstate/bbox")
     fun getRealEstateInMap(): Call<RealEstateData>
 
-    @GET("realEstate/bbox?location={LBLatitude}_{LBLongitude}_{RTLatitude}_{RTLongitude}&filter=null")
+    @GET("realEstate/bbox")
     fun getRealEstateInMapWithNoOption(
-        @Path("LBLatitude") LBLatitude: String,
-        @Path("LBLongitude") LBLongitude: String,
-        @Path("RTLatitude") RTLatitude: String,
-        @Path("RTLongitude") RTLongitude: String,
-    ): Call<BoundaryBoxData>
+        @Query("location") location: String,
+        @Query("filter") filter: String?
+    ): Call<RealEstateData>
 
     @GET("realEstate/bbox?location={LBLatitude}_{LBLongitude}_{RTLatitude}_{RTLongitude}&filter=null")
     fun getRealEstateInCluster()
