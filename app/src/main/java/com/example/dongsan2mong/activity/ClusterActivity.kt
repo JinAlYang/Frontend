@@ -3,13 +3,15 @@ package com.example.dongsan2mong.activity
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import androidx.core.content.ContentProviderCompat.requireContext
+import android.util.Log
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.example.dongsan2mong.R
 import com.example.dongsan2mong.adapter.HouseInfoDataAdapter
 import com.example.dongsan2mong.data.HouseInfoData
 import com.example.dongsan2mong.databinding.ActivityClusterBinding
 import com.example.dongsan2mong.databinding.RowHouseinfoBinding
+import org.greenrobot.eventbus.EventBus
+import org.greenrobot.eventbus.Subscribe
+import org.greenrobot.eventbus.ThreadMode
 
 class ClusterActivity : AppCompatActivity() {
 
@@ -71,6 +73,8 @@ class ClusterActivity : AppCompatActivity() {
             }
         }
         binding.clusterBackBtn.setOnClickListener {
+//            EventBus.getDefault().post(DataEvent("ClusterActivity"))
+
             val returnIntent = Intent()
             // 이전 버튼 눌러서 돌아가면 이전 activity에 dibshomearr 전송
             returnIntent.putExtra("returnDibshomeArr", adapter.findDibshomeArr())
@@ -80,4 +84,25 @@ class ClusterActivity : AppCompatActivity() {
         binding.recyclerViewCluster.adapter = adapter
 
     }
+
+    override fun onStart() {
+        super.onStart()
+        try {
+            EventBus.getDefault().register(this)
+        } catch (e: Exception) {
+        }
+    }
+
+    override fun onStop() {
+        super.onStop()
+        EventBus.getDefault().unregister(this)
+//        EventBus.getDefault().post(DataEvent("from ClusterActivity"))
+
+    }
+
+//    @Subscribe(threadMode = ThreadMode.MAIN)
+//    fun printId(event: DataEvent) {
+//        Log.d("dataEvent", "ClusterActivity : ${event.helloEventBus}")
+////        Toast.makeText(this@DataEvent, "${event.helloEventBus}", Toast.LENGTH_SHORT).show()
+//    }
 }

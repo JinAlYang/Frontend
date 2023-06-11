@@ -1,15 +1,22 @@
 package com.example.dongsan2mong.fragment
 
+import android.content.Context
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.example.dongsan2mong.data.HouseInfoData
 import com.example.dongsan2mong.adapter.HouseInfoDataAdapter
+import com.example.dongsan2mong.data.HouseInfoData
 import com.example.dongsan2mong.databinding.FragmentLatesthomeBinding
 import com.example.dongsan2mong.databinding.RowHouseinfoBinding
+import com.example.dongsan2mong.event.*
+import org.greenrobot.eventbus.EventBus
+import org.greenrobot.eventbus.Subscribe
+import org.greenrobot.eventbus.ThreadMode
+
 
 class LatesthomeFragment: Fragment() {
     lateinit var binding: FragmentLatesthomeBinding
@@ -22,6 +29,7 @@ class LatesthomeFragment: Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         binding = FragmentLatesthomeBinding.inflate(inflater, container, false)
+        Log.e("dataEvent", "Latesthome : onCreateView()")
         initRecyclerView()
         initData()
         return binding.root
@@ -57,5 +65,49 @@ class LatesthomeFragment: Fragment() {
         }
         binding.recyclerViewLatestHome.adapter = adapter
 
+    }
+
+    override fun onAttach(context: Context) {
+        super.onAttach(context)
+        try {
+            Log.e("dataEvent", "Latesthome : onAttach()")
+            EventBus.getDefault().register(this)
+        } catch (e: Exception) {
+        }
+    }
+//    override fun onStart() {
+//        super.onStart()
+//        try {
+//            EventBus.getDefault().register(this)
+//        } catch (e: Exception) {
+//        }
+//    }
+
+    override fun onDetach() {
+        super.onDetach()
+        Log.e("dataEvent", "Latesthome : onDetach()")
+        EventBus.getDefault().unregister(this)
+    }
+    override fun onStop() {
+        super.onStop()
+        Log.e("dataEvent", "Latesthome : onStop()")
+        EventBus.getDefault().post(LatesthomeEvent("from latest..."))
+
+    }
+
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    fun printDibs(event: DibsEvent) {
+        event.str = "from dibs? late"
+
+        Log.d("dataEvent", "LatesthomeFragment : ${event.str}")
+//        Toast.makeText(this@DataEvent, "${event.helloEventBus}", Toast.LENGTH_SHORT).show()
+    }
+
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    fun printMap(event: MapEvent) {
+        event.str = "from map? late"
+
+        Log.d("dataEvent", "LatesthomeFragment : ${event.str}")
+//        Toast.makeText(this@DataEvent, "${event.helloEventBus}", Toast.LENGTH_SHORT).show()
     }
 }
