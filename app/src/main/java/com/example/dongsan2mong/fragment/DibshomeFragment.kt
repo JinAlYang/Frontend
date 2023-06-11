@@ -1,17 +1,21 @@
 package com.example.dongsan2mong.fragment
 
+import android.content.Context
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.example.dongsan2mong.R
 import com.example.dongsan2mong.adapter.HouseInfoDataAdapter
-import com.example.dongsan2mong.adapter.MapGridViewAdapter
 import com.example.dongsan2mong.data.HouseInfoData
 import com.example.dongsan2mong.databinding.FragmentDibshomeBinding
 import com.example.dongsan2mong.databinding.RowHouseinfoBinding
+import com.example.dongsan2mong.event.*
+import org.greenrobot.eventbus.EventBus
+import org.greenrobot.eventbus.Subscribe
+import org.greenrobot.eventbus.ThreadMode
 
 class DibshomeFragment: Fragment() {
 
@@ -27,21 +31,23 @@ class DibshomeFragment: Fragment() {
     ): View? {
         // Inflate the layout for this fragment
         binding = FragmentDibshomeBinding.inflate(inflater, container, false)
+
         initData()
         initRecyclerView()
         return binding.root
     }
 
     fun initData() {
-//        adapter.setDibshomeArr()
 
     }
 
     fun initRecyclerView() {
-        binding.recyclerViewDibshome.layoutManager = LinearLayoutManager(requireContext(),
-            LinearLayoutManager.VERTICAL, false)
+        binding.recyclerViewDibshome.layoutManager = LinearLayoutManager(
+            requireContext(),
+            LinearLayoutManager.VERTICAL, false
+        )
         adapter = HouseInfoDataAdapter(data, selected)
-        adapter.itemClickListener = object: HouseInfoDataAdapter.OnItemClickListener {
+        adapter.itemClickListener = object : HouseInfoDataAdapter.OnItemClickListener {
             override fun OnItemClick(
                 data: HouseInfoData,
                 binding: RowHouseinfoBinding,
@@ -53,23 +59,28 @@ class DibshomeFragment: Fragment() {
         binding.recyclerViewDibshome.adapter = adapter
 
     }
-
-    /*
-    fun initData() {
-        data.add(HouseInfoData())
-        data.add(
-            HouseInfoData(
-            type = "월세",
-            price = "500/74",
-            space = "33.06m^2",
-            floor = "1층",
-            area = "광진구 구의동",
-            roomNum = "투룸",
-            tempImg = 1
-        )
-        )
+    override fun onResume() {
+        super.onResume()
+        try {
+            EventBus.getDefault().register(this)
+            EventBus.getDefault().post(DataEvent(7))
+        } catch (e: Exception) {
+        }
     }
 
+    override fun onPause() {
+        super.onPause()
+        EventBus.getDefault().unregister(this)
+        EventBus.getDefault().post(DataEvent(9))
+    }
 
-     */
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    fun printData(event: DataEvent) {
+        if (event.int == 6) {
+            Log.d("dataEvent", "wishlist to dibshome")
+        }
+        else if (event.int == 8) {
+            Log.d("dataEvent", "latesthome to dibshome")
+        }
+    }
 }

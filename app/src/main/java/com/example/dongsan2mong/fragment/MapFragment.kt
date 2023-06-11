@@ -2,10 +2,12 @@ package com.example.dongsan2mong.fragment
 
 import android.annotation.SuppressLint
 import android.app.Activity.RESULT_OK
+import android.content.Context
 import android.content.Intent
 import android.graphics.Color
 import android.graphics.PointF
 import android.os.Bundle
+import android.provider.ContactsContract.Data
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
@@ -26,17 +28,20 @@ import com.example.dongsan2mong.data.HouseInfoData
 import com.example.dongsan2mong.data.PresetInfoData
 import com.example.dongsan2mong.data.RealEstateData
 import com.example.dongsan2mong.databinding.FragmentMapBinding
+import com.example.dongsan2mong.event.*
 import com.google.android.material.slider.RangeSlider
 import com.naver.maps.geometry.LatLng
 import com.naver.maps.map.*
 import com.naver.maps.map.overlay.Marker
 import com.naver.maps.map.overlay.Overlay
 import com.naver.maps.map.overlay.OverlayImage
+import org.greenrobot.eventbus.EventBus
+import org.greenrobot.eventbus.Subscribe
+import org.greenrobot.eventbus.ThreadMode
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 import java.util.*
-import kotlin.collections.ArrayList
 
 
 class MapFragment : Fragment(), OnMapReadyCallback {
@@ -58,6 +63,8 @@ class MapFragment : Fragment(), OnMapReadyCallback {
     var allEstate: ArrayList<RealEstateData> = ArrayList<RealEstateData>()
     var seperatedEstate: ArrayList<ArrayList<RealEstateData>> = ArrayList<ArrayList<RealEstateData>>(16)
     var dibshomeArr: ArrayList<HouseInfoData> = ArrayList()
+
+//    lateinit var event1: DataEvent
 
 
 //    var estateArr: ArrayList<RealEstateData> = ArrayList<RealEstateData>()
@@ -214,6 +221,7 @@ class MapFragment : Fragment(), OnMapReadyCallback {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
         val fm = childFragmentManager
         val initialMapOption = NaverMapOptions()
             .camera(CameraPosition(LatLng(37.541618, 127.079374), 16.0))
@@ -1363,42 +1371,42 @@ class MapFragment : Fragment(), OnMapReadyCallback {
 
                 // 여기서 새로 받은 매물들분류해서 넣을거임
                 for (i in allEstate) {
-                    if (i.longitude.toLong() <= RTArr[0].longitude) {
-                        if (i.latitude.toLong() <= LBArr[0].latitude) {
+                    if (i.latitude.toDouble() >= LBArr[0].latitude) {
+                        if (i.longitude.toDouble() <= RTArr[0].longitude) {
                             seperatedEstate[0].add(i)
                         }
-                        else if (i.latitude.toLong() <= LBArr[1].latitude) {
+                        else if (i.longitude.toDouble() <= RTArr[1].longitude) {
                             seperatedEstate[1].add(i)
                         }
-                        else if (i.latitude.toLong() <= LBArr[2].latitude) {
+                        else if (i.longitude.toDouble() <= RTArr[2].longitude) {
                             seperatedEstate[2].add(i)
                         }
                         else {
                             seperatedEstate[3].add(i)
                         }
                     }
-                    else if (i.longitude.toLong() <= RTArr[4].longitude) {
-                        if (i.latitude.toLong() <= LBArr[0].latitude) {
+                    else if (i.latitude.toDouble() >= LBArr[4].latitude) {
+                        if (i.longitude.toDouble() <= RTArr[0].longitude) {
                             seperatedEstate[4].add(i)
                         }
-                        else if (i.latitude.toLong() <= LBArr[1].latitude) {
+                        else if (i.longitude.toDouble() <= RTArr[1].longitude) {
                             seperatedEstate[5].add(i)
                         }
-                        else if (i.latitude.toLong() <= LBArr[2].latitude) {
+                        else if (i.longitude.toDouble() <= RTArr[2].longitude) {
                             seperatedEstate[6].add(i)
                         }
                         else {
                             seperatedEstate[7].add(i)
                         }
                     }
-                    else if (i.longitude.toLong() <= RTArr[8].longitude) {
-                        if (i.latitude.toLong() <= LBArr[0].latitude) {
+                    else if (i.latitude.toDouble() >= LBArr[8].latitude) {
+                        if (i.longitude.toDouble() <= RTArr[0].longitude) {
                             seperatedEstate[8].add(i)
                         }
-                        else if (i.latitude.toLong() <= LBArr[1].latitude) {
+                        else if (i.longitude.toDouble() <= RTArr[1].longitude) {
                             seperatedEstate[9].add(i)
                         }
-                        else if (i.latitude.toLong() <= LBArr[2].latitude) {
+                        else if (i.longitude.toDouble() <= RTArr[2].longitude) {
                             seperatedEstate[10].add(i)
                         }
                         else {
@@ -1406,13 +1414,13 @@ class MapFragment : Fragment(), OnMapReadyCallback {
                         }
                     }
                     else {
-                        if (i.latitude.toLong() <= LBArr[0].latitude) {
+                        if (i.latitude.toDouble() <= RTArr[0].latitude) {
                             seperatedEstate[12].add(i)
                         }
-                        else if (i.latitude.toLong() <= LBArr[1].latitude) {
+                        else if (i.latitude.toDouble() <= RTArr[1].latitude) {
                             seperatedEstate[13].add(i)
                         }
-                        else if (i.latitude.toLong() <= LBArr[2].latitude) {
+                        else if (i.latitude.toDouble() <= RTArr[2].latitude) {
                             seperatedEstate[14].add(i)
                         }
                         else {
@@ -1446,6 +1454,7 @@ class MapFragment : Fragment(), OnMapReadyCallback {
                             clusterIntent.putExtra("clusterArr", seperatedEstate[i * 4 + j])
                             clusterIntent.putExtra("dibshomeArr", dibshomeArr)
                             startActivityForResult(clusterIntent, 99)
+//                            event1 = DataEvent("Fragment1 으로 메시지 전달")
 
                             true
                         }
@@ -1524,10 +1533,40 @@ class MapFragment : Fragment(), OnMapReadyCallback {
         if(resultCode == RESULT_OK){
             when(requestCode){
                 99 -> {
+//                    printId(event = event1)
                     Log.d("onActivityResult", "true")
                     dibshomeArr = data?.extras?.get("returnDibshomeArr") as ArrayList<HouseInfoData>
                 }
             }
+        }
+    }
+
+    override fun onAttach(context: Context) {
+        super.onAttach(context)
+        try {
+            EventBus.getDefault().register(this)
+        } catch (e: Exception) {
+        }
+    }
+
+    override fun onDetach() {
+        super.onDetach()
+        EventBus.getDefault().unregister(this)
+    }
+
+    override fun onStop() {
+        super.onStop()
+        EventBus.getDefault().post(DataEvent(2))
+        EventBus.getDefault().post(DataEvent(0))
+    }
+
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    fun printData(event: DataEvent) {
+        if (event.int == 1) {
+            Log.d("dataEvent", "ClusterActivity to mapFragment")
+        }
+        else if (event.int == 3) {
+            Log.d("dataEvent", "wishlist to mapFragment")
         }
     }
 }

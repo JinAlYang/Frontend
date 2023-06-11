@@ -19,6 +19,9 @@ import com.example.dongsan2mong.fragment.MapFragment
 import com.example.dongsan2mong.fragment.PlannerFragment
 import com.example.dongsan2mong.fragment.WishlistFragment
 import com.google.android.material.bottomnavigation.BottomNavigationView
+import org.greenrobot.eventbus.EventBus
+import org.greenrobot.eventbus.Subscribe
+import org.greenrobot.eventbus.ThreadMode
 import java.security.MessageDigest
 import java.security.NoSuchAlgorithmException
 
@@ -77,10 +80,16 @@ class MainActivity : AppCompatActivity() {
     }
 
     fun changeFragment(fragment: Fragment) {
+//        EventBus.getDefault().unregister(this)
+
         supportFragmentManager
             .beginTransaction()
             .replace(binding.frameLayout.id, fragment)
             .commit()
+
+//        EventBus.getDefault().post(MainEvent("helloMainBus"))
+
+        Log.d("dataEvent", "메인액티비티에서 helloMainBus 전송~")
     }
 
     fun openDrawer() {
