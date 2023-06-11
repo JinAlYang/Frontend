@@ -1,5 +1,6 @@
 package com.example.dongsan2mong.adapter
 
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
@@ -73,6 +74,7 @@ class HouseInfoDataAdapter (val items:ArrayList<HouseInfoData>, val selected:Arr
 
         holder.binding.apply {
             favorite.setOnClickListener {
+                Log.d("onActivityResult", "seleceted? : ${favorite.isSelected}, position : $position")
                 if (favorite.isSelected) {
                     favorite.isSelected = false
                     dibshomeArr.remove(items[position])

@@ -1445,7 +1445,7 @@ class MapFragment : Fragment(), OnMapReadyCallback {
                             val clusterIntent = Intent(context, ClusterActivity::class.java)
                             clusterIntent.putExtra("clusterArr", seperatedEstate[i * 4 + j])
                             clusterIntent.putExtra("dibshomeArr", dibshomeArr)
-                            startActivity(clusterIntent)
+                            startActivityForResult(clusterIntent, 99)
 
                             true
                         }
@@ -1521,10 +1521,10 @@ class MapFragment : Fragment(), OnMapReadyCallback {
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
-
         if(resultCode == RESULT_OK){
             when(requestCode){
                 99 -> {
+                    Log.d("onActivityResult", "true")
                     dibshomeArr = data?.extras?.get("returnDibshomeArr") as ArrayList<HouseInfoData>
                 }
             }
